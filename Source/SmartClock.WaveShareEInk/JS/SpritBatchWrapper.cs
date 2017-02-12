@@ -19,7 +19,7 @@ namespace SmartClock.WaveShareEInk.JS
         public static void Inject(ChakraContext context)
         {
             context.ValueConverter
-                .RegisterConverter<EInkColorEnum>(
+                .RegisterValueConverter<EInkColorEnum>(
                 (value, helper) =>
                 {
                     using (helper.With())
@@ -34,7 +34,7 @@ namespace SmartClock.WaveShareEInk.JS
                 }
                 );
 
-            context.ValueConverter.RegisterConverter<EInkFontSizeEnum>(
+            context.ValueConverter.RegisterValueConverter<EInkFontSizeEnum>(
             (value, helper) =>
             {
                 return helper.CreateValue<byte>((byte)value);
@@ -45,80 +45,78 @@ namespace SmartClock.WaveShareEInk.JS
             }
             );
 
-                context.ValueConverter.RegisterConverter<Vector2>(
-                (value, helper) =>
+            context.ValueConverter.RegisterValueConverter<Vector2>(
+            (value, helper) =>
+            {
+                JavaScriptValue result = helper.CreateObject();
+                helper.WriteProperty<float>(result, "x", value.X);
+                helper.WriteProperty<float>(result, "y", value.Y);
+                return result;
+            },
+            (value, helper) =>
+            {
+                return new Vector2(
+                    helper.ReadProperty<float>(value, "x"),
+                    helper.ReadProperty<float>(value, "y")
+                    );
+            }
+            )
+
+
+        ;
+            context.ValueConverter.RegisterProxyConverter<EInkSpritBatch>(
+                (output, source) =>
                 {
-                    JavaScriptValue result = helper.CreateObject();
-                    helper.WriteProperty<float>(result, "x", value.X);
-                    helper.WriteProperty<float>(result, "y", value.Y);
-                    return result;
-                },
-                (value, helper) =>
-                {
-                    return new Vector2(
-                        helper.ReadProperty<float>(value, "x"),
-                        helper.ReadProperty<float>(value, "y")
-                        );
+
+                    output.SetMethod("clear", source.Clear);
+                    output.SetMethod("pushColor", source.PushColor);
+                    output.SetMethod("popColor", source.PopColor);
+                    output.SetMethod("pushTransform", source.PushTransform);
+                    output.SetMethod("popTransform", source.PopTransform);
+
+                    output.SetMethod<float, float>("translate", source.Translate);
+                    output.SetMethod<float, float>("scale", source.Scale);
+                    output.SetMethod<float>("rotate", source.Rotate);
+
+                    output.SetMethod<float, float, float, Action>("applyBlock", source.ApplyBlock);
+                    output.SetMethod<string, string, Action>("applyGrid", source.ApplyGrid);
+                    output.SetMethod<int, int, int, int, Action>("drawCell", source.DrawCell);
+
+
+                    output.SetMethod<float, float>("drawPixel", source.DrawPixel);
+                    output.SetMethod<float, float, float, float>("drawLine", source.DrawLine);
+                    output.SetMethod<float, float, float, float, float, float, bool>("drawTriangle", source.DrawTriangle);
+                    output.SetMethod<float, float, float, float, bool>("drawRect", source.DrawRect);
+                    output.SetMethod<float, float, float, bool>("drawCircle", source.DrawCircle);
+                    output.SetMethod<float, float, string, EInkFontSizeEnum>("drawText", source.DrawText);
+                    output.SetMethod<float, float, string>("drawImage", source.DrawImage);
+
+                    output.SetProperty<Vector2>("DrawingSize",
+                    (value) => source.DrawingSize = value,
+                    () => source.DrawingSize);
+
+                    output.SetProperty<EInkFontSizeEnum>("FontEN",
+                    (value) => source.FontEN = value,
+                    () => source.FontEN);
+
+                    output.SetProperty<EInkFontSizeEnum>("FontCHN",
+                    (value) => source.FontCHN = value,
+                    () => source.FontCHN);
+
+                    output.SetProperty<EInkColorEnum>("ForeGroud",
+                    (value) => source.ForegroundColor = value,
+                    () => source.ForegroundColor);
+
+                    output.SetProperty<EInkColorEnum>("BackGround",
+                    (value) => source.BackgroundColor = value,
+                    () => source.BackgroundColor);
+
+                    //v.SetProperty<SmartGrid>("RootGrid",
+                    //null
+                    //, () => batch.RootGrid);
                 }
-                )
-
-
-            ;
-            context.ValueConverter.RegisterConverter<EInkSpritBatch>(
-                (batch, helper) =>
-                {
-                    return context.CreateProxyObject(batch, (v) =>
-                        {
-                            v.SetMethod("clear", batch.Clear);
-                            v.SetMethod("pushColor", batch.PushColor);
-                            v.SetMethod("popColor", batch.PopColor);
-                            v.SetMethod("pushTransform", batch.PushTransform);
-                            v.SetMethod("popTransform", batch.PopTransform);
-
-                            v.SetMethod<float, float>("translate", batch.Translate);
-                            v.SetMethod<float, float>("scale", batch.Scale);
-                            v.SetMethod<float>("rotate", batch.Rotate);
-
-                            v.SetMethod<float, float, float, Action>("applyBlock", batch.ApplyBlock);
-                            v.SetMethod<string, string, Action>("applyGrid", batch.ApplyGrid);
-                            v.SetMethod<int, int, int, int, Action>("drawCell", batch.DrawCell);
-
-
-                            v.SetMethod<float, float>("drawPixel", batch.DrawPixel);
-                            v.SetMethod<float, float, float, float>("drawLine", batch.DrawLine);
-                            v.SetMethod<float, float, float, float, float, float, bool>("drawTriangle", batch.DrawTriangle);
-                            v.SetMethod<float, float, float, float, bool>("drawRect", batch.DrawRect);
-                            v.SetMethod<float, float, float, bool>("drawCircle", batch.DrawCircle);
-                            v.SetMethod<float, float, string, EInkFontSizeEnum>("drawText", batch.DrawText);
-                            v.SetMethod<float, float, string>("drawImage", batch.DrawImage);
-
-                            v.SetProperty<Vector2>("DrawingSize",
-                            (value) => batch.DrawingSize = value,
-                            () => batch.DrawingSize);
-
-                            v.SetProperty<EInkFontSizeEnum>("FontEN",
-                            (value) => batch.FontEN = value,
-                            () => batch.FontEN);
-
-                            v.SetProperty<EInkFontSizeEnum>("FontCHN",
-                            (value) => batch.FontCHN = value,
-                            () => batch.FontCHN);
-
-                            v.SetProperty<EInkColorEnum>("ForeGroud",
-                            (value) => batch.ForegroundColor = value,
-                            () => batch.ForegroundColor);
-
-                            v.SetProperty<EInkColorEnum>("BackGround",
-                            (value) => batch.BackgroundColor = value,
-                            () => batch.BackgroundColor);
-
-                            v.SetProperty<SmartGrid>("RootGrid",
-                            null
-                            , () => batch.RootGrid);
-                        });
-                },
-                null
                 );
+
         }
     }
 }

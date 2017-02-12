@@ -11,16 +11,12 @@ namespace SmartClock.WaveShareEInk.JS
     {
         public static void Inject(ChakraContext context)
         {
-            context.ValueConverter.RegisterConverter<Controls.LEDNumber>(
-                (value, helper) =>
+            context.ValueConverter.RegisterProxyConverter<Controls.LEDNumber>(
+                (output, source) =>
                 {
-                    return helper.CreateProxyObject<Controls.LEDNumber>(value,
-                        (v) =>
-                        {
-                            v.SetMethod<string>("draw", value.Draw);
-                        });
+                    output.SetMethod<string>("draw", source.Draw);
                 }
-            , null);
+            );
         }
     }
 }

@@ -35,7 +35,6 @@ namespace SmartClock.WaveShareEInk.JS
             runtime = ChakraRuntime.Create();
             context = runtime.CreateContext(true);
             SpritBatchWrapper.Inject(context);
-            SmartGridWrapper.Inject(context);
             LEDNumberWrapper.Inject(context);
             context.ValueConverter.RegisterMethodConverter<DateTime>();//for call to draw(time) in script
 

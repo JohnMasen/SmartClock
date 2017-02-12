@@ -115,7 +115,6 @@
     <Compile Include="Controls\LEDNumber.cs" />
     <Compile Include="JS\EinkJSClock.cs" />
     <Compile Include="JS\LEDNumberWrapper.cs" />
-    <Compile Include="JS\SmartGridWrapper.cs" />
     <Compile Include="JS\SpritBatchWrapper.cs" />
     <Compile Include="Layout\SmartGrid.cs" />
     <Compile Include="EInkClockBase.cs" />
