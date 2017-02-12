@@ -1,0 +1,12 @@
+{
+  "name": "mockup-device-tcp",
+  "version": "0.0.0",
+  "description": "MockupDeviceTCP",
+  "main": "app.js",
+  "author": {
+    "name": "qian.fan.jiang"
+  },
+  "dependencies": {
+    "maths": "^0.1.0"
+  }
+}
