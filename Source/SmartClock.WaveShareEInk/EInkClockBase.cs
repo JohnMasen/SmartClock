@@ -24,7 +24,7 @@ namespace SmartClock.WaveShareEInk
             sw = new System.Diagnostics.Stopwatch();
         }
 
-        public override async Task Main()
+        public override void Main()
         {
             //if (isBusy)
             //{
@@ -35,40 +35,40 @@ namespace SmartClock.WaveShareEInk
             if (lastRun==DateTime.MinValue)//first run
             {
                 System.Diagnostics.Debug.WriteLine($"first run");
-                await createBuffer(now);
-                await sendToDevice();
+                createBuffer(now);
+                sendToDevice();
 
-                await sb.RefreshScreen();
+                sb.RefreshScreen();
 
-                await createBuffer(now.AddMinutes(1));//pre draw next frame
-                await sendToDevice();
+                createBuffer(now.AddMinutes(1));//pre draw next frame
+                sendToDevice();
 
                 lastRun = now;
             }
             else if (lastRun.Minute!=now.Minute)
             {
-                await sb.RefreshScreen();//refresh the screen from last "pre draw"
+                sb.RefreshScreen();//refresh the screen from last "pre draw"
 
-                await createBuffer(now.AddMinutes(1));
-                await sendToDevice();
+                createBuffer(now.AddMinutes(1));
+                sendToDevice();
                 lastRun = now;
             }
             //isBusy = false;
             
         }
-        private async Task createBuffer(DateTime clockTime)
+        private void createBuffer(DateTime clockTime)
         {
-            await sb.BeginAsync();
+            sb.Begin();
             sw.Restart();
             draw(sb, clockTime);
             sw.Stop();
             System.Diagnostics.Debug.WriteLine($"draw timing={sw.ElapsedMilliseconds}ms");
         }
 
-        private async Task sendToDevice()
+        private void sendToDevice()
         {
             sw.Restart();
-            await sb.EndAsync();
+            sb.End();
             sw.Stop();
             System.Diagnostics.Debug.WriteLine($"update timing={sw.ElapsedMilliseconds}ms");
         }

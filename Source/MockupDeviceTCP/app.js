@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var net = require("net");
 var configValues = [
     { set: 0x10, get: 0x11, value: new Buffer([0x00, 0x02]) },

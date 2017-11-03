@@ -27,14 +27,14 @@ namespace SmartClock.Core
                   try
                   {
                       token.ThrowIfCancellationRequested();
-                      await Init();
-                      await drawFrame(null);
+                       Init();
+                       drawFrame(null);
                       int nextSecond = 1000 - DateTime.Now.Millisecond;
                       await Task.Delay(nextSecond);
                       while (!token.IsCancellationRequested)
                       {
-                          await drawFrame(null);
-                          await Task.Delay(1000);
+                           drawFrame(null);
+                           await Task.Delay(1000);
                       }
                       System.Diagnostics.Debug.WriteLine("mainloop stopped");
                   }
@@ -68,7 +68,7 @@ namespace SmartClock.Core
             cts = null;
         }
 
-        protected virtual async Task drawFrame(object state)
+        protected virtual void drawFrame(object state)
         {
             //lock (syncRoot)
             //{
@@ -81,7 +81,7 @@ namespace SmartClock.Core
             //        isBusy = true;
             //    }
             //}
-            await Main();
+            Main();
             //lock (syncRoot)
             //{
             //    isBusy = false;
@@ -90,10 +90,9 @@ namespace SmartClock.Core
         }
 
 
-        public abstract Task Main();
-        public virtual Task Init()
+        public abstract void Main();
+        public virtual void Init()
         {
-            return Task.CompletedTask;
         }
 
 

@@ -110,7 +110,7 @@ namespace SmartClock.WaveShareEInk
             DeviceSize = device.DeviceSize;
             RootGrid = new Layout.SmartGrid(this, "*", "*");
         }
-        public async Task BeginAsync()
+        public void Begin()
         {
             if (isBegun)
             {
@@ -120,12 +120,12 @@ namespace SmartClock.WaveShareEInk
             
             commandBatch.Clear();
             //load config
-            var tmp = await device.GetDrawingColor();
+            var tmp = device.GetDrawingColor();
             _foregroundColor = tmp.Foreground;
             _backgroundColor = tmp.Background;
 
-            _fontEN = await device.GetFontSizeEnglish();
-            _fontCHN = await device.GetFontSizeChinese();
+            _fontEN = device.GetFontSizeEnglish();
+            _fontCHN = device.GetFontSizeChinese();
 
             //reset all
             ResetWorld();
@@ -134,7 +134,7 @@ namespace SmartClock.WaveShareEInk
 
         
 
-        public async Task EndAsync()
+        public void End()
         {
             if (!isBegun)
             {
@@ -145,14 +145,14 @@ namespace SmartClock.WaveShareEInk
                 throw new InvalidOperationException("PushTransform and Poptransform not paired");
             }
             System.Diagnostics.Debug.WriteLine($"command queue size={commandBatch.Count}");
-            await device.ExecuteBatchAsync(commandBatch);
+            device.ExecuteBatchAsync(commandBatch);
             commandBatch.Clear();
             isBegun = false;
         }
 
-        internal Task RefreshScreen()
+        internal void RefreshScreen()
         {
-            return device.Refresh();
+            device.Refresh();
         }
         
 

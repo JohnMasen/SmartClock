@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Devices.SerialCommunication;
-using Windows.Storage.Streams;
 
 namespace SmartClock.WaveShareEInk
 {
@@ -45,164 +44,201 @@ namespace SmartClock.WaveShareEInk
             public EInkColorEnum Background;
         }
 
-        private SerialDevice serial;
+        private SerialPort serial;
 
         public Vector2 DeviceSize { get; } = new Vector2(800, 600);
 
         //TODO: should avoid direct reference hardware device, will cause conflict. use logical IO instead
-        public EInkDevice(SerialDevice serial)
+        public EInkDevice(SerialPort serial)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             this.serial = serial;
             var magic = serial.BaudRate; //HACK:the LoadAsync will hang until I found this magic word(for my Prolific USB2Serial device)
 
-            serial.ReadTimeout = TimeSpan.FromMilliseconds(1);
-            serial.WriteTimeout = TimeSpan.FromMilliseconds(1);
-            serial.Handshake = SerialHandshake.None;
+            serial.ReadTimeout = 1;
+            serial.WriteTimeout = 1;
+            serial.Handshake = Handshake.None;
             serial.BaudRate = 115200;
             serial.DataBits = 8;
-            serial.StopBits = SerialStopBitCount.One;
-            serial.Parity = SerialParity.None;
+            serial.StopBits = StopBits.One;
+            serial.Parity = Parity.None;
         }
 
-        public async Task<byte[]> ExecuteAsync(EInkCommand command, bool checkIfOKReturned)
+        public  byte[] Execute(EInkCommand command, bool checkIfOKReturned)
         {
             byte[] cmdResult = new byte[command.ResultLength];
-            using (DataReader reader = new DataReader(serial.InputStream))
-            {
-                using (DataWriter writer = new DataWriter(serial.OutputStream))
-                {
-                        writer.WriteBytes(command.GetCommandBytes());
-                        await writer.StoreAsync();
-                        await reader.LoadAsync(1024);
-                        if (reader.UnconsumedBufferLength != command.ResultLength)
-                        {
-                            throw new InvalidOperationException($"Command result length mismatch, command={command.CommandType}");
-                        }
-                        reader.ReadBytes(cmdResult);
-                        if (checkIfOKReturned && !cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
-                        {
-                            throw new InvalidOperationException($"Invalid command result, command={command.CommandType}");
-                        }
 
-                    writer.DetachStream();
-                    reader.DetachStream();
-                    return cmdResult;
-                }
+            var data = command.GetCommandBytes();
+            serial.Write(data, 0, data.Length);
+            if (serial.BytesToRead!=command.ResultLength)
+            {
+                throw new InvalidOperationException($"Command result length mismatch, command={command.CommandType}");
             }
+            serial.Read(cmdResult, 0, command.ResultLength);
+            if (checkIfOKReturned && !cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
+            {
+                throw new InvalidOperationException($"Invalid command result, command={command.CommandType}");
+            }
+            return cmdResult;
+            //using (DataReader reader = new DataReader(serial.InputStream))
+            //{
+            //    using (DataWriter writer = new DataWriter(serial.OutputStream))
+            //    {
+            //            writer.WriteBytes(command.GetCommandBytes());
+            //            await writer.StoreAsync();
+            //            await reader.LoadAsync(1024);
+            //            if (reader.UnconsumedBufferLength != command.ResultLength)
+            //            {
+            //                throw new InvalidOperationException($"Command result length mismatch, command={command.CommandType}");
+            //            }
+            //            reader.ReadBytes(cmdResult);
+            //            if (checkIfOKReturned && !cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
+            //            {
+            //                throw new InvalidOperationException($"Invalid command result, command={command.CommandType}");
+            //            }
+
+            //        writer.DetachStream();
+            //        reader.DetachStream();
+            //        return cmdResult;
+            //    }
+            //}
 
         }
 
-        public async Task ExecuteBatchAsync(IEnumerable<EInkCommand> commands)
+        public void ExecuteBatchAsync(IEnumerable<EInkCommand> commands)
         {
             byte[] cmdResult = new byte[2];
 #if DEBUG
             List<Tuple<EInkCommand, int>> perfcounter = new List<Tuple<EInkCommand, int>>();
             Stopwatch sw = new Stopwatch();
 #endif
-            using (DataReader reader=new DataReader(serial.InputStream))
-            {
-                using (DataWriter writer=new DataWriter(serial.OutputStream))
-                {
-                    foreach (var item in commands)
-                    {
 
-                        writer.WriteBytes(item.GetCommandBytes());
+
+            foreach (var item in commands)
+            {
 #if DEBUG
-                        sw.Restart();
+            
+                sw.Restart();
 #endif
-                        await writer.StoreAsync();
-                        await reader.LoadAsync(1024);
+                Execute(item, true);
 #if DEBUG
-                        sw.Stop();
-                        perfcounter.Add(new Tuple<EInkCommand, int>(item, (int)sw.ElapsedMilliseconds));
+                sw.Stop();
+                perfcounter.Add(new Tuple<EInkCommand, int>(item, (int)sw.ElapsedMilliseconds));
 #endif
-                        if (reader.UnconsumedBufferLength!=2)
-                        {
-                            throw new InvalidOperationException($"Command execution error, command={item.CommandType}");
-                        }
-                        reader.ReadBytes(cmdResult);
-                        if (!cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
-                        {
-                            throw new InvalidOperationException($"Invalid command result, command={item.CommandType}");
-                        }
-                        
-                    }
-                    writer.DetachStream();
-                    reader.DetachStream();
-#if DEBUG
-                    int line = 1;
-                    Debug.WriteLine("sequence,command,duration,raw");
-                    foreach (var item in perfcounter)
-                    {
-                        Debug.WriteLine($"{line++},{BitConverter.ToString(new byte[] { item.Item1.CommandType })},{item.Item2},{BitConverter.ToString(item.Item1.GetCommandBytes()).Replace("-"," ")}");
-                    }
-                    Debug.WriteLine($"total {perfcounter.Count} commands");
-#endif
-                }
             }
+#if DEBUG
+            int line = 1;
+            Debug.WriteLine("sequence,command,duration,raw");
+            foreach (var item in perfcounter)
+            {
+                Debug.WriteLine($"{line++},{BitConverter.ToString(new byte[] { item.Item1.CommandType })},{item.Item2},{BitConverter.ToString(item.Item1.GetCommandBytes()).Replace("-", " ")}");
+            }
+            Debug.WriteLine($"total {perfcounter.Count} commands");
+#endif
+
+//            using (DataReader reader=new DataReader(serial.InputStream))
+//            {
+//                using (DataWriter writer=new DataWriter(serial.OutputStream))
+//                {
+//                    foreach (var item in commands)
+//                    {
+
+//                        writer.WriteBytes(item.GetCommandBytes());
+//#if DEBUG
+//                        sw.Restart();
+//#endif
+//                        await writer.StoreAsync();
+//                        await reader.LoadAsync(1024);
+//#if DEBUG
+//                        sw.Stop();
+//                        perfcounter.Add(new Tuple<EInkCommand, int>(item, (int)sw.ElapsedMilliseconds));
+//#endif
+//                        if (reader.UnconsumedBufferLength!=2)
+//                        {
+//                            throw new InvalidOperationException($"Command execution error, command={item.CommandType}");
+//                        }
+//                        reader.ReadBytes(cmdResult);
+//                        if (!cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
+//                        {
+//                            throw new InvalidOperationException($"Invalid command result, command={item.CommandType}");
+//                        }
+                        
+//                    }
+//                    writer.DetachStream();
+//                    reader.DetachStream();
+//#if DEBUG
+//                    int line = 1;
+//                    Debug.WriteLine("sequence,command,duration,raw");
+//                    foreach (var item in perfcounter)
+//                    {
+//                        Debug.WriteLine($"{line++},{BitConverter.ToString(new byte[] { item.Item1.CommandType })},{item.Item2},{BitConverter.ToString(item.Item1.GetCommandBytes()).Replace("-"," ")}");
+//                    }
+//                    Debug.WriteLine($"total {perfcounter.Count} commands");
+//#endif
+//                }
+//            }
         }
 
         #region Control API
-        public async Task Ping()
+        public void Ping()
         {
-            await runCommandInternal(0x00);
+            runCommandInternal(0x00);
         }
 
-        public async Task SetStorageArea(StorageAreaEnum value)
+        public void SetStorageArea(StorageAreaEnum value)
         {
-            await runCommandInternal(0x07, (byte)value);
+            runCommandInternal(0x07, (byte)value);
         }
 
-        public async Task<StorageAreaEnum> GetStorageArea()
+        public StorageAreaEnum GetStorageArea()
         {
-            byte[] tmp = await runCommandInternal(0x06, true, 1);
+            byte[] tmp =  runCommandInternal(0x06, true, 1);
             return (StorageAreaEnum)tmp[0];
         }
 
-        public async Task Sleep()
+        public void Sleep()
         {
-            await runCommandInternal(0x08);
+             runCommandInternal(0x08);
         }
 
-        public async Task<ScreenOrientationEnum> GetScreenOrientation()
+        public ScreenOrientationEnum GetScreenOrientation()
         {
-            byte[] result = await runCommandInternal(0x0C, true, 1);
+            byte[] result =  runCommandInternal(0x0C, true, 1);
             return (ScreenOrientationEnum)result[0];
         }
 
-        public async Task SetScreenOrientation(ScreenOrientationEnum value)
+        public void SetScreenOrientation(ScreenOrientationEnum value)
         {
-            await runCommandInternal(0x0D, (byte)value);
+            runCommandInternal(0x0D, (byte)value);
         }
-        public async Task LoadFont()
+        public void LoadFont()
         {
             EInkCommand cmd = new EInkCommand(0x0E);
-            await ExecuteAsync(cmd, true);
+            Execute(cmd, true);
         }
 
-        public async Task LoadImage()
+        public void LoadImage()
         {
             EInkCommand cmd = new EInkCommand(0x0F);
-            await ExecuteAsync(cmd, true);
+            Execute(cmd, true);
         }
 
 
-        public async Task Refresh()
+        public void Refresh()
         {
-            await runCommandInternal(0x0A);
+            runCommandInternal(0x0A);
         }
         #endregion
 
         #region Drawing Config API
-        public async Task SetDrawingColor(EInkColorEnum foreground, EInkColorEnum background)
+        public void SetDrawingColor(EInkColorEnum foreground, EInkColorEnum background)
         {
-            await runCommandInternal(0x10, (byte)foreground, (byte)background);
+            runCommandInternal(0x10, (byte)foreground, (byte)background);
         }
 
-        public async Task<ColorSetting> GetDrawingColor()
+        public ColorSetting GetDrawingColor()
         {
-            byte[] result = await runCommandInternal(0x11, true, 2);
+            byte[] result = runCommandInternal(0x11, true, 2);
             return new ColorSetting()
             {
                 Foreground = (EInkColorEnum)result[0] - 0x30,
@@ -210,53 +246,53 @@ namespace SmartClock.WaveShareEInk
             };
         }
 
-        public async Task SetFontSizeEnglish(EInkFontSizeEnum size)
+        public void SetFontSizeEnglish(EInkFontSizeEnum size)
         {
-            await runCommandInternal(0x1E, (byte)size);
+            runCommandInternal(0x1E, (byte)size);
         }
 
-        public async Task SetFontSizeChinese(EInkFontSizeEnum size)
+        public void SetFontSizeChinese(EInkFontSizeEnum size)
         {
-            await runCommandInternal(0x1F, (byte)size);
+            runCommandInternal(0x1F, (byte)size);
         }
 
 
-        public async Task<EInkFontSizeEnum> GetFontSizeEnglish()
+        public EInkFontSizeEnum GetFontSizeEnglish()
         {
-            byte[] tmp = await runCommandInternal(0x1C, true, 1);
+            byte[] tmp = runCommandInternal(0x1C, true, 1);
             return (EInkFontSizeEnum)tmp[0];
         }
 
-        public async Task<EInkFontSizeEnum> GetFontSizeChinese()
+        public EInkFontSizeEnum GetFontSizeChinese()
         {
-            byte[] tmp = await runCommandInternal(0x1D, true, 1);
+            byte[] tmp = runCommandInternal(0x1D, true, 1);
             return (EInkFontSizeEnum)tmp[0];
         }
         #endregion
 
         #region internal call wrapper
-        private async Task<byte[]> runCommandInternal(byte command, bool hasResult = false, int resultLength = 2)
+        private byte[] runCommandInternal(byte command, bool hasResult = false, int resultLength = 2)
         {
             EInkCommand cmd = new EInkCommand(command, resultLength);
-            return await ExecuteAsync(cmd, !hasResult);
+            return  Execute(cmd, !hasResult);
         }
 
-        private async Task runCommandInternal(byte command, params byte[] para)
+        private void runCommandInternal(byte command, params byte[] para)
         {
             EInkCommand cmd = new EInkCommand(command, para);
-            await ExecuteAsync(cmd, true);
+             Execute(cmd, true);
         }
 
-        private async Task runCommandInternal(byte command, params int[] para)
+        private void runCommandInternal(byte command, params int[] para)
         {
             EInkCommand cmd = new EInkCommand(command, para);
-            await ExecuteAsync(cmd, true);
+             Execute(cmd, true);
         }
 
-        private async Task runCommandInternal(byte command, int x, int y, string content)
+        private void runCommandInternal(byte command, int x, int y, string content)
         {
             EInkCommand cmd = new EInkCommand(command, x, y, content);
-            await ExecuteAsync(cmd, true);
+             Execute(cmd, true);
         }
         #endregion
 
