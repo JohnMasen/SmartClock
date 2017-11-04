@@ -53,15 +53,18 @@ namespace SmartClock.WaveShareEInk
         {
             //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             this.serial = serial;
-            var magic = serial.BaudRate; //HACK:the LoadAsync will hang until I found this magic word(for my Prolific USB2Serial device)
-
-            serial.ReadTimeout = 1;
-            serial.WriteTimeout = 1;
+            //var magic = serial.BaudRate; //HACK:the LoadAsync will hang until I found this magic word(for my Prolific USB2Serial device)
+            
+            serial.ReadTimeout = 500;
+            serial.WriteTimeout = 500;
             serial.Handshake = Handshake.None;
             serial.BaudRate = 115200;
             serial.DataBits = 8;
             serial.StopBits = StopBits.One;
             serial.Parity = Parity.None;
+            serial.Open();
+            serial.DiscardInBuffer();
+            serial.DiscardOutBuffer();
         }
 
         public  byte[] Execute(EInkCommand command, bool checkIfOKReturned)
@@ -70,10 +73,19 @@ namespace SmartClock.WaveShareEInk
 
             var data = command.GetCommandBytes();
             serial.Write(data, 0, data.Length);
-            if (serial.BytesToRead!=command.ResultLength)
+            //var s = serial.BytesToRead;
+            //if (serial.BytesToRead!=command.ResultLength)
+            //{
+            //    throw new InvalidOperationException($"Command result length mismatch, command={command.CommandType}");
+            //}
+            System.Diagnostics.Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (serial.BytesToRead != command.ResultLength)
             {
-                throw new InvalidOperationException($"Command result length mismatch, command={command.CommandType}");
+
             }
+            sw.Stop();
+            System.Diagnostics.Debug.WriteLine($"time cost {sw.ElapsedMilliseconds}");
             serial.Read(cmdResult, 0, command.ResultLength);
             if (checkIfOKReturned && !cmdResult.SequenceEqual(EInkCommand.COMMAND_OK))
             {

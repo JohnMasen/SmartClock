@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MockupDeviceTCP", "MockupDeviceTCP\MockupDeviceTCP.njsproj", "{EF82F56E-3010-470B-AA02-DD07242BA0B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{7DBF905C-BD25-4890-9A42-0D12E535877D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.Core", "SmartClock.Core\SmartClock.Core.csproj", "{F039DDD5-296E-4E3A-B0C4-C3BD10FAB382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.Core", "SmartClock.Core\SmartClock.Core.csproj", "{F039DDD5-296E-4E3A-B0C4-C3BD10FAB382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.WaveShareEInk", "SmartClock.WaveShareEInk\SmartClock.WaveShareEInk.csproj", "{D9CD831E-E7F0-483B-B206-EC729F8084D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.WaveShareEInk", "SmartClock.WaveShareEInk\SmartClock.WaveShareEInk.csproj", "{D9CD831E-E7F0-483B-B206-EC729F8084D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.TestUWP", "SmartClock.TestUWP\SmartClock.TestUWP.csproj", "{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +71,28 @@ Global
 		{D9CD831E-E7F0-483B-B206-EC729F8084D8}.Release|x64.Build.0 = Release|Any CPU
 		{D9CD831E-E7F0-483B-B206-EC729F8084D8}.Release|x86.ActiveCfg = Release|Any CPU
 		{D9CD831E-E7F0-483B-B206-EC729F8084D8}.Release|x86.Build.0 = Release|Any CPU
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|Any CPU.Build.0 = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|ARM.Build.0 = Debug|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x64.ActiveCfg = Debug|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x64.Build.0 = Debug|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x64.Deploy.0 = Debug|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x86.ActiveCfg = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x86.Build.0 = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Debug|x86.Deploy.0 = Debug|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|Any CPU.ActiveCfg = Release|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|ARM.ActiveCfg = Release|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|ARM.Build.0 = Release|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|ARM.Deploy.0 = Release|ARM
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x64.ActiveCfg = Release|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x64.Build.0 = Release|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x64.Deploy.0 = Release|x64
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x86.ActiveCfg = Release|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x86.Build.0 = Release|x86
+		{43CF368C-BAF8-46C9-BB92-6BACA7D8F55A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
