@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="EInk23Test.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EInk23Test"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="128*"/>
+            <RowDefinition Height="641*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="347*"/>
+            <ColumnDefinition Width="678*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.RowSpan="1" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnRun" Content="Run" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="btnRun_Click"/>
+            <Button x:Name="btnRefresh" Content="Refresh" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="btnRefresh_Click"/>
+        </Grid>
+        <TextBox x:Name="txtScript" Grid.ColumnSpan="1" HorizontalAlignment="Stretch"  Grid.RowSpan="2" Text="TextBox" VerticalAlignment="Stretch" AcceptsReturn="True"/>
+        <Image x:Name="imgResult" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.RowSpan="1" VerticalAlignment="Stretch"/>
+    </Grid>
+</Page>
