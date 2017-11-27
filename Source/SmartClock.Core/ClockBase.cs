@@ -5,20 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Numerics;
+using SixLabors.ImageSharp;
 
 namespace SmartClock.Core
 {
     public abstract class ClockBase
     {
-        bool isBusy = false;
         object syncRoot = new object();
         CancellationTokenSource cts;
         Task mainLoop;
         AutoResetEvent ase = new AutoResetEvent(false);
+        IClockRenderer render;
+        protected InfoManager info;
+        public ClockBase(IClockRenderer render,InfoManager infoManager)
+        {
+            this.render = render ?? throw new ArgumentNullException(nameof(render));
+            this.info = infoManager;
+        }
         public void Start()
         {
             Stop();
             cts = new CancellationTokenSource();
+            IsRunning = true;
             mainLoop = Task.Factory.StartNew(async () =>
               {
 
@@ -28,13 +36,13 @@ namespace SmartClock.Core
                   {
                       token.ThrowIfCancellationRequested();
                        Init();
-                       drawFrame(null);
+                       Draw();
                       int nextSecond = 1000 - DateTime.Now.Millisecond;
                       await Task.Delay(nextSecond);
                       while (!token.IsCancellationRequested)
                       {
-                           drawFrame(null);
-                           await Task.Delay(1000);
+                          Draw();
+                          await Task.Delay(1000);
                       }
                       System.Diagnostics.Debug.WriteLine("mainloop stopped");
                   }
@@ -55,8 +63,6 @@ namespace SmartClock.Core
             );
         }
 
-
-
         public void Stop()
         {
             if (cts == null)
@@ -66,35 +72,21 @@ namespace SmartClock.Core
             cts.Cancel();
             ase.WaitOne();//wait until mail loop stop
             cts = null;
+            IsRunning = false;
         }
 
-        protected virtual void drawFrame(object state)
+        protected abstract Image<Rgba32> drawClock();
+        
+
+        public virtual void Draw()
         {
-            //lock (syncRoot)
-            //{
-            //    if (isBusy)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        isBusy = true;
-            //    }
-            //}
-            Main();
-            //lock (syncRoot)
-            //{
-            //    isBusy = false;
-            //}
-
+            render.Render(drawClock());
         }
-
-
-        public abstract void Main();
         public virtual void Init()
         {
         }
 
+        public bool IsRunning { get;private set; } = false;
 
     }
 }

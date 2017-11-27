@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ChakraCore.NET" Version="1.0.4" />
+    <PackageReference Include="JSDraw.NET" Version="0.3.1-alpha" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj" />
+  </ItemGroup>
+</Project>
