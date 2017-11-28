@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using SmartClock.InfoProviders.XinZhiWeatherInfoProvider;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace UWPTest
@@ -35,6 +35,7 @@ namespace UWPTest
         {
             refreshPacks();
             this.imgResult.DataContext = render.Data;
+            manager.Providers.Add(new XinzhiWeatherForcast("gxs3ezcux67dzvqa","shanghai"));
         }
 
         private void refreshPacks()

@@ -114,6 +114,7 @@
     <None Include="UWPTest_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="key.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -151,6 +152,10 @@
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj">
       <Project>{f039ddd5-296e-4e3a-b0c4-c3bd10fab382}</Project>
       <Name>SmartClock.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj">
+      <Project>{e2712cb5-1c8b-4524-94d8-bc7ab3163d5b}</Project>
+      <Name>SmartClock.InfoProviders.XinZhiWeatherInfoProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmartClock.JSClock\SmartClock.JSClock.csproj">
       <Project>{b50eaf38-238f-4715-89d1-59d21b4d4116}</Project>

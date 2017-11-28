@@ -71,15 +71,26 @@ declare class JSFont extends idObject {
     constructor(family: string, size: number);
     MeasureText(text: string): Size;
 }
+declare class JSMatrix extends idObject {
+    constructor();
+    push(): void;
+    pop(): void;
+    translate(position: Point): void;
+    scale(size: Point): void;
+    rotate(degrees: number, center?: Point): void;
+    reset(): void;
+}
 declare class JSImage extends idObject {
     static Load(path: string, isPersistent?: boolean): JSImage;
     static Create(width: number, height: number, isPersistent?: boolean): JSImage;
     readonly size: Size;
+    readonly matrix: JSMatrix;
     private constructor();
     DrawLines(drawWith: DrawWith, points: Point[]): void;
     Fill(brush: BrushBase): void;
     SetOutput(name?: string): void;
     DrawImage(texture: JSImage, blend?: BlendMode, percent?: number, size?: Size, location?: Point): void;
     DrawText(text: string, font: JSFont, drawWith: DrawWith, location: Point): void;
-    DrawEclipse(drawWith: DrawWith, location: Point, radius: number): void;
+    DrawEclipse(drawWith: DrawWith, location: Point, size: Size): void;
+    DrawPolygon(drawWith: DrawWith, points: Point[]): void;
 }

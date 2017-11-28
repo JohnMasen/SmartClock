@@ -1,0 +1,59 @@
+﻿{
+  "results": [
+    {
+      "location": {
+        "id": "WTW3SJ5ZBJUY",
+        "name": "上海",
+        "country": "CN",
+        "path": "上海,上海,中国",
+        "timezone": "Asia/Shanghai",
+        "timezone_offset": "+08:00"
+      },
+      "daily": [
+        {
+          "date": "2017-11-28",
+          "text_day": "小雨",
+          "code_day": "13",
+          "text_night": "小雨",
+          "code_night": "13",
+          "high": "19",
+          "low": "12",
+          "precip": "",
+          "wind_direction": "西南",
+          "wind_direction_degree": "225",
+          "wind_speed": "10",
+          "wind_scale": "2"
+        },
+        {
+          "date": "2017-11-29",
+          "text_day": "小雨",
+          "code_day": "13",
+          "text_night": "小雨",
+          "code_night": "13",
+          "high": "14",
+          "low": "9",
+          "precip": "",
+          "wind_direction": "东北",
+          "wind_direction_degree": "45",
+          "wind_speed": "15",
+          "wind_scale": "3"
+        },
+        {
+          "date": "2017-11-30",
+          "text_day": "多云",
+          "code_day": "4",
+          "text_night": "晴",
+          "code_night": "1",
+          "high": "11",
+          "low": "8",
+          "precip": "",
+          "wind_direction": "无持续风向",
+          "wind_direction_degree": "",
+          "wind_speed": "10",
+          "wind_scale": "2"
+        }
+      ],
+      "last_update": "2017-11-28T18:00:00+08:00"
+    }
+  ]
+}

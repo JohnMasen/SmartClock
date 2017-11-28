@@ -20,8 +20,6 @@ namespace SmartClock.Core
     }
     public interface IInfoProvider
     {
-        void Start();
-        void Stop();
         InfoPack GetInfo(string arg);
         string Name { get; }
     }
