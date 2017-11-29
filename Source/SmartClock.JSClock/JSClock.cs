@@ -13,6 +13,7 @@ namespace SmartClock.JSClock
         public string SetupFunctionName { get; private set; }
         private string appFile;
         JSDraw.NET.JSDraw engine;
+        InfoManager manager;
         protected override Image<Rgba32> drawClock()
         {
             engine.ClearObjectList();
@@ -24,6 +25,7 @@ namespace SmartClock.JSClock
             ScriptPath = scriptFolder;
             DrawFunctionName = drawFunction;
             SetupFunctionName = setupFunction;
+            manager = infoManager;
             this.appFile = appFile;
         }
         public override void Init()
@@ -34,6 +36,7 @@ namespace SmartClock.JSClock
             string script = System.IO.File.ReadAllText(scriptPath);
             engine.WorkPath = ScriptPath;
             engine.Load(script);
+            engine.Context.EnableInfoManager(manager);
             engine.Run(SetupFunctionName);
         }
     }

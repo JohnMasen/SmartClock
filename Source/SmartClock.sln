@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.UWPRenderer", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPTest", "UWPTest\UWPTest.csproj", "{82290A8C-9E14-4B0F-8DD1-3FF634802086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.InfoProviders.XinZhiWeatherInfoProvider", "SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj", "{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.InfoProviders.XinZhiWeatherInfoProvider", "SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj", "{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptHelper", "ScriptHelper\ScriptHelper.csproj", "{22E292E5-84A9-41B9-BE76-E192577A7B29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,22 @@ Global
 		{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}.Release|x64.Build.0 = Release|Any CPU
 		{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}.Release|x86.Build.0 = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|ARM.Build.0 = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|x64.Build.0 = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Debug|x86.Build.0 = Debug|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|ARM.ActiveCfg = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|ARM.Build.0 = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x64.ActiveCfg = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x64.Build.0 = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x86.ActiveCfg = Release|Any CPU
+		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

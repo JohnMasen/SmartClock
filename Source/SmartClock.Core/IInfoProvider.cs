@@ -22,5 +22,8 @@ namespace SmartClock.Core
     {
         InfoPack GetInfo(string arg);
         string Name { get; }
+        void Start();
+        void Stop();
+        ProviderStatusEnum Status { get; }
     }
 }

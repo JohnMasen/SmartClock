@@ -114,6 +114,7 @@
     <None Include="UWPTest_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Clocks\Test1\xinzhi.js" />
     <Content Include="key.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -167,8 +168,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="..\ScriptHelper\InfoManager.d.ts">
+      <Link>Clocks\Test1\InfoManager.d.ts</Link>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Clocks\Test1\app.ts" />
     <TypeScriptCompile Include="Clocks\Test1\boot.d.ts" />
+    <TypeScriptCompile Include="Clocks\Test1\xinzhi.ts" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

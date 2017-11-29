@@ -19,5 +19,6 @@ namespace SmartClock.Core
                 return provider.GetInfo(arg);
             }
         }
+
     }
 }

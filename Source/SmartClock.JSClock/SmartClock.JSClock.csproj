@@ -8,10 +8,30 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\ScriptHelper\InfoManager.js" Link="InfoManager.js" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="ChakraCore.NET" Version="1.0.4" />
-    <PackageReference Include="JSDraw.NET" Version="0.3.2-alpha" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="JSDraw.NET">
+      <HintPath>..\..\..\JSDraw.NET\src\JSDraw.NET\JSDraw.NET\bin\Release\netstandard1.4\JSDraw.NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

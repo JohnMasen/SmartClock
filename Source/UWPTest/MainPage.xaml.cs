@@ -35,12 +35,13 @@ namespace UWPTest
         {
             refreshPacks();
             this.imgResult.DataContext = render.Data;
-            manager.Providers.Add(new XinzhiWeatherForcast("gxs3ezcux67dzvqa","shanghai"));
+            var xinzhi = new XinzhiWeatherForcast("gxs3ezcux67dzvqa", "shanghai");//replace the key with your own, this is for my development only
+            xinzhi.Start();
+            manager.Providers.Add(xinzhi);
         }
 
         private void refreshPacks()
         {
-
             this.lstPacks.ItemsSource = System.IO.Directory.EnumerateDirectories("Clocks");
         }
 
