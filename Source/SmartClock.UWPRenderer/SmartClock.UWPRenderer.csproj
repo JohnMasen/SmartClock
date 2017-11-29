@@ -106,8 +106,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Eink32Device.cs" />
     <Compile Include="ImageSourceRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WaveShareEink32Renderer.cs" />
     <EmbeddedResource Include="Properties\SmartClock.UWPRenderer.rd.xml" />
   </ItemGroup>
   <ItemGroup>

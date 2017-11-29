@@ -24,6 +24,7 @@ namespace UWPTest
     {
         SmartClock.JSClock.JSClock clock;
         SmartClock.UWPRenderer.ImageSourceRenderer render = new SmartClock.UWPRenderer.ImageSourceRenderer();
+        SmartClock.UWPRenderer.WaveShareEink32Renderer einkRender = new SmartClock.UWPRenderer.WaveShareEink32Renderer();
         SmartClock.Core.InfoManager manager = new SmartClock.Core.InfoManager();
         public MainPage()
         {
@@ -51,7 +52,7 @@ namespace UWPTest
             if (lstPacks.SelectedItem!=null)
             {
                 string path = lstPacks.SelectedItem as string;
-                clock = new SmartClock.JSClock.JSClock(render, manager, path);
+                clock = new SmartClock.JSClock.JSClock(einkRender, manager, path,TimeSpan.FromMinutes(1));
                 clock.Init();
                 clock.Start();
                 //clock.Draw();

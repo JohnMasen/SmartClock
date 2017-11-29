@@ -18,9 +18,17 @@ namespace SmartClock.JSClock
         {
             engine.ClearObjectList();
             engine.Run(DrawFunctionName);
-            return engine.GetOutput().First().Item;
+            var result = engine.GetOutput().FirstOrDefault();
+            if (result==null)
+            {
+                return null;
+            }
+            else
+            {
+                return result.Item;
+            }
         }
-        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager)
+        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,TimeSpan refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
         {
             ScriptPath = scriptFolder;
             DrawFunctionName = drawFunction;

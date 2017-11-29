@@ -34,6 +34,10 @@ namespace SmartClock.UWPRenderer
             }
             internal async Task SetImageSourceAsync(Image<Rgba32> source)
             {
+                if (source==null)
+                {
+                    return;
+                }
                 var stream = new MemoryStream();
                 source.SaveAsBmp(stream);
                 stream.Position = 0;

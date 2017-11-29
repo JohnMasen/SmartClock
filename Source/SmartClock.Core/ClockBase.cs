@@ -17,9 +17,11 @@ namespace SmartClock.Core
         AutoResetEvent ase = new AutoResetEvent(false);
         IClockRenderer render;
         protected InfoManager info;
-        public ClockBase(IClockRenderer render,InfoManager infoManager)
+        TimeSpan interval;
+        public ClockBase(IClockRenderer render,InfoManager infoManager,TimeSpan refreshInterval)
         {
             this.render = render ?? throw new ArgumentNullException(nameof(render));
+            interval = refreshInterval;
             this.info = infoManager;
         }
         public void Start()
@@ -42,13 +44,13 @@ namespace SmartClock.Core
                       while (!token.IsCancellationRequested)
                       {
                           Draw();
-                          await Task.Delay(1000);
+                          await Task.Delay(interval,token);
                       }
                       System.Diagnostics.Debug.WriteLine("mainloop stopped");
                   }
                   catch (OperationCanceledException)
                   {
-                      System.Diagnostics.Debug.WriteLine("mainloop stopped at booting");
+                      System.Diagnostics.Debug.WriteLine("mainloop stopped");
                   }
                   catch (Exception e)
                   {
