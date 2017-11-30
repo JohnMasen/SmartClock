@@ -2,17 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SmartClock.Core
 {
-    public struct RenderInfo
+    public class RenderInfo
     {
-        public string Name;
-        public string Version;
+        public string Name { get; set; }
+        public string Version { get; set; }
     }
     public interface IClockRenderer
     {
-        void Render(Image<Rgba32> image);
+        Task RenderAsync(Image<Rgba32> image);
         RenderInfo Info { get; }
     }
 }

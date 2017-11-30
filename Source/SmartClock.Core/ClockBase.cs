@@ -38,13 +38,13 @@ namespace SmartClock.Core
                   {
                       token.ThrowIfCancellationRequested();
                        Init();
-                       Draw();
-                      int nextSecond = 1000 - DateTime.Now.Millisecond;
-                      await Task.Delay(nextSecond);
+                      await DrawAsync();
+                      //int nextSecond = 1000 - DateTime.Now.Millisecond;
+                      //await Task.Delay(nextSecond);
                       while (!token.IsCancellationRequested)
                       {
-                          Draw();
-                          await Task.Delay(interval,token);
+                          await Task.Delay(interval, token);
+                          await DrawAsync();
                       }
                       System.Diagnostics.Debug.WriteLine("mainloop stopped");
                   }
@@ -80,9 +80,9 @@ namespace SmartClock.Core
         protected abstract Image<Rgba32> drawClock();
         
 
-        public virtual void Draw()
+        public virtual async Task DrawAsync()
         {
-            render.Render(drawClock());
+            await render.RenderAsync(drawClock());
         }
         public virtual void Init()
         {

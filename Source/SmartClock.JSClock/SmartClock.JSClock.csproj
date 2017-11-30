@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="JSDraw.NET">
-      <HintPath>..\..\..\JSDraw.NET\src\JSDraw.NET\JSDraw.NET\bin\Release\netstandard1.4\JSDraw.NET.dll</HintPath>
+      <HintPath>..\..\..\JSDraw.NET\src\JSDraw.NET\JSDraw.NET\bin\Debug\netstandard1.4\JSDraw.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

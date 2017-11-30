@@ -18,7 +18,7 @@ namespace SmartClock.UWPRenderer
 
         public DataObject Data { get; private set; } = new DataObject();
         
-        public async void Render(Image<Rgba32> image)
+        public async Task RenderAsync(Image<Rgba32> image)
         {
             await Data.SetImageSourceAsync(image);
         }

@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SmartClock.Core;
+using SixLabors.ImageSharp.Processing;
 namespace SmartClock.UWPRenderer
 {
     public class WaveShareEink32Renderer : IClockRenderer
     {
+        public float DitherThreshold { get; set; } = 0.5f;
         public RenderInfo Info => new RenderInfo() { Name = "WaveShareEInk32", Version = "1.0.0" };
         Eink32Device device;
-        public void Render(Image<Rgba32> image)
+        public async Task RenderAsync(Image<Rgba32> image)
         {
             if (image==null)
             {
@@ -20,11 +22,15 @@ namespace SmartClock.UWPRenderer
             if (device == null)
             {
                 device = new Eink32Device();
-                device.InitAsync().Wait();
-                device.Reset().Wait();
+                await device.InitAsync();
+                await device.Reset();
             }
-            var buffer = createFromImage(image);
-            device.DisplayFrameAsync(buffer).Wait();
+            var c=image.Clone(ctx => ctx
+                .Grayscale(GrayscaleMode.Bt601)
+                .Dither(new SixLabors.ImageSharp.Dithering.FloydSteinbergDiffuser(), DitherThreshold)
+                );
+            var buffer = createFromImage(c);
+            await device.DisplayFrameAsync(buffer);
         }
         private byte[] createFromImage(Image<Rgba32> img)
         {

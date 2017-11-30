@@ -11,7 +11,7 @@
     <AssemblyName>UWPTest</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Clocks\Test1\xinzhi.js" />
-    <Content Include="key.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -140,7 +139,7 @@
       <Version>1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
+      <Version>6.0.2</Version>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp">
       <Version>1.0.0-beta0002</Version>
@@ -161,6 +160,10 @@
     <ProjectReference Include="..\SmartClock.JSClock\SmartClock.JSClock.csproj">
       <Project>{b50eaf38-238f-4715-89d1-59d21b4d4116}</Project>
       <Name>SmartClock.JSClock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartClock.NetcoreRenderer\SmartClock.NetcoreRenderer.csproj">
+      <Project>{f29647ab-eabe-4e01-89d8-d2c459493c99}</Project>
+      <Name>SmartClock.NetcoreRenderer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmartClock.UWPRenderer\SmartClock.UWPRenderer.csproj">
       <Project>{551d1e83-f8f1-4f0d-8b9d-1f2fe8e24fd6}</Project>

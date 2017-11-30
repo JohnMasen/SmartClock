@@ -43,6 +43,7 @@ function draw() {
     let img = JSImage.Create(400, 300);
     let bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
     let bBlack = JSBrush.createSolid(new JSColor("#000000"));
+    //bBlack.Thickness = 3;
     let controls: UIControl[] = new Array<UIControl>();
     
     let f = new JSFont("Open 24 Display St", 100);
@@ -102,6 +103,10 @@ function draw() {
     dayName.boarderBrush = bBlack;
     controls.push(dayName);
 
+    let imgRM = JSImage.Load("rickmorty.png");
+    img.DrawImage(imgRM, undefined, undefined, imgRM.size, { x: 0, y: 165 });
+
+
     for (var i = 0; i < controls.length; i++) {
         controls[i].Draw();
     }
@@ -112,7 +117,8 @@ function draw() {
 function formatDate(d: Date): string {
     let hh = d.getHours().toString();
     let mm = d.getMinutes().toString();
-    return addZero(hh) + ":" + addZero(mm);
+    let ss = d.getSeconds().toString();
+    return addZero(hh) + ":" + addZero(mm)+":"+addZero(ss);
 }
 
 function getDateName(d: Date): string {

@@ -52,6 +52,7 @@ function draw() {
     var img = JSImage.Create(400, 300);
     var bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
     var bBlack = JSBrush.createSolid(new JSColor("#000000"));
+    //bBlack.Thickness = 3;
     var controls = new Array();
     var f = new JSFont("Open 24 Display St", 100);
     var fh = new JSFont("simhei", 40);
@@ -102,6 +103,8 @@ function draw() {
     dayName.font = fDateNameFont;
     dayName.boarderBrush = bBlack;
     controls.push(dayName);
+    var imgRM = JSImage.Load("rickmorty.png");
+    img.DrawImage(imgRM, undefined, undefined, imgRM.size, { x: 0, y: 165 });
     for (var i = 0; i < controls.length; i++) {
         controls[i].Draw();
     }
@@ -110,7 +113,8 @@ function draw() {
 function formatDate(d) {
     var hh = d.getHours().toString();
     var mm = d.getMinutes().toString();
-    return addZero(hh) + ":" + addZero(mm);
+    var ss = d.getSeconds().toString();
+    return addZero(hh) + ":" + addZero(mm) + ":" + addZero(ss);
 }
 function getDateName(d) {
     return d.getFullYear().toString() + "年"

@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Blend for Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.Core", "SmartClock.Core\SmartClock.Core.csproj", "{F039DDD5-296E-4E3A-B0C4-C3BD10FAB382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.Core", "SmartClock.Core\SmartClock.Core.csproj", "{F039DDD5-296E-4E3A-B0C4-C3BD10FAB382}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.JSClock", "SmartClock.JSClock\SmartClock.JSClock.csproj", "{B50EAF38-238F-4715-89D1-59D21B4D4116}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.JSClock", "SmartClock.JSClock\SmartClock.JSClock.csproj", "{B50EAF38-238F-4715-89D1-59D21B4D4116}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.UWPRenderer", "SmartClock.UWPRenderer\SmartClock.UWPRenderer.csproj", "{551D1E83-F8F1-4F0D-8B9D-1F2FE8E24FD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPTest", "UWPTest\UWPTest.csproj", "{82290A8C-9E14-4B0F-8DD1-3FF634802086}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.InfoProviders.XinZhiWeatherInfoProvider", "SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj", "{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.InfoProviders.XinZhiWeatherInfoProvider", "SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj", "{E2712CB5-1C8B-4524-94D8-BC7AB3163D5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptHelper", "ScriptHelper\ScriptHelper.csproj", "{22E292E5-84A9-41B9-BE76-E192577A7B29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.NetcoreRenderer", "SmartClock.NetcoreRenderer\SmartClock.NetcoreRenderer.csproj", "{F29647AB-EABE-4E01-89D8-D2C459493C99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,22 @@ Global
 		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x64.Build.0 = Release|Any CPU
 		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x86.ActiveCfg = Release|Any CPU
 		{22E292E5-84A9-41B9-BE76-E192577A7B29}.Release|x86.Build.0 = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|x64.Build.0 = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Debug|x86.Build.0 = Debug|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|ARM.Build.0 = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|x64.ActiveCfg = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|x64.Build.0 = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|x86.ActiveCfg = Release|Any CPU
+		{F29647AB-EABE-4E01-89D8-D2C459493C99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
