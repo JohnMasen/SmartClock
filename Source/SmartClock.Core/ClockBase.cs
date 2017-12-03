@@ -78,6 +78,8 @@ namespace SmartClock.Core
                   finally
                   {
                       ase.Set();//release blocking
+                      cts = null;
+                      IsRunning = false;
                   }
               }, cts.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default
             );
@@ -91,8 +93,6 @@ namespace SmartClock.Core
             }
             cts.Cancel();
             ase.WaitOne();//wait until mail loop stop
-            cts = null;
-            IsRunning = false;
         }
 
         protected abstract Image<Rgba32> drawClock();
