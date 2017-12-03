@@ -12,6 +12,11 @@
                 <ToggleSwitch HorizontalAlignment="Stretch" VerticalAlignment="Center" IsOn="{Binding IsEnabled, Mode=TwoWay}" OffContent="{Binding Renderer.Info.Name, Mode=OneTime}" OnContent="{Binding Renderer.Info.Name, Mode=OneTime}"/>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="DataTemplate1">
+            <Grid d:DesignWidth="665" d:DesignHeight="101">
+                <TextBlock TextWrapping="Wrap" Text="{Binding Name}"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -28,7 +33,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="lstPacks" Grid.ColumnSpan="1"  Grid.RowSpan="1" VerticalAlignment="Stretch"/>
+            <ListView x:Name="lstPacks" Grid.ColumnSpan="1"  Grid.RowSpan="1" VerticalAlignment="Stretch" ItemTemplate="{StaticResource DataTemplate1}"/>
             <ListView ItemTemplate="{StaticResource RenderItemTemplate}" x:Name="lstRenders" Grid.Row="1" Grid.ColumnSpan="1"  Grid.RowSpan="1" VerticalAlignment="Stretch"/>
         </Grid>
 

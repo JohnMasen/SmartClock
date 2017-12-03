@@ -157,6 +157,10 @@
       <Project>{e2712cb5-1c8b-4524-94d8-bc7ab3163d5b}</Project>
       <Name>SmartClock.InfoProviders.XinZhiWeatherInfoProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SmartClock.JSClockManager\SmartClock.JSClockManager.csproj">
+      <Project>{1feff14f-dbc9-4052-a71f-38ca445ce027}</Project>
+      <Name>SmartClock.JSClockManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SmartClock.JSClock\SmartClock.JSClock.csproj">
       <Project>{b50eaf38-238f-4715-89d1-59d21b4d4116}</Project>
       <Name>SmartClock.JSClock</Name>

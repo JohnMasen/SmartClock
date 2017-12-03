@@ -10,5 +10,6 @@ namespace SmartClock.JSClockManager
         public string Author { get; set; }
         public string Version { get; set; }
         public string Comment { get; set; }
+        public string FolderName { get; set; }
     }
 }

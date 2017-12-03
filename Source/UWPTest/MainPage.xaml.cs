@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using SmartClock.InfoProviders.XinZhiWeatherInfoProvider;
 using SmartClock.UWPRenderer;
 using SmartClock.NetcoreRenderer;
+using SmartClock.JSClockManager;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace UWPTest
@@ -24,11 +25,11 @@ namespace UWPTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        SmartClock.JSClock.JSClock clock;
+        private const string CLOCK_NAME = "TestClock";
+        Manager manager = new Manager();
         //SmartClock.UWPRenderer.ImageSourceRenderer render = new SmartClock.UWPRenderer.ImageSourceRenderer();
         //SmartClock.UWPRenderer.WaveShareEink32Renderer einkRender = new SmartClock.UWPRenderer.WaveShareEink32Renderer();
-        SmartClock.NetcoreRenderer.CombinedRenderer render = new SmartClock.NetcoreRenderer.CombinedRenderer();
-        SmartClock.Core.InfoManager manager = new SmartClock.Core.InfoManager();
+        CombinedRenderer render = new CombinedRenderer();
         public MainPage()
         {
             this.InitializeComponent();
@@ -46,25 +47,21 @@ namespace UWPTest
             lstRenders.ItemsSource = render.Renderers;
             var xinzhi = new XinzhiWeatherForcast("gxs3ezcux67dzvqa", "shanghai");//replace the key with your own, this is for my development only
             xinzhi.Start();
-            manager.Providers.Add(xinzhi);
+            manager.InfoManager.Providers.Add(xinzhi);
+            manager.AddDefinition(CLOCK_NAME, render, SmartClock.Core.ClockRefreshIntervalEnumn.PerSecond);
         }
 
         private void refreshPacks()
         {
-            this.lstPacks.ItemsSource = System.IO.Directory.EnumerateDirectories("Clocks");
+            this.lstPacks.ItemsSource = manager.InstalledClockScripts;
         }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            clock?.Stop();
-            if (lstPacks.SelectedItem!=null)
+            ClockScriptInfo info = lstPacks.SelectedItem as ClockScriptInfo;
+            if (info != null)
             {
-                string path = lstPacks.SelectedItem as string;
-                clock = new SmartClock.JSClock.JSClock(render, manager, path,SmartClock.Core.ClockRefreshIntervalEnumn.PerSecond);
-                clock.Init();
-                clock.Start();
-                //clock.Draw();
-                //imgResult.Source = render.Data.Image;
+                manager.StartClock(CLOCK_NAME, info.FolderName);
             }
             
         }
