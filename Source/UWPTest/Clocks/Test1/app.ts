@@ -123,7 +123,7 @@ function formatDate(d: Date): string {
 
 function getDateName(d: Date): string {
     return d.getFullYear().toString() + "年"
-        + d.getMonth().toString() + "月"
+        + (d.getMonth()+1).toString() + "月"
         + d.getDate().toString() + "日";
 }
 function addZero(s: string) {

@@ -8,10 +8,10 @@ namespace SmartClock.JSClock
 {
     public class JSClock : ClockBase
     {
-        public string ScriptPath { get; private set; }
+        public string ScriptFolder { get; private set; }
         public string DrawFunctionName { get; private set; }
         public string SetupFunctionName { get; private set; }
-        private string appFile;
+        public string AppFile { get; private set; }
         JSDraw.NET.JSDraw engine;
         InfoManager manager;
         protected override Image<Rgba32> drawClock()
@@ -28,21 +28,21 @@ namespace SmartClock.JSClock
                 return result.Item;
             }
         }
-        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,TimeSpan refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
+        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,ClockRefreshIntervalEnumn refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
         {
-            ScriptPath = scriptFolder;
+            ScriptFolder = scriptFolder;
             DrawFunctionName = drawFunction;
             SetupFunctionName = setupFunction;
             manager = infoManager;
-            this.appFile = appFile;
+            this.AppFile = appFile;
         }
         public override void Init()
         {
             base.Init();
             engine = new JSDraw.NET.JSDraw();
-            string scriptPath = System.IO.Path.Combine(ScriptPath, appFile);
+            string scriptPath = System.IO.Path.Combine(ScriptFolder, AppFile);
             string script = System.IO.File.ReadAllText(scriptPath);
-            engine.WorkPath = ScriptPath;
+            engine.WorkPath = ScriptFolder;
             engine.Load(script);
             engine.Context.EnableInfoManager(manager);
             engine.Run(SetupFunctionName);

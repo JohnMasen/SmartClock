@@ -9,20 +9,27 @@ using SixLabors.ImageSharp;
 
 namespace SmartClock.Core
 {
+    public enum ClockRefreshIntervalEnumn : int
+    {
+        PerSecond = 0,
+        PerMinute = 1
+    }
+
     public abstract class ClockBase
     {
         object syncRoot = new object();
         CancellationTokenSource cts;
         Task mainLoop;
         AutoResetEvent ase = new AutoResetEvent(false);
-        IClockRenderer render;
+        public IClockRenderer Render{get;private set;}
         protected InfoManager info;
-        TimeSpan interval;
-        public ClockBase(IClockRenderer render,InfoManager infoManager,TimeSpan refreshInterval)
+        
+        public ClockRefreshIntervalEnumn RefreshInterval { get; private set; }
+        public ClockBase(IClockRenderer render,InfoManager infoManager,ClockRefreshIntervalEnumn refreshInterval=ClockRefreshIntervalEnumn.PerSecond)
         {
-            this.render = render ?? throw new ArgumentNullException(nameof(render));
-            interval = refreshInterval;
+            this.Render = render ?? throw new ArgumentNullException(nameof(render));
             this.info = infoManager;
+            RefreshInterval = refreshInterval;
         }
         public void Start()
         {
@@ -31,7 +38,6 @@ namespace SmartClock.Core
             IsRunning = true;
             mainLoop = Task.Factory.StartNew(async () =>
               {
-
                   System.Diagnostics.Debug.WriteLine("mainloop started");
                   CancellationToken token = cts.Token;
                   try
@@ -41,9 +47,21 @@ namespace SmartClock.Core
                       await DrawAsync();
                       //int nextSecond = 1000 - DateTime.Now.Millisecond;
                       //await Task.Delay(nextSecond);
+                      int nextRefresh;
+                      switch (RefreshInterval)
+                      {
+                          case ClockRefreshIntervalEnumn.PerSecond:
+                              nextRefresh = 1000 - DateTime.Now.Millisecond;
+                              break;
+                          case ClockRefreshIntervalEnumn.PerMinute:
+                              nextRefresh = (60- DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
+                              break;
+                          default:
+                              throw new InvalidOperationException("RefreshInterval is not in valid value");
+                      }
                       while (!token.IsCancellationRequested)
                       {
-                          await Task.Delay(interval, token);
+                          await Task.Delay(nextRefresh, token);
                           await DrawAsync();
                       }
                       System.Diagnostics.Debug.WriteLine("mainloop stopped");
@@ -82,7 +100,7 @@ namespace SmartClock.Core
 
         public virtual async Task DrawAsync()
         {
-            await render.RenderAsync(drawClock());
+            await Render.RenderAsync(drawClock());
         }
         public virtual void Init()
         {

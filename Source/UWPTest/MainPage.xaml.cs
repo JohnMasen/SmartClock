@@ -60,7 +60,7 @@ namespace UWPTest
             if (lstPacks.SelectedItem!=null)
             {
                 string path = lstPacks.SelectedItem as string;
-                clock = new SmartClock.JSClock.JSClock(render, manager, path,TimeSpan.FromMinutes(1));
+                clock = new SmartClock.JSClock.JSClock(render, manager, path,SmartClock.Core.ClockRefreshIntervalEnumn.PerSecond);
                 clock.Init();
                 clock.Start();
                 //clock.Draw();

@@ -118,7 +118,7 @@ function formatDate(d) {
 }
 function getDateName(d) {
     return d.getFullYear().toString() + "年"
-        + d.getMonth().toString() + "月"
+        + (d.getMonth() + 1).toString() + "月"
         + d.getDate().toString() + "日";
 }
 function addZero(s) {
