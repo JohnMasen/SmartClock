@@ -22,6 +22,13 @@ namespace WinIoTEInk32RenderServer
             return new ResponseData() { status = 0, message = message };
         }
     }
+
+    class Capability
+    {
+        public string Host = nameof(WinIoTEInk32RenderServer);
+        public int TransferBufferSize = 15000;
+    }
+
     [RestController(InstanceCreationType.Singleton)]
     class HostRouter
     {
@@ -76,6 +83,12 @@ namespace WinIoTEInk32RenderServer
         public IGetResponse Ping()
         {
             return new GetResponse(GetResponse.ResponseStatus.OK, ResponseData.SUCCESS);
+        }
+
+        [UriFormat("/Capability")]
+        public IGetResponse GetCapability()
+        {
+            return new GetResponse(GetResponse.ResponseStatus.OK, new Capability());
         }
     }
 }
