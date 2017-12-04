@@ -27,7 +27,7 @@ namespace SmartClock.UWPRenderer
             {
                 device = new Eink32Device();
                 await device.InitAsync();
-                await device.Reset();
+                await device.ResetAsync();
             }
             Image<Rgba32> tmp;
             if (IsPreProcessEnabled)

@@ -49,7 +49,7 @@ namespace UWPTest
             var xinzhi = new XinzhiWeatherForcast("gxs3ezcux67dzvqa", "shanghai");//replace the key with your own, this is for my development only
             xinzhi.Start();
             manager.InfoManager.Providers.Add(xinzhi);
-            manager.AddDefinition(CLOCK_NAME, render, SmartClock.Core.ClockRefreshIntervalEnumn.PerSecond);
+            manager.AddDefinition(CLOCK_NAME, render, SmartClock.Core.ClockRefreshIntervalEnum.PerSecond);
         }
 
         private void refreshPacks()

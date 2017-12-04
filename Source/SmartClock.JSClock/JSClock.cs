@@ -30,7 +30,7 @@ namespace SmartClock.JSClock
                 return result.Item;
             }
         }
-        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,ClockRefreshIntervalEnumn refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
+        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,ClockRefreshIntervalEnum refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
         {
             ScriptFolder = scriptFolder;
             DrawFunctionName = drawFunction;

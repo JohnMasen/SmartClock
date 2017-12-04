@@ -130,7 +130,7 @@ namespace SmartClock.UWPRenderer
             spi = spiController.GetDevice(spiSetting);
         }
 
-        public async Task Reset()
+        public async Task ResetAsync()
         {
             await reset();
             sendCommand(POWER_SETTING);

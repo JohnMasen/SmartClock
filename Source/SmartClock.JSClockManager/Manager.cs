@@ -84,7 +84,7 @@ namespace SmartClock.JSClockManager
             }
         }
 
-        public void AddDefinition(string name,IClockRenderer renderer,ClockRefreshIntervalEnumn refreshInterval)
+        public void AddDefinition(string name,IClockRenderer renderer,ClockRefreshIntervalEnum refreshInterval)
         {
             items.Add(name, new ClockInfo(renderer, refreshInterval));
         }

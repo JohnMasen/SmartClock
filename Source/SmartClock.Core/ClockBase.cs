@@ -9,7 +9,7 @@ using SixLabors.ImageSharp;
 
 namespace SmartClock.Core
 {
-    public enum ClockRefreshIntervalEnumn : int
+    public enum ClockRefreshIntervalEnum : int
     {
         PerSecond = 0,
         PerMinute = 1
@@ -24,8 +24,8 @@ namespace SmartClock.Core
         public IClockRenderer Render { get; private set; }
         protected InfoManager info;
 
-        public ClockRefreshIntervalEnumn RefreshInterval { get; private set; }
-        public ClockBase(IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnumn refreshInterval = ClockRefreshIntervalEnumn.PerSecond)
+        public ClockRefreshIntervalEnum RefreshInterval { get; private set; }
+        public ClockBase(IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnum refreshInterval = ClockRefreshIntervalEnum.PerSecond)
         {
             this.Render = render ?? throw new ArgumentNullException(nameof(render));
             this.info = infoManager;
@@ -50,10 +50,10 @@ namespace SmartClock.Core
                     int nextRefresh;
                     switch (RefreshInterval)
                     {
-                        case ClockRefreshIntervalEnumn.PerSecond:
+                        case ClockRefreshIntervalEnum.PerSecond:
                             nextRefresh = 1000 - DateTime.Now.Millisecond;
                             break;
-                        case ClockRefreshIntervalEnumn.PerMinute:
+                        case ClockRefreshIntervalEnum.PerMinute:
                             nextRefresh = (60 - DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
                             break;
                         default:

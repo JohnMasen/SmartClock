@@ -10,8 +10,8 @@ namespace SmartClock.JSClockManager
         public JSClock.JSClock Clock { get; set; }
         public IClockRenderer Renderer { get; private set; }
         public string ScriptFolder { get; set; }
-        public ClockRefreshIntervalEnumn RefreshInterval { get; private set; }
-        public ClockInfo(IClockRenderer renderer,ClockRefreshIntervalEnumn refreshInterval)
+        public ClockRefreshIntervalEnum RefreshInterval { get; private set; }
+        public ClockInfo(IClockRenderer renderer,ClockRefreshIntervalEnum refreshInterval)
         {
             Renderer = renderer;
             RefreshInterval = refreshInterval;
