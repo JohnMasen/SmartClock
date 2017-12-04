@@ -6,6 +6,7 @@ using System.Net.Http;
 using Windows.ApplicationModel.Background;
 using Restup.Webserver.Rest;
 using Restup.Webserver.Http;
+using Restup.Webserver.File;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
@@ -30,6 +31,7 @@ namespace WinIoTEInk32RenderServer
             var configuration = new HttpServerConfiguration()
               .ListenOnPort(8800)
               .RegisterRoute("api", restRouteHandler)
+              .RegisterRoute(new StaticFileRouteHandler("WebRoot"))
               .EnableCors();
 
             var httpServer = new HttpServer(configuration);

@@ -71,5 +71,11 @@ namespace WinIoTEInk32RenderServer
             
             
         }
+
+        [UriFormat("/Ping")]
+        public IGetResponse Ping()
+        {
+            return new GetResponse(GetResponse.ResponseStatus.OK, ResponseData.SUCCESS);
+        }
     }
 }
