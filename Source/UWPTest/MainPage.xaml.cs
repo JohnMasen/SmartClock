@@ -57,14 +57,11 @@ namespace UWPTest
             this.lstPacks.ItemsSource = manager.InstalledClockScripts;
         }
 
-        private async void btnLoad_Click(object sender, RoutedEventArgs e)
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             ClockScriptInfo info = lstPacks.SelectedItem as ClockScriptInfo;
             btnLoad.IsEnabled = false;
-            if (info != null)
-            {
-                await Task.Factory.StartNew(()=>manager.StartClock(CLOCK_NAME, info.FolderName));
-            }
+            manager.StartClock(CLOCK_NAME, info.FolderName);
             btnLoad.IsEnabled = true;
             
         }

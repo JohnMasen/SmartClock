@@ -3,6 +3,7 @@ using System;
 using SixLabors.ImageSharp;
 using JSDraw.NET;
 using System.Linq;
+using System.Threading;
 
 namespace SmartClock.JSClock
 {
@@ -14,8 +15,9 @@ namespace SmartClock.JSClock
         public string AppFile { get; private set; }
         JSDraw.NET.JSDraw engine;
         InfoManager manager;
-        protected override Image<Rgba32> drawClock()
+        protected override Image<Rgba32> drawClock(CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             engine.ClearObjectList();
             engine.Run(DrawFunctionName);
             var result = engine.GetOutput().FirstOrDefault();

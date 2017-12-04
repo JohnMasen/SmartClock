@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SmartClock.Core;
 using SixLabors.ImageSharp.Processing;
+using System.Threading;
+
 namespace SmartClock.UWPRenderer
 {
     public class WaveShareEink32Renderer : IClockRenderer
@@ -13,8 +15,10 @@ namespace SmartClock.UWPRenderer
         public float DitherThreshold { get; set; } = 0.5f;
         public RenderInfo Info => new RenderInfo() { Name = "WaveShareEInk32", Version = "1.0.0" };
         Eink32Device device;
-        public async Task RenderAsync(Image<Rgba32> image)
+        public bool IsPreProcessEnabled { get; set; } = true;
+        public async Task RenderAsync(Image<Rgba32> image, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             if (image==null)
             {
                 return;
@@ -25,11 +29,19 @@ namespace SmartClock.UWPRenderer
                 await device.InitAsync();
                 await device.Reset();
             }
-            var c=image.Clone(ctx => ctx
-                .Grayscale(GrayscaleMode.Bt601)
-                .Dither(new SixLabors.ImageSharp.Dithering.FloydSteinbergDiffuser(), DitherThreshold)
+            Image<Rgba32> tmp;
+            if (IsPreProcessEnabled)
+            {
+                tmp = image.Clone(ctx => ctx
+                  .Grayscale(GrayscaleMode.Bt601)
+                  .Dither(new SixLabors.ImageSharp.Dithering.FloydSteinbergDiffuser(), DitherThreshold)
                 );
-            var buffer = createFromImage(c);
+            }
+            else
+            {
+                tmp = image;
+            }
+            var buffer = createFromImage(tmp);
             await device.DisplayFrameAsync(buffer);
         }
         private byte[] createFromImage(Image<Rgba32> img)

@@ -44,7 +44,7 @@ namespace SmartClock.Core
                 {
                     token.ThrowIfCancellationRequested();
                     Init();
-                    await DrawAsync();
+                    await DrawAsync(token);
                     //int nextSecond = 1000 - DateTime.Now.Millisecond;
                     //await Task.Delay(nextSecond);
                     int nextRefresh;
@@ -62,7 +62,7 @@ namespace SmartClock.Core
                     while (!token.IsCancellationRequested)
                     {
                         await Task.Delay(nextRefresh, token);
-                        await DrawAsync();
+                        await DrawAsync(token);
                     }
                     System.Diagnostics.Debug.WriteLine("mainloop stopped");
                 }
@@ -95,12 +95,12 @@ namespace SmartClock.Core
             ase.WaitOne();//wait until mail loop stop
         }
 
-        protected abstract Image<Rgba32> drawClock();
+        protected abstract Image<Rgba32> drawClock(CancellationToken token);
 
 
-        public virtual async Task DrawAsync()
+        public virtual async Task DrawAsync(CancellationToken token)
         {
-            await Render.RenderAsync(drawClock());
+            await Render.RenderAsync(drawClock(token),token);
         }
         public virtual void Init()
         {

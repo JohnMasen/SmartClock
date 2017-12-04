@@ -3,6 +3,7 @@ using SixLabors.ImageSharp;
 using SmartClock.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SmartClock.NetcoreRenderer
 {
@@ -21,14 +22,14 @@ namespace SmartClock.NetcoreRenderer
         public List<CombinedRendererItem> Renderers { get; private set; } = new List<CombinedRendererItem>();
         public RenderInfo Info => new RenderInfo() { Name = "CombinedRenderer", Version = "1.0.0" };
 
-        public async Task RenderAsync(Image<Rgba32> image)
+        public async Task RenderAsync(Image<Rgba32> image, CancellationToken token)
         {
             
             foreach (var item in Renderers)
             {
                 if (item.IsEnabled)
                 {
-                    await item.Renderer.RenderAsync(image);
+                    await item.Renderer.RenderAsync(image,token);
                 }
             }
         }

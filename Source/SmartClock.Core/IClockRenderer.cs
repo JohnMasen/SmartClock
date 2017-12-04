@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartClock.Core
@@ -13,7 +14,7 @@ namespace SmartClock.Core
     }
     public interface IClockRenderer
     {
-        Task RenderAsync(Image<Rgba32> image);
+        Task RenderAsync(Image<Rgba32> image, CancellationToken token);
         RenderInfo Info { get; }
     }
 }

@@ -8,6 +8,7 @@ using SmartClock.Core;
 using System.ComponentModel;
 using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
+using System.Threading;
 
 namespace SmartClock.UWPRenderer
 {
@@ -18,9 +19,9 @@ namespace SmartClock.UWPRenderer
 
         public DataObject Data { get; private set; } = new DataObject();
         
-        public async Task RenderAsync(Image<Rgba32> image)
+        public async Task RenderAsync(Image<Rgba32> image, CancellationToken token)
         {
-            await Data.SetImageSourceAsync(image);
+            await Data.SetImageSourceAsync(image,token);
         }
 
         public class DataObject : INotifyPropertyChanged
@@ -32,8 +33,9 @@ namespace SmartClock.UWPRenderer
             {
                 uiSchduler = TaskScheduler.FromCurrentSynchronizationContext();
             }
-            internal async Task SetImageSourceAsync(Image<Rgba32> source)
+            internal async Task SetImageSourceAsync(Image<Rgba32> source, CancellationToken token)
             {
+                token.ThrowIfCancellationRequested();
                 if (source==null)
                 {
                     return;
@@ -41,6 +43,7 @@ namespace SmartClock.UWPRenderer
                 var stream = new MemoryStream();
                 source.SaveAsBmp(stream);
                 stream.Position = 0;
+                token.ThrowIfCancellationRequested();
                 await Task.Factory.StartNew(() =>
                 {
                     BitmapImage bitmap = new BitmapImage();
