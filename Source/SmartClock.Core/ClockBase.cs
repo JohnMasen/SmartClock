@@ -20,6 +20,7 @@ namespace SmartClock.Core
         object syncRoot = new object();
         CancellationTokenSource cts;
         Task mainLoop;
+        AutoResetEvent ase = new AutoResetEvent(false);
         public IClockRenderer Render { get; private set; }
         protected InfoManager info;
 
@@ -61,7 +62,6 @@ namespace SmartClock.Core
                     while (!token.IsCancellationRequested)
                     {
                         await Task.Delay(nextRefresh, token);
-                        token.ThrowIfCancellationRequested();
                         await DrawAsync();
                     }
                     System.Diagnostics.Debug.WriteLine("mainloop stopped");
@@ -75,6 +75,12 @@ namespace SmartClock.Core
                     System.Diagnostics.Debug.WriteLine($"clock failed, internal = {e.ToString()}");
                     throw new InvalidOperationException("clock failed,check inner exception for details", e);
                 }
+                finally
+                {
+                    ase.Set();//release blocking
+                    cts = null;
+                    IsRunning = false;
+                }
             }, cts.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default
             );
         }
@@ -86,8 +92,7 @@ namespace SmartClock.Core
                 return;
             }
             cts.Cancel();
-            cts = null;
-            IsRunning = false;
+            ase.WaitOne();//wait until mail loop stop
         }
 
         protected abstract Image<Rgba32> drawClock();

@@ -54,7 +54,7 @@ function draw() {
     var bBlack = JSBrush.createSolid(new JSColor("#000000"));
     //bBlack.Thickness = 3;
     var controls = new Array();
-    var f = new JSFont("Open 24 Display St", 100);
+    var f = new JSFont("Digital Dream", 60);
     var fh = new JSFont("simhei", 40);
     var fWeatherFont = new JSFont("simhei", 36);
     var fDateNameFont = new JSFont("simhei", 18);
@@ -114,7 +114,8 @@ function formatDate(d) {
     var hh = d.getHours().toString();
     var mm = d.getMinutes().toString();
     var ss = d.getSeconds().toString();
-    return addZero(hh) + ":" + addZero(mm) + ":" + addZero(ss);
+    return hh + ":" + addZero(mm);
+    //+ ":" + addZero(ss);
 }
 function getDateName(d) {
     return d.getFullYear().toString() + "年"
@@ -130,7 +131,7 @@ function addZero(s) {
     }
 }
 function setup() {
-    JSFont.Install("Open 24 Display St.ttf");
+    JSFont.Install("DigitalDream.ttf");
     JSFont.Install("simhei.ttf");
 }
 function getDayName(d) {

@@ -45,8 +45,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Margin="5,5,5,5" Click="btnLoad_Click"/>
-            <Button x:Name="btnRun" Content="Run" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Margin="5,5,5,5"/>
+            <Button x:Name="btnLoad" Grid.RowSpan="2" Content="Load" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Margin="5,5,5,5" Click="btnLoad_Click"/>
         </Grid>
 
 

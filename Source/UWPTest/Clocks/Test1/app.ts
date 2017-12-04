@@ -46,7 +46,7 @@ function draw() {
     //bBlack.Thickness = 3;
     let controls: UIControl[] = new Array<UIControl>();
     
-    let f = new JSFont("Open 24 Display St", 100);
+    let f = new JSFont("Digital Dream", 60);
     let fh = new JSFont("simhei", 40);
     let fWeatherFont = new JSFont("simhei", 36);
     let fDateNameFont = new JSFont("simhei", 18);
@@ -118,7 +118,8 @@ function formatDate(d: Date): string {
     let hh = d.getHours().toString();
     let mm = d.getMinutes().toString();
     let ss = d.getSeconds().toString();
-    return addZero(hh) + ":" + addZero(mm)+":"+addZero(ss);
+    return hh + ":" + addZero(mm);
+        //+ ":" + addZero(ss);
 }
 
 function getDateName(d: Date): string {
@@ -135,7 +136,7 @@ function addZero(s: string) {
     }
 }
 function setup() {
-    JSFont.Install("Open 24 Display St.ttf");
+    JSFont.Install("DigitalDream.ttf");
     JSFont.Install("simhei.ttf");
 }
 function getDayName(d: Date): string {

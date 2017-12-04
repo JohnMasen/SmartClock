@@ -111,6 +111,7 @@
     <Content Include="Clocks\Test1\DigitalDream.ttf" />
     <Content Include="Clocks\Test1\rickmorty.png" />
     <Content Include="Clocks\Test1\simhei.ttf" />
+    <Content Include="Clocks\Test1\Famirids.ttf" />
     <None Include="UWPTest_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
