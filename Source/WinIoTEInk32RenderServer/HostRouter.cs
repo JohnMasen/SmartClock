@@ -32,32 +32,32 @@ namespace WinIoTEInk32RenderServer
     [RestController(InstanceCreationType.Singleton)]
     class HostRouter
     {
-        private Eink32Device device;
+        private Eink32Device device = Eink32Device.Default;
         private byte[] buffer = new byte[15000];
-        public HostRouter()
-        {
-            device = new Eink32Device();
-        }
+        
 
-        public async Task InitAsync()
-        {
-            await device.InitAsync();
-            await device.ResetAsync();
-            
-        }
+        
         [UriFormat("/SetBuffer?pos={startPos}")]
-        public IPutResponse SetBuffer(int startPos,[FromContent] byte[] data)
+        public IPutResponse SetBuffer(int startPos,[FromContent] string data)
         {
             try
             {
-                data.CopyTo(buffer, startPos);
+                //using (System.IO.MemoryStream ms=new System.IO.MemoryStream(data))
+                //{
+                //    using (System.IO.StreamReader reader=new System.IO.StreamReader(ms))
+                //    {
+                //        string tmp = reader.ReadToEnd();
+                        var bytes=Convert.FromBase64String(data);
+                System.Diagnostics.Debug.WriteLine(bytes.Length);
+                        bytes.CopyTo(buffer, startPos);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
-
-                return new PutResponse(PutResponse.ResponseStatus.OK, ResponseData.CreateError(ex.ToString()));
+                return new PutResponse(PutResponse.ResponseStatus.OK,ResponseData.CreateError(ex.ToString()));
             }
-            
+
             return new PutResponse(PutResponse.ResponseStatus.OK,ResponseData.SUCCESS);
         }
         [UriFormat("/Refresh")]
@@ -65,10 +65,13 @@ namespace WinIoTEInk32RenderServer
         {
             try
             {
-                Task.Factory.StartNew(async () =>
+                lock (device)
                 {
-                    await device.DisplayFrameAsync(buffer);
-                }).Wait();
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await device.DisplayFrameAsync(buffer);
+                    }).Wait();
+                }
             }
             catch (Exception ex)
             {
