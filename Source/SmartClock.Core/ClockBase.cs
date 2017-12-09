@@ -12,7 +12,8 @@ namespace SmartClock.Core
     public enum ClockRefreshIntervalEnum : int
     {
         PerSecond = 0,
-        PerMinute = 1
+        PerMinute = 1,
+        OneTime = 99
     }
 
     public abstract class ClockBase
@@ -45,26 +46,28 @@ namespace SmartClock.Core
                     token.ThrowIfCancellationRequested();
                     Init();
                     await DrawAsync(token);
-                    //int nextSecond = 1000 - DateTime.Now.Millisecond;
-                    //await Task.Delay(nextSecond);
-                    int nextRefresh;
-                    switch (RefreshInterval)
+                    if (RefreshInterval!=ClockRefreshIntervalEnum.OneTime)
                     {
-                        case ClockRefreshIntervalEnum.PerSecond:
-                            nextRefresh = 1000 - DateTime.Now.Millisecond;
-                            break;
-                        case ClockRefreshIntervalEnum.PerMinute:
-                            nextRefresh = (60 - DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
-                            break;
-                        default:
-                            throw new InvalidOperationException("RefreshInterval is not in valid value");
+                        int nextRefresh;
+                        switch (RefreshInterval)
+                        {
+                            case ClockRefreshIntervalEnum.PerSecond:
+                                nextRefresh = 1000 - DateTime.Now.Millisecond;
+                                break;
+                            case ClockRefreshIntervalEnum.PerMinute:
+                                nextRefresh = (60 - DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
+                                break;
+                            default:
+                                throw new InvalidOperationException("RefreshInterval is not in valid value");
+                        }
+                        while (!token.IsCancellationRequested)
+                        {
+                            await Task.Delay(nextRefresh, token);
+                            await DrawAsync(token);
+                        }
+                        System.Diagnostics.Debug.WriteLine("mainloop stopped");
                     }
-                    while (!token.IsCancellationRequested)
-                    {
-                        await Task.Delay(nextRefresh, token);
-                        await DrawAsync(token);
-                    }
-                    System.Diagnostics.Debug.WriteLine("mainloop stopped");
+                    
                 }
                 catch (OperationCanceledException)
                 {
@@ -100,7 +103,7 @@ namespace SmartClock.Core
 
         public virtual async Task DrawAsync(CancellationToken token)
         {
-            await Render.RenderAsync(drawClock(token),token);
+            await Render.RenderAsync(drawClock(token), token);
         }
         public virtual void Init()
         {
