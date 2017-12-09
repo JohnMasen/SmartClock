@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.JSClockManager",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIoTEInk32RenderServer", "WinIoTEInk32RenderServer\WinIoTEInk32RenderServer.csproj", "{2F772D72-16B6-4713-850A-C762F085D5A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.Web", "SmartClock.Web\SmartClock.Web.csproj", "{C9656A45-F387-4F60-B6F6-1552436BD72C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,22 @@ Global
 		{2F772D72-16B6-4713-850A-C762F085D5A2}.Release|x86.ActiveCfg = Release|x86
 		{2F772D72-16B6-4713-850A-C762F085D5A2}.Release|x86.Build.0 = Release|x86
 		{2F772D72-16B6-4713-850A-C762F085D5A2}.Release|x86.Deploy.0 = Release|x86
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|ARM.Build.0 = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|x64.Build.0 = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9656A45-F387-4F60-B6F6-1552436BD72C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
