@@ -38,7 +38,6 @@ namespace SmartClock.Web
             }
 
             app.UseStaticFiles();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
