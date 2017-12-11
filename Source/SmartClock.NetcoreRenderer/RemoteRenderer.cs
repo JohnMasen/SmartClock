@@ -90,7 +90,7 @@ namespace SmartClock.NetcoreRenderer
                 sb.Append(Convert.ToBase64String(buffer, pos, sendBufferSize));
                 sb.Append("\"");
                 System.Diagnostics.Debug.WriteLine($"set buffer pos={pos} size= {sendBufferSize}");
-                ServerResponse response = await serverPut<ServerResponse>($"/SetBuffer?pos={{{pos}}}", sb.ToString());
+                ServerResponse response = await serverPut<ServerResponse>($"/SetBuffer?pos={pos}", sb.ToString());
                 if (response.status != 0)
                 {
                     throw new InvalidOperationException($"Send buffer to server failed,message={response.message}");

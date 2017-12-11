@@ -48,20 +48,21 @@ namespace SmartClock.Core
                     await DrawAsync(token);
                     if (RefreshInterval!=ClockRefreshIntervalEnum.OneTime)
                     {
-                        int nextRefresh;
-                        switch (RefreshInterval)
-                        {
-                            case ClockRefreshIntervalEnum.PerSecond:
-                                nextRefresh = 1000 - DateTime.Now.Millisecond;
-                                break;
-                            case ClockRefreshIntervalEnum.PerMinute:
-                                nextRefresh = (60 - DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
-                                break;
-                            default:
-                                throw new InvalidOperationException("RefreshInterval is not in valid value");
-                        }
+                        
                         while (!token.IsCancellationRequested)
                         {
+                            int nextRefresh;
+                            switch (RefreshInterval)
+                            {
+                                case ClockRefreshIntervalEnum.PerSecond:
+                                    nextRefresh = 1000 - DateTime.Now.Millisecond;
+                                    break;
+                                case ClockRefreshIntervalEnum.PerMinute:
+                                    nextRefresh = (60 - DateTime.Now.Second) * 1000 + (1000 - DateTime.Now.Millisecond);
+                                    break;
+                                default:
+                                    throw new InvalidOperationException("RefreshInterval is not in valid value");
+                            }
                             await Task.Delay(nextRefresh, token);
                             await DrawAsync(token);
                         }
