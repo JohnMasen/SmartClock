@@ -46,7 +46,6 @@ namespace UWPTest
             WaveShareEink32Renderer einkRenderer = new WaveShareEink32Renderer();
             render.Renderers.Add(new CombinedRendererItem(einkRenderer,false));
             RemoteRenderer remoteRenderer = new RemoteRenderer("192.168.0.220");
-            await remoteRenderer.Connect();
             render.Renderers.Add(new CombinedRendererItem(remoteRenderer,false));
             lstRenders.ItemsSource = render.Renderers;
             var xinzhi = new XinzhiWeatherForcast("gxs3ezcux67dzvqa", "shanghai");//replace the key with your own, this is for my development only

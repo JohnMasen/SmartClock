@@ -25,7 +25,6 @@ namespace SmartClock.Web.Controllers
             previewRenderer = new PNGStreamRenderer();
             manager.AddDefinition("preview", previewRenderer, Core.ClockRefreshIntervalEnum.OneTime);
             RemoteRenderer remote = new RemoteRenderer("192.168.0.220");
-            remote.Connect().Wait();
             manager.AddDefinition("PerMinute", remote, Core.ClockRefreshIntervalEnum.PerMinute);
         }
         public IActionResult Index()

@@ -30,14 +30,16 @@ namespace SmartClock.NetcoreRenderer
         public bool IsPreProcessEnabled { get; set; } = true;
         public float DitherThreshold { get; set; } = 0.5f;
         FloydSteinbergDiffuser dither = new FloydSteinbergDiffuser();
+        public bool ThrowExceptionWhenError { get; set; } = false;
         public RemoteRenderer(string serverName)
         {
             this.serverAddress = $"http://{serverName}:8800/api";
+            client = new System.Net.Http.HttpClient();
         }
 
-        public async Task Connect()
+        
+        private async Task LoadServerCapabilityAsync()
         {
-            client = new System.Net.Http.HttpClient();
             var result = await serverGet<Capability>("/Capability");
             ServerBufferSize = result.TransferBufferSize;
         }
@@ -65,6 +67,25 @@ namespace SmartClock.NetcoreRenderer
         }
         public async Task RenderAsync(Image<Rgba32> image, CancellationToken token)
         {
+            if (ServerBufferSize==0)
+            {
+                try
+                {
+                    await LoadServerCapabilityAsync();
+                }
+                catch (Exception)
+                {
+                    if (ThrowExceptionWhenError)
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    
+                }
+            }
             StringBuilder sb = new StringBuilder();
             int pos = 0;
             Image<Rgba32> target;
@@ -91,14 +112,14 @@ namespace SmartClock.NetcoreRenderer
                 sb.Append("\"");
                 System.Diagnostics.Debug.WriteLine($"set buffer pos={pos} size= {sendBufferSize}");
                 ServerResponse response = await serverPut<ServerResponse>($"/SetBuffer?pos={pos}", sb.ToString());
-                if (response.status != 0)
+                if (response.status != 0 && ThrowExceptionWhenError)
                 {
                     throw new InvalidOperationException($"Send buffer to server failed,message={response.message}");
                 }
                 pos += ServerBufferSize;
             }
             var result = await serverGet<ServerResponse>("/Refresh");
-            if (result.status != 0)
+            if (result.status != 0 && ThrowExceptionWhenError)
             {
                 throw new InvalidOperationException($"call server refresh failed with message {result.message}");
             }
