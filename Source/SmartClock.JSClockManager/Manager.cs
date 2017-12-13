@@ -43,7 +43,7 @@ namespace SmartClock.JSClockManager
 
             //check if the folder is used by running clock
             var runningClock = DefinedClocks.FirstOrDefault(x => x.Container.ScriptFolder == scriptFolder && x.Container.Clock?.IsRunning==true).ToTuple();
-            if (runningClock != null)
+            if (runningClock.Item1 != null)
             {
                 if (updateIfRunning)
                 {
@@ -67,7 +67,7 @@ namespace SmartClock.JSClockManager
             ZipFile.ExtractToDirectory(zipFileName, scriptFolder);
 
             //restart the clock which was using the script
-            if (runningClock!=null)
+            if (runningClock.Item1!=null)
             {
                 StartClock(runningClock.Item1, scriptFolder);
             }

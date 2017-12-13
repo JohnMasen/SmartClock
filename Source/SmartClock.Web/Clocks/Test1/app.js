@@ -55,9 +55,9 @@ function draw() {
     //bBlack.Thickness = 3;
     var controls = new Array();
     var f = new JSFont("Digital Dream", 60);
-    var fh = new JSFont("simhei", 40);
-    var fWeatherFont = new JSFont("simhei", 36);
-    var fDateNameFont = new JSFont("simhei", 18);
+    var fh = new JSFont("Digital Dream", 40);
+    var fWeatherFont = new JSFont("Digital Dream", 36);
+    var fDateNameFont = new JSFont("Digital Dream", 18);
     var d = new Date();
     var weather = xinzhiWeather.Get();
     img.Fill(bWhite); //draw background
@@ -69,25 +69,25 @@ function draw() {
     controls.push(LEDTime);
     //draw weather_day
     var weatherInfo = new CenteredLabel({ x: 250, y: 0 }, { width: 75, height: 100 }, img, bBlack);
-    weatherInfo.text = weather.results[0].daily[0].text_day;
+    weatherInfo.text = weather.results[0].daily[0].code_day;
     weatherInfo.font = fWeatherFont;
     weatherInfo.boarderBrush = bBlack;
     controls.push(weatherInfo);
     //draw weather_highTemp
     var weahterHigh = new CenteredLabel({ x: 325, y: 0 }, { width: 75, height: 100 }, img, bBlack);
-    weahterHigh.text = weather.results[0].daily[0].high + "℃";
+    weahterHigh.text = weather.results[0].daily[0].high + "C";
     weahterHigh.font = fWeatherFont;
     weahterHigh.boarderBrush = bBlack;
     controls.push(weahterHigh);
     //draw weather_lowTemp
     var weahterLow = new CenteredLabel({ x: 325, y: 100 }, { width: 75, height: 100 }, img, bBlack);
-    weahterLow.text = weather.results[0].daily[0].low + "℃";
+    weahterLow.text = weather.results[0].daily[0].low + "C";
     weahterLow.font = fWeatherFont;
     weahterLow.boarderBrush = bBlack;
     controls.push(weahterLow);
     //draw weather_night
     var weather_night = new CenteredLabel({ x: 250, y: 100 }, { width: 75, height: 100 }, img, bBlack);
-    weather_night.text = weather.results[0].daily[0].text_night;
+    weather_night.text = weather.results[0].daily[0].code_night;
     weather_night.font = fWeatherFont;
     weather_night.boarderBrush = bBlack;
     controls.push(weather_night);
@@ -118,9 +118,9 @@ function formatDate(d) {
     //+ ":" + addZero(ss);
 }
 function getDateName(d) {
-    return d.getFullYear().toString() + "年"
-        + (d.getMonth() + 1).toString() + "月"
-        + d.getDate().toString() + "日";
+    return d.getFullYear().toString() + "/"
+        + (d.getMonth() + 1).toString() + "/"
+        + d.getDate().toString() + "/";
 }
 function addZero(s) {
     if (s.length < 2) {
@@ -132,17 +132,17 @@ function addZero(s) {
 }
 function setup() {
     JSFont.Install("DigitalDream.ttf");
-    JSFont.Install("simhei.ttf");
+    //JSFont.Install("simhei.ttf");
 }
 function getDayName(d) {
     var weekday = new Array(7);
-    weekday[0] = "星期天";
-    weekday[1] = "星期一";
-    weekday[2] = "星期二";
-    weekday[3] = "星期三";
-    weekday[4] = "星期四";
-    weekday[5] = "星期五";
-    weekday[6] = "星期六";
+    weekday[0] = "Sun";
+    weekday[1] = "Mon";
+    weekday[2] = "Tue";
+    weekday[3] = "Wed";
+    weekday[4] = "Thu";
+    weekday[5] = "Fri";
+    weekday[6] = "Sat";
     return weekday[d.getDay()];
 }
 var xinzhiWeather = /** @class */ (function () {

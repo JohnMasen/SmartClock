@@ -14,6 +14,9 @@ namespace SmartClock.Web
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("initlizing ClockManager");
+            ClockManager.Init();
+            Console.WriteLine("ClockManager Ready");
             BuildWebHost(args).Run();
         }
 

@@ -47,9 +47,9 @@ function draw() {
     let controls: UIControl[] = new Array<UIControl>();
     
     let f = new JSFont("Digital Dream", 60);
-    let fh = new JSFont("simhei", 40);
-    let fWeatherFont = new JSFont("simhei", 36);
-    let fDateNameFont = new JSFont("simhei", 18);
+    let fh = new JSFont("Digital Dream", 40);
+    let fWeatherFont = new JSFont("Digital Dream", 36);
+    let fDateNameFont = new JSFont("Digital Dream", 18);
     let d = new Date();
     let weather = xinzhiWeather.Get();
 
@@ -63,28 +63,28 @@ function draw() {
 
     //draw weather_day
     let weatherInfo = new CenteredLabel({ x: 250, y: 0 }, { width: 75, height: 100 }, img, bBlack);
-    weatherInfo.text = weather.results[0].daily[0].text_day;
+    weatherInfo.text = weather.results[0].daily[0].code_day;
     weatherInfo.font = fWeatherFont;
     weatherInfo.boarderBrush = bBlack;
     controls.push(weatherInfo);
 
     //draw weather_highTemp
     let weahterHigh = new CenteredLabel({ x: 325, y: 0 }, { width: 75, height: 100 }, img, bBlack);
-    weahterHigh.text = weather.results[0].daily[0].high +"℃";
+    weahterHigh.text = weather.results[0].daily[0].high +"C";
     weahterHigh.font = fWeatherFont;
     weahterHigh.boarderBrush = bBlack;
     controls.push(weahterHigh);
 
     //draw weather_lowTemp
     let weahterLow = new CenteredLabel({ x: 325, y: 100 }, { width: 75, height: 100 }, img, bBlack);
-    weahterLow.text = weather.results[0].daily[0].low + "℃";
+    weahterLow.text = weather.results[0].daily[0].low + "C";
     weahterLow.font = fWeatherFont;
     weahterLow.boarderBrush = bBlack;
     controls.push(weahterLow);
 
     //draw weather_night
     let weather_night = new CenteredLabel({ x: 250, y: 100 }, { width: 75, height: 100 }, img, bBlack);
-    weather_night.text = weather.results[0].daily[0].text_night;
+    weather_night.text = weather.results[0].daily[0].code_night;
     weather_night.font = fWeatherFont;
     weather_night.boarderBrush = bBlack;
     controls.push(weather_night);
@@ -123,9 +123,9 @@ function formatDate(d: Date): string {
 }
 
 function getDateName(d: Date): string {
-    return d.getFullYear().toString() + "年"
-        + (d.getMonth()+1).toString() + "月"
-        + d.getDate().toString() + "日";
+    return d.getFullYear().toString() + "/"
+        + (d.getMonth()+1).toString() + "/"
+        + d.getDate().toString() + "/";
 }
 function addZero(s: string) {
     if (s.length < 2) {
@@ -137,17 +137,17 @@ function addZero(s: string) {
 }
 function setup() {
     JSFont.Install("DigitalDream.ttf");
-    JSFont.Install("simhei.ttf");
+    //JSFont.Install("simhei.ttf");
 }
 function getDayName(d: Date): string {
     let weekday = new Array<string>(7);
-    weekday[0] = "星期天";
-    weekday[1] = "星期一";
-    weekday[2] = "星期二";
-    weekday[3] = "星期三";
-    weekday[4] = "星期四";
-    weekday[5] = "星期五";
-    weekday[6] = "星期六";
+    weekday[0] = "Sun";
+    weekday[1] = "Mon";
+    weekday[2] = "Tue";
+    weekday[3] = "Wed";
+    weekday[4] = "Thu";
+    weekday[5] = "Fri";
+    weekday[6] = "Sat";
     return weekday[d.getDay()];
 }
 

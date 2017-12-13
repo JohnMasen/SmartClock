@@ -26,9 +26,6 @@
     <Content Include="Clocks\Test1\rickmorty.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Clocks\Test1\simhei.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Clocks\Test1\xinzhi.js" />
   </ItemGroup>
 

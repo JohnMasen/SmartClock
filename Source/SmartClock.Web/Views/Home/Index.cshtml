@@ -15,6 +15,15 @@
     
     
 </div>
+<form method="post" enctype="multipart/form-data"  asp-controller="Home" asp-action="UploadScript">
+    <div>
+        <p>Upload clock script:</p>
+        <input type="file" name="files" />
+    </div>
+    <div>
+        <input type="submit" value="Upload" />
+    </div>
+</form>
 <div class="row">
     <img id="preview" />
 </div>
