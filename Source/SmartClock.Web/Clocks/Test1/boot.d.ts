@@ -8,10 +8,6 @@ declare abstract class DrawWith extends idObject {
     protected _type: DrawWithType;
     constructor(id: number, thickness: number, type: DrawWithType);
 }
-declare abstract class BrushBase extends DrawWith {
-    Thickness: number;
-    constructor(id: number, thickness?: number);
-}
 declare enum DrawWithType {
     brush = 0,
     pen = 1,
@@ -53,14 +49,17 @@ interface Rectangle {
     width: number;
     height: number;
 }
+declare function setAA(isEnabled: boolean): void;
 declare class JSColor {
     readonly hexString: string;
     constructor(hex: string);
 }
-declare class JSBrush extends idObject {
+declare abstract class JSBrush extends DrawWith {
+    Thickness: number;
+    constructor(id: number, thickness?: number);
     static createSolid(color: JSColor): JSSolidBrush;
 }
-declare class JSSolidBrush extends BrushBase {
+declare class JSSolidBrush extends JSBrush {
     readonly color: JSColor;
     constructor(color: JSColor);
 }
@@ -87,10 +86,12 @@ declare class JSImage extends idObject {
     readonly matrix: JSMatrix;
     private constructor();
     DrawLines(drawWith: DrawWith, points: Point[]): void;
-    Fill(brush: BrushBase): void;
+    Fill(brush: JSBrush): void;
     SetOutput(name?: string): void;
     DrawImage(texture: JSImage, blend?: BlendMode, percent?: number, size?: Size, location?: Point): void;
     DrawText(text: string, font: JSFont, drawWith: DrawWith, location: Point): void;
     DrawEclipse(drawWith: DrawWith, location: Point, size: Size): void;
+    FillEclipse(brush: JSBrush, location: Point, size: Size): void;
     DrawPolygon(drawWith: DrawWith, points: Point[]): void;
+    FillPolygon(brush: JSBrush, points: Point[]): void;
 }
