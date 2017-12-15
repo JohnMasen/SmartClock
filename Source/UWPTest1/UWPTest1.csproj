@@ -4,20 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{82290A8C-9E14-4B0F-8DD1-3FF634802086}</ProjectGuid>
+    <ProjectGuid>{962B2835-F539-4767-B6BA-6D1BF7850FB1}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UWPTest</RootNamespace>
-    <AssemblyName>UWPTest</AssemblyName>
+    <RootNamespace>UWPTest1</RootNamespace>
+    <AssemblyName>UWPTest1</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>UWPTest_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>UWPTest1_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -104,17 +104,17 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Clocks\Test1\DigitalDream.ttf" />
+    <Content Include="Clocks\Test1\Famirids.ttf" />
+    <Content Include="Clocks\Test1\Open 24 Display St.ttf" />
+    <Content Include="Clocks\Test1\simhei.ttf" />
+    <None Include="UWPTest1_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Clocks\Test1\app.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Clocks\Test1\Open 24 Display St.ttf" />
-    <Content Include="Clocks\Test1\DigitalDream.ttf" />
     <Content Include="Clocks\Test1\rickmorty.png" />
-    <Content Include="Clocks\Test1\simhei.ttf" />
-    <Content Include="Clocks\Test1\Famirids.ttf" />
-    <None Include="UWPTest_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Clocks\Test1\xinzhi.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -142,17 +142,26 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>
-    <PackageReference Include="SixLabors.ImageSharp">
-      <Version>1.0.0-beta0002</Version>
-    </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp.Drawing">
       <Version>1.0.0-beta0002</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="..\scripthelper\InfoManager.d.ts">
+      <Link>Clocks\Test1\InfoManager.d.ts</Link>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Clocks\Test1\app.ts" />
+    <TypeScriptCompile Include="Clocks\Test1\boot.d.ts" />
+    <TypeScriptCompile Include="Clocks\Test1\xinzhi.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj">
       <Project>{f039ddd5-296e-4e3a-b0c4-c3bd10fab382}</Project>
       <Name>SmartClock.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartClock.Devices.WaveShareEInk42\SmartClock.Devices.WaveShareEInk42.csproj">
+      <Project>{dbce2363-6a92-40f6-9121-0f984154f7ec}</Project>
+      <Name>SmartClock.Devices.WaveShareEInk42</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmartClock.InfoProviders.XinZhiWeatherInfoProvider\SmartClock.InfoProviders.XinZhiWeatherInfoProvider.csproj">
       <Project>{e2712cb5-1c8b-4524-94d8-bc7ab3163d5b}</Project>
@@ -174,14 +183,6 @@
       <Project>{551d1e83-f8f1-4f0d-8b9d-1f2fe8e24fd6}</Project>
       <Name>SmartClock.UWPRenderer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="..\ScriptHelper\InfoManager.d.ts">
-      <Link>Clocks\Test1\InfoManager.d.ts</Link>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Clocks\Test1\app.ts" />
-    <TypeScriptCompile Include="Clocks\Test1\boot.d.ts" />
-    <TypeScriptCompile Include="Clocks\Test1\xinzhi.ts" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
