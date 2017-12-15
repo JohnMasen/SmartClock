@@ -140,7 +140,7 @@
       <Version>1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.2</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp">
       <Version>1.0.0-beta0002</Version>

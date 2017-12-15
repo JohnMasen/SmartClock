@@ -106,15 +106,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Eink32Device.cs" />
     <Compile Include="ImageSourceRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UWPEInk32IO.cs" />
     <Compile Include="WaveShareEink32Renderer.cs" />
     <EmbeddedResource Include="Properties\SmartClock.UWPRenderer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp">
       <Version>1.0.0-beta0002</Version>
@@ -128,6 +128,15 @@
       <Project>{f039ddd5-296e-4e3a-b0c4-c3bd10fab382}</Project>
       <Name>SmartClock.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SmartClock.Devices.WaveShareEInk42\SmartClock.Devices.WaveShareEInk42.csproj">
+      <Project>{dbce2363-6a92-40f6-9121-0f984154f7ec}</Project>
+      <Name>SmartClock.Devices.WaveShareEInk42</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsIoT, Version=10.0.16299.0">
+      <Name>Windows IoT Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

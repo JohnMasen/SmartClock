@@ -8,6 +8,7 @@ using SmartClock.Core;
 using SixLabors.ImageSharp.Processing;
 using System.Threading;
 using SmartClock.UWPRenderer;
+using SmartClock.Devices.WaveShareEInk42;
 
 namespace SmartClock.UWPRenderer
 {
@@ -26,7 +27,7 @@ namespace SmartClock.UWPRenderer
             }
             if (device == null)
             {
-                device = Eink32Device.Default;
+                device = new Eink32Device(new UWPEInk32IO());
                 await device.InitAsync();
                 await device.ResetAsync();
             }
@@ -43,8 +44,11 @@ namespace SmartClock.UWPRenderer
                 tmp = image;
             }
             var buffer = tmp.SavePixelData();
-            await device.DisplayARGB32ByteBufferAsync(buffer);
+            await device.RenderRGBAFrameAsync(buffer);
         }
-        
+        public Task RenderRawBuffer(byte[] buffer)
+        {
+            return device.DisplayFrameAsync(buffer);
+        }
     }
 }

@@ -43,7 +43,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -95,10 +95,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\SmartClock.UWPRenderer\Eink32Device.cs">
-      <Link>Eink32Device.cs</Link>
-    </Compile>
     <Compile Include="HostRouter.cs" />
+    <Compile Include="RendererHost.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -138,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.2</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Restup">
       <Version>1.0.0</Version>
@@ -154,6 +152,10 @@
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj">
       <Project>{f039ddd5-296e-4e3a-b0c4-c3bd10fab382}</Project>
       <Name>SmartClock.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartClock.UWPRenderer\SmartClock.UWPRenderer.csproj">
+      <Project>{551d1e83-f8f1-4f0d-8b9d-1f2fe8e24fd6}</Project>
+      <Name>SmartClock.UWPRenderer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">

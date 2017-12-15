@@ -14,7 +14,8 @@ using SixLabors.Fonts;
 using SixLabors.Primitives;
 using Windows.Networking.Connectivity;
 using Windows.Networking;
-
+using System.Threading.Tasks;
+using static WinIoTEInk32RenderServer.RendererHost;
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
 namespace WinIoTEInk32RenderServer
@@ -32,11 +33,8 @@ namespace WinIoTEInk32RenderServer
             // described in http://aka.ms/backgroundtaskdeferral
             //
             deferral = taskInstance.GetDeferral();
-            await Eink32Device.Default.InitAsync();
-            await Eink32Device.Default.ResetAsync();
             var restRouteHandler = new RestRouteHandler();
             restRouteHandler.RegisterController<HostRouter>();
-
             var configuration = new HttpServerConfiguration()
               .ListenOnPort(8800)
               .RegisterRoute("api", restRouteHandler)
@@ -44,12 +42,11 @@ namespace WinIoTEInk32RenderServer
               .EnableCors();
             var httpServer = new HttpServer(configuration);
             await httpServer.StartServerAsync();
-            drawWelcomeScreen();
+            await DrawWelcomeScreen();
         }
 
-        private void drawWelcomeScreen()
+        private async Task DrawWelcomeScreen()
         {
-            var device = Eink32Device.Default;
             Image<Rgba32> image = new Image<Rgba32>(400, 300);
             FontCollection fc = new FontCollection();
             fc.Install("DigitalDream.ttf");
@@ -58,72 +55,40 @@ namespace WinIoTEInk32RenderServer
             image.Mutate((ctx) =>
                 {
                     ctx.Fill(Rgba32.White);
-                    ctx.DrawText($"Server IP:{GetCurrentIpv4Address()}", f, Rgba32.Black, new PointF(0, 0),options);
+                    ctx.DrawText($"{GetCurrentIpv4Address()}:8800", f, Rgba32.Black, new PointF(0, 0),options);
                     ctx.DrawText($"{DateTime.Now.ToString()}", f, Rgba32.Black, new PointF(0, 100),options);
+                    ctx.Dither(new SixLabors.ImageSharp.Dithering.FloydSteinbergDiffuser(),0.5f);
                 });
-            var buffer=image.SavePixelData();
-            lock (device)
-            {
-                device.DisplayARGB32ByteBufferAsync(buffer).Wait();
-            }
+            await Renderer.RenderAsync(image,Task.Factory.CancellationToken);
         }
 
         private static string GetCurrentIpv4Address()
 
         {
-
             try
-
             {
-
                 var icp = NetworkInformation.GetInternetConnectionProfile();
-
                 if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
-
                 {
-
                     var name = icp.ProfileName;
-
-
-
                     var hostnames = NetworkInformation.GetHostNames();
-
-
-
                     foreach (var hn in hostnames)
-
                     {
-
                         if (hn.IPInformation != null &&
-
                             hn.IPInformation.NetworkAdapter != null &&
-
                             hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
-
                             hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-
                             hn.Type == HostNameType.Ipv4)
-
                         {
-
                             return hn.CanonicalName;
-
                         }
-
                     }
-
                 }
-
             }
-
             catch (Exception)
-
             {
-
                 // do nothing
-
                 // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
-
             }
             return "NoInternetConnection";
 

@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Devices.Gpio;
-using Windows.Devices.Spi;
 
-namespace SmartClock.UWPRenderer
+namespace SmartClock.Devices.WaveShareEInk42
 {
-    class Eink32Device
+    public class Eink32Device
     {
-        public static Eink32Device Default = new Eink32Device();
         public const int Width = 400;
         public const int Height = 300;
         private int frameBytes = Width * Height / 8;
+        private IEInk32DeviceIO deviceIO;
         #region DeviceCommands
         public const byte PANEL_SETTING = 0x00;
         public const byte POWER_SETTING = 0x01;
@@ -109,35 +104,18 @@ namespace SmartClock.UWPRenderer
             };
         #endregion
 
-        GpioPin rstPin;
-        GpioPin busyPin;
-        GpioPin dataPin;
-        SpiDevice spi;
-        private Eink32Device()
+        public Eink32Device(IEInk32DeviceIO eInk32DeviceIO)
         {
-
+            deviceIO = eInk32DeviceIO;
         }
         public async Task InitAsync()
         {
-            var gpioController = GpioController.GetDefault();
-            rstPin = gpioController.OpenPin(17);
-            rstPin.SetDriveMode(GpioPinDriveMode.Output);
-            busyPin = gpioController.OpenPin(24);
-            busyPin.SetDriveMode(GpioPinDriveMode.Input);
-            dataPin = gpioController.OpenPin(25);
-            dataPin.SetDriveMode(GpioPinDriveMode.Output);
-            //tstPin = gpioController.OpenPin(18);
-            var spiController = await SpiController.GetDefaultAsync();
-            var spiSetting = new SpiConnectionSettings(0);
-            spiSetting.ClockFrequency = 2000000;
-            spiSetting.Mode = SpiMode.Mode0;
-            //spiSetting.DataBitLength = 8;
-            spi = spiController.GetDevice(spiSetting);
+            await deviceIO.InitAsync();
         }
 
         public async Task ResetAsync()
         {
-            await reset();
+            await deviceIO.ResetAsync();
             sendCommand(POWER_SETTING);
             sendData(0x03);                  // VDS_EN, VDG_EN
             sendData(0x00);                  // VCOM_HV, VGHL_LV[1], VGHL_LV[0]
@@ -177,8 +155,8 @@ namespace SmartClock.UWPRenderer
             setLUT();
 
             sendCommand(DISPLAY_REFRESH);
-            await Task.Delay(100);
-            waitDevice();
+            //await Task.Delay(100);
+            waitDevice(5000);//device may take 4 seconds to refresh screen
         }
 
         private void setLUT()
@@ -195,17 +173,18 @@ namespace SmartClock.UWPRenderer
             sendData(lut_bb);
         }
 
-        public bool IsBusy => busyPin.Read() == GpioPinValue.Low;
 
         private void waitDevice(int millisecondsTimeout = 1000)
         {
-            while (IsBusy)
+            int waitTime = 0;
+            while (deviceIO.IsDeviceBusy)
             {
-                Task.Delay(100).Wait(millisecondsTimeout);
-            }
-            if (IsBusy)
-            {
-                throw new InvalidOperationException("Wait for device busy timed out");
+                if (waitTime>millisecondsTimeout)
+                {
+                    throw new InvalidOperationException("Wait for device busy timed out");
+                }
+                Task.Delay(100).Wait();
+                waitTime += 100;
             }
         }
 
@@ -226,24 +205,15 @@ namespace SmartClock.UWPRenderer
             }
         }
 
-        private async Task reset()
-        {
-            rstPin.Write(GpioPinValue.Low);
-            await Task.Delay(200);
-            rstPin.Write(GpioPinValue.High);
-            await Task.Delay(200);
-        }
 
         private void sendCommand(params byte[] cmd)
         {
-            dataPin.Write(GpioPinValue.Low);
-            spi.Write(cmd);
+            deviceIO.SendCommand(cmd);
         }
 
-        private void sendData(params byte[] cmd)
+        private void sendData(params byte[] data)
         {
-            dataPin.Write(GpioPinValue.High);
-            spi.Write(cmd);
+            deviceIO.SendData(data);
         }
 
         public async Task Sleep()
@@ -269,48 +239,5 @@ namespace SmartClock.UWPRenderer
             sendData(0xA5);
             System.Diagnostics.Debug.WriteLine("end sleep");
         }
-    }
-
-    static class EInk32DeviceHelper
-    {
-        internal static async Task DisplayARGB32ByteBufferAsync(this Eink32Device device, byte[] buffer)
-        {
-            if (buffer.Length % 32 !=0)
-            {
-                throw new ArgumentException("buffer length must be multiply of 32");
-            }
-            byte[] result = new byte[buffer.Length / 32];
-            int pos = 0;
-            byte tmp = 0;
-            byte[] masks =
-            {
-                0x80, //1000 0000
-                0x40, //0100 0000
-                0x20, //0010 0000
-                0x10, //0001 0000
-                0x08, //0000 1000
-                0x04, //0000 0100
-                0x02, //0000 0010
-                0x01, //0000 0001
-            };
-            for (int i = 0; i < result.Length; i++)
-            {
-                tmp = 0;
-                for (int j = 0; j < 8; j++)
-                {
-                    byte r = buffer[pos++];
-                    byte g = buffer[pos++];
-                    byte b = buffer[pos++];
-                    byte a = buffer[pos++];//not used
-                    if (!(r == 0 && b == 0 && g == 0))
-                    {
-                        tmp += masks[j];
-                    }
-                }
-                result[i] = tmp;
-            }
-            await device.DisplayFrameAsync(result);
-        }
-        
     }
 }

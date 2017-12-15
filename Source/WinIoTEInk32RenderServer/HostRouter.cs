@@ -9,7 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
-
+using static WinIoTEInk32RenderServer.RendererHost;
 namespace WinIoTEInk32RenderServer
 {
     class ResponseData
@@ -32,9 +32,8 @@ namespace WinIoTEInk32RenderServer
     [RestController(InstanceCreationType.Singleton)]
     class HostRouter
     {
-        private Eink32Device device = Eink32Device.Default;
         private byte[] buffer = new byte[15000];
-        
+        private object syncRoot = new object();
 
         
         [UriFormat("/SetBuffer?pos={startPos}")]
@@ -65,12 +64,9 @@ namespace WinIoTEInk32RenderServer
         {
             try
             {
-                lock (device)
+                lock (syncRoot)
                 {
-                    Task.Factory.StartNew(async () =>
-                    {
-                        await device.DisplayFrameAsync(buffer);
-                    }).Wait();
+                    Renderer.RenderRawBuffer(buffer).Wait();
                 }
             }
             catch (Exception ex)
