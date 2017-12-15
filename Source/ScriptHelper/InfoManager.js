@@ -4,9 +4,12 @@ var ProviderStatusEnum;
     ProviderStatusEnum[ProviderStatusEnum["Ready"] = 1] = "Ready";
     ProviderStatusEnum[ProviderStatusEnum["Idle"] = 2] = "Idle";
 })(ProviderStatusEnum || (ProviderStatusEnum = {}));
-class InfoManager {
-    static GetInfo(provider, arg = "") {
-        return _info.getInfo(provider, arg);
+var InfoManager = /** @class */ (function () {
+    function InfoManager() {
     }
-}
-//# sourceMappingURL=InfoManager.js.map
+    InfoManager.GetInfo = function (provider, arg) {
+        if (arg === void 0) { arg = ""; }
+        return _info.getInfo(provider, arg);
+    };
+    return InfoManager;
+}());
