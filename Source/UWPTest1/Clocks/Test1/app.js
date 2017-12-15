@@ -49,6 +49,7 @@ var CenteredLabel = /** @class */ (function (_super) {
     return CenteredLabel;
 }(UIControl));
 function draw() {
+    setAA(true);
     var img = JSImage.Create(400, 300);
     var bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
     var bBlack = JSBrush.createSolid(new JSColor("#000000"));

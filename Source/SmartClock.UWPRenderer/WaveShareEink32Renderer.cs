@@ -35,7 +35,7 @@ namespace SmartClock.UWPRenderer
             if (IsPreProcessEnabled)
             {
                 tmp = image.Clone(ctx => ctx
-                  .Grayscale(GrayscaleMode.Bt601)
+                  .BlackWhite()
                   .Dither(new SixLabors.ImageSharp.Dithering.FloydSteinbergDiffuser(), DitherThreshold)
                 );
             }

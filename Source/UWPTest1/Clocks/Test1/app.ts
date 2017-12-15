@@ -40,6 +40,7 @@ class CenteredLabel extends UIControl {
 }
 
 function draw() {
+    setAA(true);
     let img = JSImage.Create(400, 300);
     let bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
     let bBlack = JSBrush.createSolid(new JSColor("#000000"));

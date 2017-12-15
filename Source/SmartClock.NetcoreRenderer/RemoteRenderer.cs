@@ -93,7 +93,7 @@ namespace SmartClock.NetcoreRenderer
             {
                 target = image.Clone(ctx =>
                   {
-                      ctx.Grayscale(SixLabors.ImageSharp.Processing.GrayscaleMode.Bt601);
+                      ctx.BlackWhite();
                       ctx.Dither(dither, DitherThreshold);
                   });
             }
