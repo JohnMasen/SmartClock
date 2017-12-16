@@ -302,3 +302,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /Source/UWPTest/key.txt
+/Source/UWPTest1/Clocks/MyClock.zip
