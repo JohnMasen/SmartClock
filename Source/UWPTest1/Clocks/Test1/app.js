@@ -48,6 +48,21 @@ var CenteredLabel = /** @class */ (function (_super) {
     };
     return CenteredLabel;
 }(UIControl));
+var CenteredImage = /** @class */ (function (_super) {
+    __extends(CenteredImage, _super);
+    function CenteredImage() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.imagePath = "";
+        return _this;
+    }
+    CenteredImage.prototype.onDraw = function (image) {
+        if (this.imagePath != "") {
+            var texture = JSImage.Load(this.imagePath);
+            image.DrawImage(texture, BlendMode.Normal, 1, this.size);
+        }
+    };
+    return CenteredImage;
+}(UIControl));
 function draw() {
     setAA(true);
     var img = JSImage.Create(400, 300);
@@ -59,6 +74,7 @@ function draw() {
     var fh = new JSFont("simhei", 40);
     var fWeatherFont = new JSFont("simhei", 36);
     var fDateNameFont = new JSFont("simhei", 18);
+    var fWeatherText = new JSFont("simhei", 14);
     var d = new Date();
     var weather = xinzhiWeather.Get();
     img.Fill(bWhite); //draw background
@@ -69,11 +85,19 @@ function draw() {
     //LEDTime.boarderBrush = bBlack;
     controls.push(LEDTime);
     //draw weather_day
-    var weatherInfo = new CenteredLabel({ x: 250, y: 0 }, { width: 75, height: 100 }, img, bBlack);
-    weatherInfo.text = weather.results[0].daily[0].text_day;
-    weatherInfo.font = fWeatherFont;
+    //let weatherInfo = new CenteredLabel({ x: 250, y: 0 }, { width: 75, height: 100 }, img, bBlack);
+    //weatherInfo.text = weather.results[0].daily[0].text_day;
+    //weatherInfo.font = fWeatherFont;
+    //weatherInfo.boarderBrush = bBlack;
+    var weatherInfo = new CenteredImage({ x: 250, y: 0 }, { width: 75, height: 75 }, img, bBlack);
+    weatherInfo.imagePath = "WeatherIcons\\" + weather.results[0].daily[0].code_day + ".jpg";
     weatherInfo.boarderBrush = bBlack;
     controls.push(weatherInfo);
+    var weatherInfoText = new CenteredLabel({ x: 250, y: 75 }, { width: 75, height: 25 }, img, bBlack);
+    weatherInfoText.text = "白天:" + weather.results[0].daily[0].text_day;
+    weatherInfoText.boarderBrush = bBlack;
+    weatherInfoText.font = fWeatherText;
+    controls.push(weatherInfoText);
     //draw weather_highTemp
     var weahterHigh = new CenteredLabel({ x: 325, y: 0 }, { width: 75, height: 100 }, img, bBlack);
     weahterHigh.text = weather.results[0].daily[0].high + "℃";
@@ -87,11 +111,15 @@ function draw() {
     weahterLow.boarderBrush = bBlack;
     controls.push(weahterLow);
     //draw weather_night
-    var weather_night = new CenteredLabel({ x: 250, y: 100 }, { width: 75, height: 100 }, img, bBlack);
-    weather_night.text = weather.results[0].daily[0].text_night;
-    weather_night.font = fWeatherFont;
+    var weather_night = new CenteredImage({ x: 250, y: 100 }, { width: 75, height: 75 }, img, bBlack);
+    weather_night.imagePath = "WeatherIcons\\" + weather.results[0].daily[0].code_night + ".jpg";
     weather_night.boarderBrush = bBlack;
     controls.push(weather_night);
+    var weatherNightText = new CenteredLabel({ x: 250, y: 175 }, { width: 75, height: 25 }, img, bBlack);
+    weatherNightText.text = "晚间:" + weather.results[0].daily[0].text_night;
+    weatherNightText.boarderBrush = bBlack;
+    weatherNightText.font = fWeatherText;
+    controls.push(weatherNightText);
     //draw date name
     var dateName = new CenteredLabel({ x: 200, y: 200 }, { width: 200, height: 50 }, img, bBlack);
     dateName.text = getDateName(d);

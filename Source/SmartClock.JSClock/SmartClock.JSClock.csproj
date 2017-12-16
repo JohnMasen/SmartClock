@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ChakraCore.NET" Version="1.0.4" />
-    <PackageReference Include="JSDraw.NET" Version="0.3.4-alpha" />
+    <PackageReference Include="JSDraw.NET" Version="0.3.5-alpha" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj" />
