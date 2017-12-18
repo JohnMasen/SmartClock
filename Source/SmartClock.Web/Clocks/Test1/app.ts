@@ -49,7 +49,7 @@ function draw() {
     let f = new JSFont("Digital Dream", 60);
     let fh = new JSFont("Digital Dream", 40);
     let fWeatherFont = new JSFont("Digital Dream", 36);
-    let fDateNameFont = new JSFont("Digital Dream", 18);
+    let fDateNameFont = new JSFont("Digital Dream", 30);
     let d = new Date();
     let weather = xinzhiWeather.Get();
 

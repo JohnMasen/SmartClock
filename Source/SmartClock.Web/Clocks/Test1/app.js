@@ -57,7 +57,7 @@ function draw() {
     var f = new JSFont("Digital Dream", 60);
     var fh = new JSFont("Digital Dream", 40);
     var fWeatherFont = new JSFont("Digital Dream", 36);
-    var fDateNameFont = new JSFont("Digital Dream", 18);
+    var fDateNameFont = new JSFont("Digital Dream", 30);
     var d = new Date();
     var weather = xinzhiWeather.Get();
     img.Fill(bWhite); //draw background
