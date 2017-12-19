@@ -56,7 +56,13 @@ namespace UWPTest1
 
         private void refreshPacks()
         {
-            this.lstPacks.ItemsSource = manager.InstalledClockScripts;
+            var items= manager.InstalledClockScripts;
+            this.lstPacks.ItemsSource = items;
+            if (items.Count()>0)
+            {
+                lstPacks.SelectedIndex = 0;
+            }
+            
         }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)

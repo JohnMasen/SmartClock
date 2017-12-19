@@ -107,7 +107,7 @@
     <Content Include="Clocks\Test1\DigitalDream.ttf" />
     <Content Include="Clocks\Test1\Famirids.ttf" />
     <Content Include="Clocks\Test1\Open 24 Display St.ttf" />
-    <Content Include="Clocks\Test1\simhei.ttf" />
+    <Content Include="Clocks\Test1\FZHTK.TTF" />
     <None Include="UWPTest1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
