@@ -111,7 +111,7 @@ function draw() {
     controls.push(LEDTime);
 
     let weatherIcon = new CenteredImage({ x: 240, y: 100 }, { width: 160, height: 70 }, img, bBlack);
-    weatherIcon.imagePath = "WeatherIcons\\" + forecast.results[0].daily[0].code_day + ".jpg";
+    weatherIcon.imagePath = "WeatherIcons\\" + currentWeather.results[0].now.code + ".jpg";
     //weatherIcon.boarderBrush = bBlack;
     weatherIcon.imageSize = { width: 70, height: 70 };
     controls.push(weatherIcon);
