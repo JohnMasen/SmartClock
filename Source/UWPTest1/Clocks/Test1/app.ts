@@ -99,7 +99,8 @@ function draw() {
     let controls: UIControl[] = new Array<UIControl>();
     let f = new JSFont("Digital Dream", 60);
     let d = new Date();
-    let weather = xinzhiWeather.Get();
+    let forecast = xinzhiWeather.GetForcast();
+    let currentWeather = xinzhiWeather.GetCurrent();
 
     img.Fill(bWhite);//draw background
     //draw time
@@ -110,19 +111,19 @@ function draw() {
     controls.push(LEDTime);
 
     let weatherIcon = new CenteredImage({ x: 240, y: 100 }, { width: 160, height: 70 }, img, bBlack);
-    weatherIcon.imagePath = "WeatherIcons\\" + weather.results[0].daily[0].code_day + ".jpg";
+    weatherIcon.imagePath = "WeatherIcons\\" + forecast.results[0].daily[0].code_day + ".jpg";
     //weatherIcon.boarderBrush = bBlack;
     weatherIcon.imageSize = { width: 70, height: 70 };
     controls.push(weatherIcon);
 
     let weatherText = new CenteredLabel({ x: 240, y: 160 }, { width: 160, height: 30 }, img, bBlack);
-    weatherText.text = weather.results[0].daily[0].text_day;
+    weatherText.text = currentWeather.results[0].now.text +" "+ currentWeather.results[0].now.temperature + "℃";
     weatherText.font = new JSFont(DEFAULT_FONT_NAME, 24);
     //weatherText.boarderBrush = bBlack;
     controls.push(weatherText);
 
     let tempratureText = new CenteredLabel({ x: 240, y: 200 }, { width: 160, height: 100 }, img, bBlack);
-    tempratureText.text = weather.results[0].daily[0].high + "℃~" + weather.results[0].daily[0].low +"℃";
+    tempratureText.text = forecast.results[0].daily[0].high + "℃~" + forecast.results[0].daily[0].low +"℃";
     tempratureText.font = new JSFont(DEFAULT_FONT_NAME, 34);
     //tempratureText.boarderBrush = bBlack;
     controls.push(tempratureText);
@@ -142,7 +143,7 @@ function draw() {
     controls.push(dayName);
 
     for (var i = 0; i < 2; i++) {
-        let c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, weather.results[0].daily[i],i+1);
+        let c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, forecast.results[0].daily[i],i+1);
         c.boarderBrush = bBlack;
         controls.push(c);
     }
@@ -196,9 +197,15 @@ function getDayName(d: Date): string {
 }
 
 class xinzhiWeather {
-    static Get(): XinZhiWeatherInfo {
+    static GetCurrent(): CurrentWeather {
+        let weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast","now");
+        let weather = JSON.parse(weahterPack.value) as CurrentWeather;
+        return weather;
+    }
+
+    static GetForcast(): ForecastWeather {
         let weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast");
-        let weather = JSON.parse(weahterPack.value) as XinZhiWeatherInfo;
+        let weather = JSON.parse(weahterPack.value) as ForecastWeather;
         return weather;
     }
 }
@@ -226,14 +233,30 @@ interface Daily {
     wind_scale: string;
 }
 
-interface Result {
+interface ForecastResult {
     location: Location;
     daily: Daily[];
     last_update: Date;
 }
 
-interface XinZhiWeatherInfo {
-    results: Result[];
+interface ForecastWeather {
+    results: ForecastResult[];
+}
+
+interface Now {
+    text: string;
+    code: string;
+    temperature: string;
+}
+
+interface CurrentResult {
+    location: Location;
+    now: Now;
+    last_update: Date;
+}
+
+interface CurrentWeather {
+    results: CurrentResult[];
 }
 
 

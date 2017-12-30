@@ -8,6 +8,7 @@ namespace SmartClock.InfoProviders.XinZhiWeatherInfoProvider
     public class XinzhiWeatherForcast : Core.IInfoProvider
     {
         private string serviceAPI = "https://api.seniverse.com/v3/weather/daily.json?key={0}&location={1}&language=zh-Hans&unit=c&start=0&days=5";
+        private string serviceAPI_Current = "https://api.seniverse.com/v3/weather/now.json?key={0}&location={1}&language=zh-Hans&unit=c";
         public string Name => "XinzhiWeatherForcast";
         private DateTime lastrun = DateTime.MinValue;
         private string lastValue = string.Empty;
@@ -15,7 +16,8 @@ namespace SmartClock.InfoProviders.XinZhiWeatherInfoProvider
         private string key;
         private CancellationTokenSource cts;
         public ProviderStatusEnum Status { get; private set; }
-        InfoPack result = InfoPack.NA;
+        InfoPack forcast = InfoPack.NA;
+        InfoPack current = InfoPack.NA;
 
         public XinzhiWeatherForcast(string key, string defaultCity)
         {
@@ -26,7 +28,15 @@ namespace SmartClock.InfoProviders.XinZhiWeatherInfoProvider
         }
         public InfoPack GetInfo(string arg)
         {
-            return result;
+            if (arg=="now")
+            {
+                return current;
+            }
+            else
+            {
+                return forcast;
+            }
+            
         }
 
         public void Start()
@@ -48,18 +58,18 @@ namespace SmartClock.InfoProviders.XinZhiWeatherInfoProvider
                     {
                         token.ThrowIfCancellationRequested();
                         string url = string.Format(serviceAPI, key, city);
-                        HttpClient client = new HttpClient();
-
-                        string data = await client.GetStringAsync(url);
-                        InfoPack tmp = new InfoPack();
-                        tmp.LastUpdate = DateTime.Now;
-                        tmp.Status = ProviderStatusEnum.Ready;
-                        tmp.Value = data;
-                        result = tmp;
-#if DEBUG
-                        System.Diagnostics.Debug.WriteLine($"xinzhi weather ={data}");
-#endif
-
+                        var data=await loadData(url);//load forcast
+                        if (data.Status!=ProviderStatusEnum.NA)
+                        {
+                            forcast = data;
+                        }
+                        
+                        url= string.Format(serviceAPI_Current, key, city);
+                        data = await loadData(url);//load current weather
+                        if (data.Status!=ProviderStatusEnum.NA)
+                        {
+                            current = data;
+                        }
                         await Task.Delay(delay, token);
                     }
                 }
@@ -76,6 +86,31 @@ namespace SmartClock.InfoProviders.XinZhiWeatherInfoProvider
             );
             Status = ProviderStatusEnum.Ready;
 
+        }
+
+        private async Task<InfoPack> loadData(string url)
+        {
+            HttpClient client = new HttpClient();
+            try
+            {
+                string data = await client.GetStringAsync(url);
+                InfoPack tmp = new InfoPack();
+                tmp.LastUpdate = DateTime.Now;
+                tmp.Status = ProviderStatusEnum.Ready;
+                tmp.Value = data;
+                
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"xinzhi weather ={data}");
+#endif
+                return tmp;
+            }
+            catch (Exception ex)//in case read data failed, do nothing
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"xinzhi weather load error. message={ex.ToString()}");
+                return InfoPack.NA;
+#endif
+            }
         }
 
         public void Stop()

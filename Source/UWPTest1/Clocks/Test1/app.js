@@ -109,7 +109,8 @@ function draw() {
     var controls = new Array();
     var f = new JSFont("Digital Dream", 60);
     var d = new Date();
-    var weather = xinzhiWeather.Get();
+    var forecast = xinzhiWeather.GetForcast();
+    var currentWeather = xinzhiWeather.GetCurrent();
     img.Fill(bWhite); //draw background
     //draw time
     var LEDTime = new CenteredLabel({ x: 0, y: 0 }, { width: 240, height: 200 }, img, bBlack);
@@ -118,17 +119,17 @@ function draw() {
     //LEDTime.boarderBrush = bBlack;
     controls.push(LEDTime);
     var weatherIcon = new CenteredImage({ x: 240, y: 100 }, { width: 160, height: 70 }, img, bBlack);
-    weatherIcon.imagePath = "WeatherIcons\\" + weather.results[0].daily[0].code_day + ".jpg";
+    weatherIcon.imagePath = "WeatherIcons\\" + forecast.results[0].daily[0].code_day + ".jpg";
     //weatherIcon.boarderBrush = bBlack;
     weatherIcon.imageSize = { width: 70, height: 70 };
     controls.push(weatherIcon);
     var weatherText = new CenteredLabel({ x: 240, y: 160 }, { width: 160, height: 30 }, img, bBlack);
-    weatherText.text = weather.results[0].daily[0].text_day;
+    weatherText.text = currentWeather.results[0].now.text + " " + currentWeather.results[0].now.temperature + "℃";
     weatherText.font = new JSFont(DEFAULT_FONT_NAME, 24);
     //weatherText.boarderBrush = bBlack;
     controls.push(weatherText);
     var tempratureText = new CenteredLabel({ x: 240, y: 200 }, { width: 160, height: 100 }, img, bBlack);
-    tempratureText.text = weather.results[0].daily[0].high + "℃~" + weather.results[0].daily[0].low + "℃";
+    tempratureText.text = forecast.results[0].daily[0].high + "℃~" + forecast.results[0].daily[0].low + "℃";
     tempratureText.font = new JSFont(DEFAULT_FONT_NAME, 34);
     //tempratureText.boarderBrush = bBlack;
     controls.push(tempratureText);
@@ -145,7 +146,7 @@ function draw() {
     //dayName.boarderBrush = bBlack;
     controls.push(dayName);
     for (var i = 0; i < 2; i++) {
-        var c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, weather.results[0].daily[i], i + 1);
+        var c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, forecast.results[0].daily[i], i + 1);
         c.boarderBrush = bBlack;
         controls.push(c);
     }
@@ -195,7 +196,12 @@ function getDayName(d) {
 var xinzhiWeather = /** @class */ (function () {
     function xinzhiWeather() {
     }
-    xinzhiWeather.Get = function () {
+    xinzhiWeather.GetCurrent = function () {
+        var weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast", "now");
+        var weather = JSON.parse(weahterPack.value);
+        return weather;
+    };
+    xinzhiWeather.GetForcast = function () {
         var weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast");
         var weather = JSON.parse(weahterPack.value);
         return weather;

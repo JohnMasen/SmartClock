@@ -23,19 +23,38 @@
     wind_scale: string;
 }
 
- interface Result {
+ interface ForecastResult {
     location: Location;
     daily: Daily[];
     last_update: Date;
 }
 
- interface RootObject {
-    results: Result[];
+ interface Forecast {
+     results: ForecastResult[];
+}
+
+interface Now {
+    text: string;
+    code: string;
+    temperature: string;
+}
+
+interface CurrentResult {
+    location: Location;
+    now: Now;
+    last_update: Date;
+}
+
+interface Current {
+    results: CurrentResult[];
 }
 
 
+function ParseForcast(source: string): Forecast {
+    return JSON.parse(source) as Forecast;
+}
 
- function Parse(source: string): RootObject {
-    return JSON.parse(source) as RootObject;
+function ParseCurrent(source: string): Current {
+    return JSON.parse(source) as Current;
 }
 
