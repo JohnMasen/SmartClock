@@ -1,36 +1,42 @@
-﻿using SmartClock.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using ChakraCore.NET;
+using SmartClock.Core;
+
 namespace SmartClock.JSClock
 {
-    public static class ManagerInjector
+    class ClockPluginInstaller : ChakraCore.NET.Hosting.IPluginInstaller
     {
-        public static void EnableInfoManager (this ChakraCore.NET.ChakraContext  context,InfoManager manager,string jsValueName="_info")
+        public string Name => "JSClock";
+
+        public string GetSDK()
         {
-            var service=context.ServiceNode.GetService<ChakraCore.NET.IJSValueConverterService>();
+            return Properties.Resources.sdk;
+        }
+
+        public void Install(JSValue target)
+        {
+            var service = target.ServiceNode.GetService<IJSValueConverterService>();
             service.RegisterStructConverter<InfoPack>(
-                (jsvalue,value)=>
+                (jsvalue, value) =>
                 {
                     jsvalue.WriteProperty<string>("value", value.Value);
                     jsvalue.WriteProperty<string>("lastUpdate", value.LastUpdate.ToString());
                     jsvalue.WriteProperty<int>("status", (int)value.Status);
                 },
-                (jsvalue)=>
+                (jsvalue) =>
                 {
                     throw new NotSupportedException();
                 }
 
                 );
             service.RegisterProxyConverter<InfoManager>(
-                (jsvalue, obj, node) => 
+                (jsvalue, obj, node) =>
                 {
-                    jsvalue.SetFunction<string,string, InfoPack>("getInfo", obj.GetInfo);
+                    target.Binding.SetFunction<string, string, InfoPack>("getInfo", obj.GetInfo);
                 }
                 );
-            context.GlobalObject.WriteProperty<InfoManager>(jsValueName, manager);
-            context.RunScript(Properties.Resources.InfoManager);
         }
     }
 }

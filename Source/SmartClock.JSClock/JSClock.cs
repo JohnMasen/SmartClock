@@ -1,53 +1,55 @@
 ﻿using SmartClock.Core;
 using System;
 using SixLabors.ImageSharp;
-using JSDraw.NET;
 using System.Linq;
 using System.Threading;
+using ChakraCore.NET.Plugin.Drawing.ImageSharp;
+using ChakraCore.NET.Hosting;
 
 namespace SmartClock.JSClock
 {
     public class JSClock : ClockBase
     {
-        public string ScriptFolder { get; private set; }
-        public string DrawFunctionName { get; private set; }
-        public string SetupFunctionName { get; private set; }
-        public string AppFile { get; private set; }
-        JSDraw.NET.JSDraw engine;
+        public string[] ScriptFolders { get; private set; }
+        public string ResourceFolder { get; private set; }
         InfoManager manager;
+        ClockApp app;
+        ImageSharpDrawingInstaller engine;
         protected override Image<Rgba32> drawClock(CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            engine.ClearObjectList();
-            engine.Run(DrawFunctionName);
-            var result = engine.GetOutput().FirstOrDefault();
+            app.Draw();
+            var result = engine.LastDrawingSurface?.Image;
             if (result==null)
             {
                 return null;
             }
             else
             {
-                return result.Item;
+                return result;
             }
         }
-        public JSClock(IClockRenderer render,InfoManager infoManager,String scriptFolder,ClockRefreshIntervalEnum refreshInterval, string appFile="app.js",string drawFunction="draw",string setupFunction="setup"):base(render,infoManager, refreshInterval)
+        public JSClock(IClockRenderer render,InfoManager infoManager,ClockRefreshIntervalEnum refreshInterval,string resourceFolder, params string[] scriptFolders):base(render,infoManager, refreshInterval)
         {
-            ScriptFolder = scriptFolder;
-            DrawFunctionName = drawFunction;
-            SetupFunctionName = setupFunction;
             manager = infoManager;
-            this.AppFile = appFile;
+            ScriptFolders = scriptFolders;
+            ResourceFolder = resourceFolder;
         }
         public override void Init()
         {
             base.Init();
-            engine = new JSDraw.NET.JSDraw();
-            string scriptPath = System.IO.Path.Combine(ScriptFolder, AppFile);
-            string script = System.IO.File.ReadAllText(scriptPath);
-            engine.WorkPath = ScriptFolder;
-            engine.Load(script);
-            engine.Context.EnableInfoManager(manager);
-            engine.Run(SetupFunctionName);
+            engine = new ImageSharpDrawingInstaller();
+            JavaScriptHostingConfig config = new JavaScriptHostingConfig();
+            config.AddPlugin(engine);
+            foreach (var item in ScriptFolders)
+            {
+                config.AddModuleFolder(item);
+            }
+            engine.SetTextureRoot(ResourceFolder);
+            engine.SetFontRoot(ResourceFolder);
+            config.AddPlugin<ClockPluginInstaller>();
+            app=JavaScriptHosting.Default.GetModuleClass<ClockApp>("app", "App", config);
+            app.Init();
         }
     }
 }

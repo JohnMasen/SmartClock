@@ -62,22 +62,13 @@ namespace SmartClock.JSClock.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to var ProviderStatusEnum;
-        ///(function (ProviderStatusEnum) {
-        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;NA&quot;] = 0] = &quot;NA&quot;;
-        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;Ready&quot;] = 1] = &quot;Ready&quot;;
-        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;Idle&quot;] = 2] = &quot;Idle&quot;;
-        ///})(ProviderStatusEnum || (ProviderStatusEnum = {}));
-        ///class InfoManager {
-        ///    static GetInfo(provider, arg = &quot;&quot;) {
-        ///        return _info.getInfo(provider, arg);
-        ///    }
-        ///}
-        /////# sourceMappingURL=InfoManager.js.map.
+        ///   Looks up a localized string similar to &quot;use strict&quot;;
+        ///let a = 1;
+        ///.
         /// </summary>
-        internal static string InfoManager {
+        internal static string sdk {
             get {
-                return ResourceManager.GetString("InfoManager", resourceCulture);
+                return ResourceManager.GetString("sdk", resourceCulture);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using ChakraCore.NET.Hosting;
 namespace SmartClock.JSClockManager
 {
     public class Manager
@@ -94,11 +95,12 @@ namespace SmartClock.JSClockManager
             scriptFolder = Path.Combine(ClockScriptFolder, scriptFolder);
             var info = items[name];
             info.Clock?.Stop();
-            info.Clock = new JSClock.JSClock(info.Renderer, InfoManager, scriptFolder,info.RefreshInterval);
-            info.Clock.Init();
+            info.Clock = new JSClock.JSClock(info.Renderer, InfoManager, info.RefreshInterval, ClockScriptFolder,scriptFolder, ClockScriptFolder);
             info.Clock.Start();
             info.ScriptFolder = scriptFolder;
         }
+
+        
 
         public void StopClock(string name)
         {

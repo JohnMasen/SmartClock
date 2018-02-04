@@ -1,22 +1,7 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var DEFAULT_FONT_NAME = "FZHei-B01";
-var UIControl = /** @class */ (function () {
-    function UIControl(pos, size, img, drawWith) {
-        this.position = pos;
-        this.size = size;
-        this.image = img;
-        this.drawWith = drawWith;
-    }
-    UIControl.prototype.Draw = function () {
+"use strict";
+const DEFAULT_FONT_NAME = "FZHei-B01";
+class UIControl {
+    Draw() {
         this.image.matrix.push();
         this.image.matrix.translate(this.position);
         if (this.boarderBrush) {
@@ -29,67 +14,59 @@ var UIControl = /** @class */ (function () {
         }
         this.onDraw(this.image);
         this.image.matrix.pop();
-    };
-    return UIControl;
-}());
-var CenteredLabel = /** @class */ (function (_super) {
-    __extends(CenteredLabel, _super);
-    function CenteredLabel() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.text = "";
-        return _this;
     }
-    CenteredLabel.prototype.onDraw = function (image) {
-        var textSize = this.font.MeasureText(this.text);
-        var pos = {
+    constructor(pos, size, img, drawWith) {
+        this.position = pos;
+        this.size = size;
+        this.image = img;
+        this.drawWith = drawWith;
+    }
+}
+class CenteredLabel extends UIControl {
+    constructor() {
+        super(...arguments);
+        this.text = "";
+    }
+    onDraw(image) {
+        let textSize = this.font.MeasureText(this.text);
+        let pos = {
             x: (this.size.width - textSize.width) / 2,
             y: (this.size.height - textSize.height) / 2
         };
         image.DrawText(this.text, this.font, this.drawWith, pos);
-    };
-    return CenteredLabel;
-}(UIControl));
-var CenteredImage = /** @class */ (function (_super) {
-    __extends(CenteredImage, _super);
-    function CenteredImage() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.imagePath = "";
-        return _this;
     }
-    CenteredImage.prototype.onDraw = function (image) {
+}
+class CenteredImage extends UIControl {
+    constructor() {
+        super(...arguments);
+        this.imagePath = "";
+    }
+    onDraw(image) {
         if (this.imagePath != "") {
-            var texture = JSImage.Load(this.imagePath);
-            var s = (this.imageSize) ? this.imageSize : texture.size;
-            var pos = {
+            let texture = JSImage.Load(this.imagePath);
+            let s = (this.imageSize) ? this.imageSize : texture.size;
+            let pos = {
                 x: (this.size.width - s.width) / 2,
                 y: (this.size.height - s.height) / 2
             };
             image.DrawImage(texture, BlendMode.Normal, 1, s, pos);
         }
-    };
-    return CenteredImage;
-}(UIControl));
-var WeatherInfoControl = /** @class */ (function (_super) {
-    __extends(WeatherInfoControl, _super);
-    function WeatherInfoControl(pos, img, drawWith, dailyWeather, dayAdd) {
-        var _this = _super.call(this, pos, { width: 120, height: 100 }, img, drawWith) || this;
-        _this.info = dailyWeather;
-        _this.dayText = getDayName(addDays(new Date(), dayAdd)).substr(2, 1);
-        return _this;
     }
-    WeatherInfoControl.prototype.onDraw = function (image) {
-        var controls = new Array();
-        var weatherIcon = new CenteredImage({ x: 30, y: 0 }, { width: 90, height: 60 }, image, this.drawWith);
+}
+class WeatherInfoControl extends UIControl {
+    onDraw(image) {
+        let controls = new Array();
+        let weatherIcon = new CenteredImage({ x: 30, y: 0 }, { width: 90, height: 60 }, image, this.drawWith);
         //weatherIcon.boarderBrush = this.drawWith;
         weatherIcon.imagePath = "WeatherIcons\\" + this.info.code_day + ".jpg";
         weatherIcon.imageSize = { width: 45, height: 45 };
         controls.push(weatherIcon);
-        var weatherText = new CenteredLabel({ x: 0, y: 50 }, { width: 120, height: 50 }, image, this.drawWith);
+        let weatherText = new CenteredLabel({ x: 0, y: 50 }, { width: 120, height: 50 }, image, this.drawWith);
         //weatherText.boarderBrush = this.drawWith;
         weatherText.text = this.info.high + "℃~" + this.info.low + "℃";
         weatherText.font = new JSFont(DEFAULT_FONT_NAME, 26);
         controls.push(weatherText);
-        var dayName = new CenteredLabel({ x: 0, y: 0 }, { width: 30, height: 60 }, image, this.drawWith);
+        let dayName = new CenteredLabel({ x: 0, y: 0 }, { width: 30, height: 60 }, image, this.drawWith);
         //dayName.boarderBrush = this.drawWith;
         dayName.text = this.dayText;
         dayName.font = new JSFont(DEFAULT_FONT_NAME, 30);
@@ -97,56 +74,60 @@ var WeatherInfoControl = /** @class */ (function (_super) {
         for (var i = 0; i < controls.length; i++) {
             controls[i].Draw();
         }
-    };
-    return WeatherInfoControl;
-}(UIControl));
+    }
+    constructor(pos, img, drawWith, dailyWeather, dayAdd) {
+        super(pos, { width: 120, height: 100 }, img, drawWith);
+        this.info = dailyWeather;
+        this.dayText = getDayName(addDays(new Date(), dayAdd)).substr(2, 1);
+    }
+}
 function draw() {
     setAA(true);
-    var img = JSImage.Create(400, 300);
-    var bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
-    var bBlack = JSBrush.createSolid(new JSColor("#000000"));
+    let img = JSImage.Create(400, 300);
+    let bWhite = JSBrush.createSolid(new JSColor("#ffffff"));
+    let bBlack = JSBrush.createSolid(new JSColor("#000000"));
     //bBlack.Thickness = 3;
-    var controls = new Array();
-    var f = new JSFont("Digital Dream", 60);
-    var d = new Date();
-    var forecast = xinzhiWeather.GetForcast();
-    var currentWeather = xinzhiWeather.GetCurrent();
+    let controls = new Array();
+    let f = new JSFont("Digital Dream", 60);
+    let d = new Date();
+    let forecast = xinzhiWeather.GetForcast();
+    let currentWeather = xinzhiWeather.GetCurrent();
     img.Fill(bWhite); //draw background
     //draw time
-    var LEDTime = new CenteredLabel({ x: 0, y: 0 }, { width: 240, height: 200 }, img, bBlack);
+    let LEDTime = new CenteredLabel({ x: 0, y: 0 }, { width: 240, height: 200 }, img, bBlack);
     LEDTime.text = formatDate(d);
     LEDTime.font = f;
     //LEDTime.boarderBrush = bBlack;
     controls.push(LEDTime);
-    var weatherIcon = new CenteredImage({ x: 240, y: 100 }, { width: 160, height: 70 }, img, bBlack);
+    let weatherIcon = new CenteredImage({ x: 240, y: 100 }, { width: 160, height: 70 }, img, bBlack);
     weatherIcon.imagePath = "WeatherIcons\\" + currentWeather.results[0].now.code + ".jpg";
     //weatherIcon.boarderBrush = bBlack;
     weatherIcon.imageSize = { width: 70, height: 70 };
     controls.push(weatherIcon);
-    var weatherText = new CenteredLabel({ x: 240, y: 160 }, { width: 160, height: 30 }, img, bBlack);
+    let weatherText = new CenteredLabel({ x: 240, y: 160 }, { width: 160, height: 30 }, img, bBlack);
     weatherText.text = currentWeather.results[0].now.text + " " + currentWeather.results[0].now.temperature + "℃";
     weatherText.font = new JSFont(DEFAULT_FONT_NAME, 24);
     //weatherText.boarderBrush = bBlack;
     controls.push(weatherText);
-    var tempratureText = new CenteredLabel({ x: 240, y: 200 }, { width: 160, height: 100 }, img, bBlack);
+    let tempratureText = new CenteredLabel({ x: 240, y: 200 }, { width: 160, height: 100 }, img, bBlack);
     tempratureText.text = forecast.results[0].daily[0].high + "℃~" + forecast.results[0].daily[0].low + "℃";
     tempratureText.font = new JSFont(DEFAULT_FONT_NAME, 34);
     //tempratureText.boarderBrush = bBlack;
     controls.push(tempratureText);
     //draw date name
-    var dateName = new CenteredLabel({ x: 240, y: 50 }, { width: 160, height: 50 }, img, bBlack);
+    let dateName = new CenteredLabel({ x: 240, y: 50 }, { width: 160, height: 50 }, img, bBlack);
     dateName.text = getDateName(d);
     dateName.font = new JSFont(DEFAULT_FONT_NAME, 32);
     //dateName.boarderBrush = bBlack;
     controls.push(dateName);
     //draw day name
-    var dayName = new CenteredLabel({ x: 240, y: 0 }, { width: 160, height: 50 }, img, bBlack);
+    let dayName = new CenteredLabel({ x: 240, y: 0 }, { width: 160, height: 50 }, img, bBlack);
     dayName.text = getDayName(d);
     dayName.font = new JSFont(DEFAULT_FONT_NAME, 30);
     //dayName.boarderBrush = bBlack;
     controls.push(dayName);
     for (var i = 0; i < 2; i++) {
-        var c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, forecast.results[0].daily[i], i + 1);
+        let c = new WeatherInfoControl({ x: i * 120, y: 200 }, img, bBlack, forecast.results[0].daily[i], i + 1);
         c.boarderBrush = bBlack;
         controls.push(c);
     }
@@ -156,14 +137,14 @@ function draw() {
     img.SetOutput();
 }
 function formatDate(d) {
-    var hh = d.getHours().toString();
-    var mm = d.getMinutes().toString();
-    var ss = d.getSeconds().toString();
+    let hh = d.getHours().toString();
+    let mm = d.getMinutes().toString();
+    let ss = d.getSeconds().toString();
     return hh + ":" + addZero(mm);
     //+ ":" + addZero(ss);
 }
 function addDays(date, days) {
-    var result = new Date(date.getTime() + 86400000 * days);
+    let result = new Date(date.getTime() + 86400000 * days);
     return result;
 }
 function getDateName(d) {
@@ -183,7 +164,7 @@ function setup() {
     JSFont.Install("FZHTK.TTF");
 }
 function getDayName(d) {
-    var weekday = new Array(7);
+    let weekday = new Array(7);
     weekday[0] = "星期日";
     weekday[1] = "星期一";
     weekday[2] = "星期二";
@@ -193,19 +174,15 @@ function getDayName(d) {
     weekday[6] = "星期六";
     return weekday[d.getDay()];
 }
-var xinzhiWeather = /** @class */ (function () {
-    function xinzhiWeather() {
+class xinzhiWeather {
+    static GetCurrent() {
+        let weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast", "now");
+        let weather = JSON.parse(weahterPack.value);
+        return weather;
     }
-    xinzhiWeather.GetCurrent = function () {
-        var weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast", "now");
-        var weather = JSON.parse(weahterPack.value);
+    static GetForcast() {
+        let weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast");
+        let weather = JSON.parse(weahterPack.value);
         return weather;
-    };
-    xinzhiWeather.GetForcast = function () {
-        var weahterPack = InfoManager.GetInfo("XinzhiWeatherForcast");
-        var weather = JSON.parse(weahterPack.value);
-        return weather;
-    };
-    return xinzhiWeather;
-}());
-//# sourceMappingURL=app.js.map
+    }
+}
