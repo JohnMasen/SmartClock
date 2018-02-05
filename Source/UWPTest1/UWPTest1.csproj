@@ -105,60 +105,55 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Clocks\SpritBatchHelper.js" />
-    <Content Include="Clocks\Test1\DigitalDream.ttf" />
-    <Content Include="Clocks\Test1\Famirids.ttf" />
-    <Content Include="Clocks\Test1\Open 24 Display St.ttf" />
-    <Content Include="Clocks\Test1\FZHTK.TTF" />
-    <Content Include="Clocks\Test2\simhei.ttf" />
+    <Content Include="Clocks\Test2\rickmorty.png" />
+    <Content Include="Clocks\Test2\FZHTK.TTF" />
+    <Content Include="Clocks\Test2\DigitalDream.ttf" />
     <None Include="Clocks\tsconfig.json" />
     <None Include="UWPTest1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Clocks\Test1\app.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Clocks\Test1\rickmorty.png" />
-    <Content Include="Clocks\Test1\WeatherIcons\0.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\1.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\10.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\11.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\12.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\13.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\14.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\15.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\16.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\17.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\18.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\19.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\2.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\20.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\21.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\22.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\23.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\24.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\25.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\26.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\27.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\28.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\29.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\3.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\30.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\31.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\32.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\33.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\34.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\35.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\36.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\37.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\38.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\4.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\5.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\6.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\7.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\8.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\9.jpg" />
-    <Content Include="Clocks\Test1\WeatherIcons\99.jpg" />
     <Content Include="Clocks\Test2\app.js" />
+    <Content Include="Clocks\Test2\WeatherIcons\0.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\1.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\10.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\11.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\12.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\13.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\14.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\15.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\16.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\17.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\18.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\19.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\2.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\20.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\21.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\22.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\23.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\24.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\25.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\26.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\27.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\28.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\29.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\3.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\30.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\31.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\32.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\33.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\34.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\35.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\36.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\37.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\38.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\4.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\5.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\6.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\7.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\8.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\9.jpg" />
+    <Content Include="Clocks\Test2\WeatherIcons\99.jpg" />
     <Content Include="Clocks\xinzhi.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -187,7 +182,7 @@
       <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="ChakraCore.NET.Plugin.Drawing.ImageSharp">
-      <Version>0.1.0</Version>
+      <Version>0.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
@@ -199,7 +194,6 @@
   <ItemGroup>
     <None Include="Clocks\sdk%40JSClock.d.ts" />
     <TypeScriptCompile Include="Clocks\sdk%40Plugin.Drawing.d.ts" />
-    <None Include="Clocks\Test1\app.ts" />
     <None Include="Clocks\Test2\app.ts" />
     <None Include="Clocks\xinzhi.ts" />
     <None Include="Clocks\SpritBatchHelper.ts" />

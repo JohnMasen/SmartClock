@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="ChakraCore.NET" Version="1.2.8" />
     <PackageReference Include="ChakraCore.NET.Hosting" Version="1.0.1" />
-    <PackageReference Include="ChakraCore.NET.Plugin.Drawing.ImageSharp" Version="0.1.0" />
+    <PackageReference Include="ChakraCore.NET.Plugin.Drawing.ImageSharp" Version="0.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj" />
