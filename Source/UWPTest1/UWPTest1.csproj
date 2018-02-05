@@ -104,10 +104,12 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Clocks\SpritBatchHelper.js" />
     <Content Include="Clocks\Test1\DigitalDream.ttf" />
     <Content Include="Clocks\Test1\Famirids.ttf" />
     <Content Include="Clocks\Test1\Open 24 Display St.ttf" />
     <Content Include="Clocks\Test1\FZHTK.TTF" />
+    <Content Include="Clocks\Test2\simhei.ttf" />
     <None Include="Clocks\tsconfig.json" />
     <None Include="UWPTest1_TemporaryKey.pfx" />
   </ItemGroup>
@@ -157,6 +159,7 @@
     <Content Include="Clocks\Test1\WeatherIcons\9.jpg" />
     <Content Include="Clocks\Test1\WeatherIcons\99.jpg" />
     <Content Include="Clocks\Test2\app.js" />
+    <Content Include="Clocks\xinzhi.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -198,7 +201,8 @@
     <TypeScriptCompile Include="Clocks\sdk%40Plugin.Drawing.d.ts" />
     <None Include="Clocks\Test1\app.ts" />
     <None Include="Clocks\Test2\app.ts" />
-    <TypeScriptCompile Include="Clocks\xinzhi.ts" />
+    <None Include="Clocks\xinzhi.ts" />
+    <None Include="Clocks\SpritBatchHelper.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj">

@@ -8,3 +8,6 @@ let native = RequireNative("JSClock");
 export function GetInfo(providerName, arg) {
     return native.getInfo(providerName, arg);
 }
+export function Echo(text) {
+    native.Echo(text);
+}

@@ -17,3 +17,6 @@ let native = RequireNative("JSClock");
 export function GetInfo(providerName: string, arg: string): InfoPack {
     return native.getInfo(providerName, arg) as InfoPack;
 }
+export function Echo(text: string):void {
+     native.Echo(text);
+}

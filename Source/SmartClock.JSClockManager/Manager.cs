@@ -95,7 +95,7 @@ namespace SmartClock.JSClockManager
             scriptFolder = Path.Combine(ClockScriptFolder, scriptFolder);
             var info = items[name];
             info.Clock?.Stop();
-            info.Clock = new JSClock.JSClock(info.Renderer, InfoManager, info.RefreshInterval, ClockScriptFolder,scriptFolder, ClockScriptFolder);
+            info.Clock = new JSClock.JSClock(info.Renderer, InfoManager, info.RefreshInterval, scriptFolder, scriptFolder, ClockScriptFolder);
             info.Clock.Start();
             info.ScriptFolder = scriptFolder;
         }

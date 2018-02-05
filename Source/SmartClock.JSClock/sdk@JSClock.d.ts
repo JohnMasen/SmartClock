@@ -13,3 +13,4 @@ export interface InfoPack {
     status: ProviderStatusEnum;
 }
 export declare function GetInfo(providerName: string, arg: string): InfoPack;
+export declare function Echo(text: string): void;

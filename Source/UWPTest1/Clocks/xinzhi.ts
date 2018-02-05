@@ -1,5 +1,7 @@
-﻿
- interface Location {
+﻿import { GetInfo } from "sdk@JSClock";
+
+
+ export interface Location {
     id: string;
     name: string;
     country: string;
@@ -8,7 +10,7 @@
     timezone_offset: string;
 }
 
- interface Daily {
+export interface Daily {
     date: string;
     text_day: string;
     code_day: string;
@@ -23,29 +25,29 @@
     wind_scale: string;
 }
 
- interface ForecastResult {
+export interface ForecastResult {
     location: Location;
     daily: Daily[];
     last_update: Date;
 }
 
- interface Forecast {
+export interface Forecast {
      results: ForecastResult[];
 }
 
-interface Now {
+export interface Now {
     text: string;
     code: string;
     temperature: string;
 }
 
-interface CurrentResult {
+export interface CurrentResult {
     location: Location;
     now: Now;
     last_update: Date;
 }
 
-interface Current {
+export interface Current {
     results: CurrentResult[];
 }
 
@@ -57,4 +59,10 @@ function ParseForcast(source: string): Forecast {
 function ParseCurrent(source: string): Current {
     return JSON.parse(source) as Current;
 }
+export function GetCurrent():Current{
+    return ParseCurrent(GetInfo("XinzhiWeatherForcast","now").value);
+}
 
+export function GetForecast():Forecast{
+    return ParseForcast(GetInfo("XinzhiWeatherForcast","").value);
+}

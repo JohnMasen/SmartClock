@@ -47,7 +47,7 @@ namespace SmartClock.JSClock
             }
             engine.SetTextureRoot(ResourceFolder);
             engine.SetFontRoot(ResourceFolder);
-            config.AddPlugin<ClockPluginInstaller>();
+            config.AddPlugin(new ClockPluginInstaller(manager));
             app=JavaScriptHosting.Default.GetModuleClass<ClockApp>("app", "App", config);
             app.Init();
         }

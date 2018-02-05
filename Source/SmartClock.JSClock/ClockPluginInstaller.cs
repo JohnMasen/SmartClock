@@ -8,6 +8,11 @@ namespace SmartClock.JSClock
 {
     class ClockPluginInstaller : ChakraCore.NET.Hosting.IPluginInstaller
     {
+        private InfoManager manager;
+        public ClockPluginInstaller(InfoManager manager)
+        {
+            this.manager = manager;
+        }
         public string Name => "JSClock";
 
         public string GetSDK()
@@ -31,12 +36,8 @@ namespace SmartClock.JSClock
                 }
 
                 );
-            service.RegisterProxyConverter<InfoManager>(
-                (jsvalue, obj, node) =>
-                {
-                    target.Binding.SetFunction<string, string, InfoPack>("getInfo", obj.GetInfo);
-                }
-                );
+                target.Binding.SetFunction<string, string, InfoPack>("getInfo", manager.GetInfo);
+            target.Binding.SetMethod<string>("Echo", (s)=>System.Diagnostics.Debug.WriteLine(s));
         }
     }
 }

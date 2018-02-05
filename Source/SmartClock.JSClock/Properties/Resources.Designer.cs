@@ -62,8 +62,16 @@ namespace SmartClock.JSClock.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;use strict&quot;;
-        ///let a = 1;
+        ///   Looks up a localized string similar to export var ProviderStatusEnum;
+        ///(function (ProviderStatusEnum) {
+        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;NA&quot;] = 0] = &quot;NA&quot;;
+        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;Ready&quot;] = 1] = &quot;Ready&quot;;
+        ///    ProviderStatusEnum[ProviderStatusEnum[&quot;Idle&quot;] = 2] = &quot;Idle&quot;;
+        ///})(ProviderStatusEnum || (ProviderStatusEnum = {}));
+        ///let native = RequireNative(&quot;JSClock&quot;);
+        ///export function GetInfo(providerName, arg) {
+        ///    return native.getInfo(providerName, arg);
+        ///}
         ///.
         /// </summary>
         internal static string sdk {
