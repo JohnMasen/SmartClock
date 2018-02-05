@@ -1,4 +1,3 @@
-import { Echo } from "sdk@JSClock";
 import { GetDrawingSurface, BlendModeEnum, Color, LoadFont, LoadTexture } from "sdk@Plugin.Drawing";
 import { GetCurrent, GetForecast } from "xinzhi";
 import { UIControl, CenteredText, Page, CenteredImage } from "SpritBatchHelper";
@@ -49,7 +48,6 @@ export class App {
         let surface = GetDrawingSurface(this.drawRegion, "0.1");
         this.sb = surface.CreateSpritBatch();
         this.fontFTK = LoadFont("FZHTK.ttf");
-        Echo("fontloaded=" + JSON.stringify(this.fontFTK));
         this.rick = LoadTexture("rickmorty.png");
         this.fontLED = LoadFont("DigitalDream.ttf");
     }
@@ -66,7 +64,6 @@ class WeatherInfoControl extends UIControl {
         let weatherIcon = new CenteredImage({ X: 30, Y: 0, Width: 90, Height: 60 }, weatherIconTexture);
         this.Children.push(weatherIcon);
         let f1 = getfont(26);
-        Echo("f=" + JSON.stringify(f1));
         let weatherText = new CenteredText({ X: 0, Y: 50, Width: 120, Height: 50 }, info.low + "℃~" + info.high + "℃", f1, color);
         this.Children.push(weatherText);
         let f2 = getfont(30);
