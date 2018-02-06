@@ -11,22 +11,13 @@
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Clocks\Test1\app.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Clocks\Test1\DigitalDream.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Clocks\Test1\Famirids.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Clocks\Test1\Open 24 Display St.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Clocks\Test1\rickmorty.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Clocks\Test1\xinzhi.js" />
+    <None Remove="Clocks\SpritBatchHelper.js" />
+    <None Remove="Clocks\Test2.zip" />
+    <None Remove="Clocks\xinzhi.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Clocks\SpritBatchHelper.js" />
+    <Content Include="Clocks\xinzhi.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,15 +43,6 @@
     <Reference Include="JSDraw.NET">
       <HintPath>..\..\..\JSDraw.NET\src\JSDraw.NET\JSDraw.NET\bin\Debug\netstandard1.4\JSDraw.NET.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="..\ScriptHelper\InfoManager.d.ts">
-      <Link>Clocks\Test1\InfoManager.d.ts</Link>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Clocks\Test1\app.ts" />
-    <TypeScriptCompile Include="Clocks\Test1\boot.d.ts" />
-    <TypeScriptCompile Include="Clocks\Test1\xinzhi.ts" />
   </ItemGroup>
 
 </Project>

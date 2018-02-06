@@ -105,7 +105,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Clocks\SpritBatchHelper.js" />
-    <Content Include="Clocks\Test2\rickmorty.png" />
     <Content Include="Clocks\Test2\FZHTK.TTF" />
     <Content Include="Clocks\Test2\DigitalDream.ttf" />
     <None Include="Clocks\tsconfig.json" />

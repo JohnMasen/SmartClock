@@ -9,7 +9,6 @@ export class App implements ClockApp
     fontLED:Font;
     sb:SpritBatch;
     drawRegion:Rectangle={X:0,Y:0,Width:400,Height:300};
-    rick:ITexture;
     Draw(): void {
         let sb=this.sb;
         let white=new Color("#ffffff");
@@ -74,7 +73,6 @@ export class App implements ClockApp
         let surface=GetDrawingSurface(this.drawRegion,"0.1");
         this.sb=surface.CreateSpritBatch();
         this.fontFTK=LoadFont("FZHTK.ttf");
-        this.rick=LoadTexture("rickmorty.png");
         this.fontLED=LoadFont("DigitalDream.ttf");
     }
     ftk(size:number):Font

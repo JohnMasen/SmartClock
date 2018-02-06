@@ -48,7 +48,6 @@ export class App {
         let surface = GetDrawingSurface(this.drawRegion, "0.1");
         this.sb = surface.CreateSpritBatch();
         this.fontFTK = LoadFont("FZHTK.ttf");
-        this.rick = LoadTexture("rickmorty.png");
         this.fontLED = LoadFont("DigitalDream.ttf");
     }
     ftk(size) {
