@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Numerics;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace SmartClock.Core
 {
