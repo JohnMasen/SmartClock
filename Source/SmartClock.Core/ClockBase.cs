@@ -100,12 +100,12 @@ namespace SmartClock.Core
             ase.WaitOne();//wait until mail loop stop
         }
 
-        protected abstract Image<Rgba32> drawClock(CancellationToken token);
+        protected abstract Task<Image<Rgba32>> drawClockAsync(CancellationToken token);
 
 
         public virtual async Task DrawAsync(CancellationToken token)
         {
-            await Render.RenderAsync(drawClock(token), token);
+            await Render.RenderAsync(await drawClockAsync(token), token);
         }
         public virtual void Init()
         {
