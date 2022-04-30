@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SmartClock.Studio (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SmartClock.Studio (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
