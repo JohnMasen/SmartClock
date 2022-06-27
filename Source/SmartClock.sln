@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.Core", "SmartClo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.ScriptClock.ImageSharp", "SmartClock.ScriptClock.ImageSharp\SmartClock.ScriptClock.ImageSharp.csproj", "{DDBC3536-CF75-4429-A0F7-9EBDE8C58813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.Studio", "SmartClock.Studio\SmartClock.Studio.csproj", "{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.Studio", "SmartClock.Studio\SmartClock.Studio.csproj", "{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartClock.Test", "SmartClock.Test\SmartClock.Test.csproj", "{210C699F-B4AB-4A60-8199-DD0243B4694B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,26 @@ Global
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.ActiveCfg = Release|x86
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.Build.0 = Release|x86
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.Deploy.0 = Release|x86
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|arm64.Build.0 = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|x64.Build.0 = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Debug|x86.Build.0 = Debug|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|ARM.Build.0 = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|arm64.ActiveCfg = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|arm64.Build.0 = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|x64.ActiveCfg = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|x64.Build.0 = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|x86.ActiveCfg = Release|Any CPU
+		{210C699F-B4AB-4A60-8199-DD0243B4694B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
