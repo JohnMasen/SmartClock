@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
@@ -37,5 +37,13 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartClock.Core\SmartClock.Core.csproj" />
     <ProjectReference Include="..\SmartClock.ScriptClock.ImageSharp\SmartClock.ScriptClock.ImageSharp.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Scripts\Test1\Main.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Test1\Pic1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

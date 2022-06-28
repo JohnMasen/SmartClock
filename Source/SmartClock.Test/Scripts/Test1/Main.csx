@@ -1,1 +1,0 @@
-﻿DrawImage("Pic1.JPG");
