@@ -21,15 +21,15 @@ namespace SmartClock.ScriptClock.ImageSharp
             global.Image = new Image<Rgba32>(800, 600);
             global.InfoManager = infoManager;
             global.Loader = loader;
-            mainCode = CSharpScript.Create(loader.LoadText("main.csx"), null, typeof(ScriptGlobal));
+            mainCode = CSharpScript.Create(loader.LoadText("Main.csx"), null, typeof(ScriptGlobal));
         }
 
         public string Name { get; private set; }
         public string Version { get; private set; }
-        public static ScriptClockIS Load(Stream contentStream, IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnum refreshInterval = ClockRefreshIntervalEnum.PerSecond)
+        public static ScriptClockIS Load(ZipArchive packageContent, IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnum refreshInterval = ClockRefreshIntervalEnum.PerSecond)
         {
             
-            return new ScriptClockIS(new PackageLoader(contentStream), render, infoManager, refreshInterval);
+            return new ScriptClockIS(new PackageLoader(packageContent), render, infoManager, refreshInterval);
         }
 
         protected override async Task<Image<Rgba32>> drawClockAsync(CancellationToken token)

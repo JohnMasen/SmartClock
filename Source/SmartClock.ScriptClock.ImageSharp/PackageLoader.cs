@@ -11,12 +11,9 @@ namespace SmartClock.ScriptClock.ImageSharp
     public class PackageLoader
     {
         ZipArchive package;
-        public PackageLoader(Stream packageStream)
+        public PackageLoader(ZipArchive content)
         {
-            MemoryStream ms = new MemoryStream();
-            packageStream.CopyTo(ms);//copy and release the source stream 
-            ms.Position = 0;
-            package = new ZipArchive(ms);
+            package = content;
         }
         public Image<Rgba32> LoadImage(string path)
         {

@@ -16,5 +16,12 @@ namespace SmartClock.ScriptClock.ImageSharp
         public InfoManager InfoManager { get; set; }
         public DateTime ClockTime { get; set; }
         public Image Image { get; set; }
+        public void DrawImage(string path)
+        {
+            Image.Mutate(opt =>
+            {
+                opt.DrawImage(Loader.LoadImage(path), 1f);
+            });
+        }
     }
 }
