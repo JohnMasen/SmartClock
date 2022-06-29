@@ -2,11 +2,14 @@
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using SmartClock.Core;
 using SmartClock.ScriptClock.ImageSharp;
+using SmartClock.Studio.Models;
 using SmartClock.Studio.Render;
 using SmartClock.Studio.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -26,34 +29,68 @@ namespace SmartClock.Studio.ViewModel
             manager = clockManager;
             imgRender = render;
             ResultImage = imgRender.Image;
+            loadClockPack("Scripts\\Test1");
         }
-        public string Text { get; set; } = "aaaaaaaa";
-
-        public ImageSource ResultImage { get; } 
-        public void RaisePropertyChanged([CallerMemberName] string? caller = null)
+        private string scriptCode;
+        public string ScriptCode 
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(caller));
+            get => scriptCode;
+            set=>SetProperty(ref scriptCode, value);
+        } 
+
+        public ImageSource ResultImage { get; }
+
+        private ClockPack currentClockPack;
+        public ClockPack CurrentClockPack
+        {
+            get => currentClockPack;
+            set => SetProperty(ref currentClockPack, value);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<ImageResourceItem> ImageResources { get; } = new ObservableCollection<ImageResourceItem>();
 
-        public RelayCommand RunOnce => new RelayCommand(RunOnceCommand);
-        private void RunOnceCommand()
+        private void loadClockPack(string path)
         {
-            var pack=manager.LoadFromFolder("Scripts\\Test1");
-            var clock=manager.BuildClock(pack, imgRender,Core.ClockRefreshIntervalEnum.OneTime);
+            CurrentClockPack = manager.LoadFromFolder(path);
+            ScriptCode = CurrentClockPack.Code;
+            ImageResources.Clear();
+            foreach (var item in CurrentClockPack.Images)
+            {
+                ImageResources.Add(new ImageResourceItem()
+                {
+                    Name = Path.GetFileName(item),
+                    Image = new BitmapImage(new Uri(item)),
+                    Path=item
+                }); ;
+            }
+        }
+
+        private ScriptClockIS buildClock(ClockRefreshIntervalEnum interval)
+        {
+            CurrentClockPack.Code = ScriptCode;
+            CurrentClockPack.Images.Clear();
+            foreach (var item in ImageResources)
+            {
+                currentClockPack.Images.Add(item.Path);
+            }
+            return manager.BuildClock(CurrentClockPack, imgRender, interval);
+        }
+
+
+        public RelayCommand RunOnce => new RelayCommand(()=>
+        {
+            
+            var clock = buildClock(ClockRefreshIntervalEnum.OneTime);
             clock.Start();
-        }
-
+        });
         
-        private void RunCommand()
+        
+        public RelayCommand Run  => new RelayCommand(()=>
         {
-            var pack = manager.LoadFromFolder("Scripts\\Test1");
             currentClock?.Stop();
-            currentClock = manager.BuildClock(pack, imgRender, Core.ClockRefreshIntervalEnum.PerSecond);
+            currentClock = buildClock(ClockRefreshIntervalEnum.PerSecond);
             currentClock.Start();
-        }
-        public RelayCommand Run  => new RelayCommand(RunCommand);
+        });
 
         public RelayCommand Stop => new RelayCommand(() =>
         {
