@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding Path=ImageResources}" ItemTemplate="{StaticResource ImageResourceItemTemplate}">
+            <ListView ItemsSource="{Binding Path=ClockResources}" ItemTemplate="{StaticResource ImageResourceItemTemplate}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsStackPanel Orientation="Horizontal"/>

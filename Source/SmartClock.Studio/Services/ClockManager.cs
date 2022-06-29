@@ -13,7 +13,8 @@ namespace SmartClock.Studio.Services
 {
     public class ClockManager
     {
-        public static string[] ImageFiles = { ".jpg", ".bmp", ".png" };
+        
+        
         public ClockPack LoadFromFolder(string path)
         {
             ClockPack result = new ClockPack();
@@ -29,13 +30,15 @@ namespace SmartClock.Studio.Services
             }
             result.Code = File.ReadAllText(mainFile);
 
-            var files = from f in Directory.GetFiles(rootPath)
-                        join ext in ImageFiles on Path.GetExtension(f) equals ext
-                        select f;
-            foreach (var item in files)
+            foreach (var item in Directory.GetFiles(rootPath))
             {
-                result.Images.Add(item);
+                if (string.Compare(Path.GetFileName(item),"main.csx",true)!=0)//exclude main code
+                {
+                    result.Files.Add(item);
+                }
+                
             }
+
             DirectoryInfo info = new DirectoryInfo(rootPath);
 
             result.Name = info.Name;
@@ -52,7 +55,7 @@ namespace SmartClock.Studio.Services
             }
             
 
-            foreach (var f in clock.Images)
+            foreach (var f in clock.Files)
             {
                 using var imgStream = archive.CreateEntry(Path.GetFileName(f)).Open();
                 using var fs = File.Open(f, FileMode.Open);

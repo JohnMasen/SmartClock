@@ -23,6 +23,7 @@ namespace SmartClock.ScriptClock.ImageSharp
             global.Image = new Image<Rgba32>(800, 600);
             global.InfoManager = infoManager;
             global.Loader = loader;
+            global.IsFirstRun = true;
             mainCode = CSharpScript.Create(loader.LoadText("Main.csx"), null, typeof(ScriptGlobal));
         }
 
@@ -43,6 +44,7 @@ namespace SmartClock.ScriptClock.ImageSharp
 
             global.ClockTime = DateTime.Now;
             await mainCode.RunAsync(global);
+            global.IsFirstRun = false;
             return global.Image as Image<Rgba32>;
         }
     }

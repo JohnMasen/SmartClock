@@ -42,6 +42,9 @@
     <ProjectReference Include="..\SmartClock.ScriptClock.ImageSharp\SmartClock.ScriptClock.ImageSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Scripts\Test1\Arvo-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\Test1\Main.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

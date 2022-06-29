@@ -47,32 +47,33 @@ namespace SmartClock.Studio.ViewModel
             set => SetProperty(ref currentClockPack, value);
         }
 
-        public ObservableCollection<ImageResourceItem> ImageResources { get; } = new ObservableCollection<ImageResourceItem>();
+        public ObservableCollection<ResourceItem> ClockResources { get; } = new ObservableCollection<ResourceItem>();
 
         private void loadClockPack(string path)
         {
             CurrentClockPack = manager.LoadFromFolder(path);
             ScriptCode = CurrentClockPack.Code;
-            ImageResources.Clear();
-            foreach (var item in CurrentClockPack.Images)
+            ClockResources.Clear();
+            foreach (var item in CurrentClockPack.Files)
             {
-                ImageResources.Add(new ImageResourceItem()
+                var resourceType = ResourceItem.ParseItemType(item);
+                ClockResources.Add(new ResourceItem()
                 {
                     Name = Path.GetFileName(item),
-                    Image = new BitmapImage(new Uri(item)),
-                    Path=item
-                }); ;
+                    Image = resourceType == ResourceItemTypeEnum.Image ? new BitmapImage(new Uri(item)) : null,
+                    Path = item,
+                    ResourceType = resourceType
+                }); ; ;
             }
         }
 
         private ScriptClockIS buildClock(ClockRefreshIntervalEnum interval)
         {
             CurrentClockPack.Code = ScriptCode;
-            CurrentClockPack.Images.Clear();
-            foreach (var item in ImageResources)
-            {
-                currentClockPack.Images.Add(item.Path);
-            }
+            //foreach (var item in ClockResources)
+            //{
+            //    currentClockPack.Files.Add(item.Path);
+            //}
             return manager.BuildClock(CurrentClockPack, imgRender, interval);
         }
 

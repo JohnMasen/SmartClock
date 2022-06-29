@@ -29,6 +29,11 @@ namespace SmartClock.ScriptClock.ImageSharp
             return reader.ReadToEnd();
         }
 
+        public Stream LoadStream(string path)
+        {
+            return FindEntry(path).Open();
+        }
+
         private ZipArchiveEntry FindEntry(string name)
         {
             return package.Entries.FirstOrDefault(x => string.Compare(name, x.Name, true)==0);
