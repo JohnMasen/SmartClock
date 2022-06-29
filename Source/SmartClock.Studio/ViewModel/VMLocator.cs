@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SmartClock.Studio.ViewModel
 {
     public static class VMLocator
     {
-        private static VMMainWindow mainWindow = new VMMainWindow();
-        public static  VMMainWindow VMMainWindow => mainWindow;
+        //private static VMMainWindow mainWindow = new VMMainWindow();
+        public static VMMainWindow VMMainWindow => App.Current.Services.GetService<VMMainWindow>();
     }
 }

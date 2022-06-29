@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Toolkit.HighPerformance.Buffers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -44,57 +45,57 @@ namespace SmartClock.Studio
             this.InitializeComponent();
         }
 
-        private async void btnGo_Click(object sender, RoutedEventArgs e)
-        {
-            var tmp = createZipPackage("Scripts\\Test1");
-            var render = new ImageClockRender();
-            InfoManager info = new InfoManager();
-            ScriptClockIS clock = ScriptClockIS.Load(tmp, render, info, Core.ClockRefreshIntervalEnum.OneTime);
-            clock.Start();
-            while (clock.IsRunning)
-            {
 
-            }
-            WriteableBitmap writeableBitmap = new WriteableBitmap(render.Image.Width, render.Image.Height);
+
+        //private async void btnGo_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var tmp = createZipPackage("Scripts\\Test1");
+        //    var render = new ImageClockRender();
+        //    InfoManager info = new InfoManager();
+        //    ScriptClockIS clock = ScriptClockIS.Load(tmp, render, info, Core.ClockRefreshIntervalEnum.OneTime);
+        //    clock.Start();
+        //    while (clock.IsRunning)
+        //    {
+
+        //    }
+        //    using var buffer = MemoryOwner<Bgra32>.Allocate(render.Image.Width * render.Image.Height);
+        //    render.Image.CloneAs<Bgra32>().CopyPixelDataTo(buffer.Memory.Span);
+        //    MemoryMarshal.AsBytes(buffer.Memory.Span);
             
-            using var buffer = MemoryPool<Bgra32>.Shared.Rent(render.Image.Width * render.Image.Height);
-            render.Image.CloneAs<Bgra32>().CopyPixelDataTo(buffer.Memory.Span);
-            MemoryMarshal.AsBytes(buffer.Memory.Span);
             
             
-            
-            int bufferSize = render.Image.Width * render.Image.Height * 4;
-            byte[] swapBuffer = new byte[bufferSize];
-            MemoryMarshal.AsBytes(buffer.Memory.Span).Slice(0,bufferSize).CopyTo(swapBuffer);
+        //    int bufferSize = render.Image.Width * render.Image.Height * 4;
+        //    byte[] swapBuffer = new byte[bufferSize];
+        //    MemoryMarshal.AsBytes(buffer.Memory.Span).CopyTo(swapBuffer);
 
-            SoftwareBitmap bitmap = new SoftwareBitmap(BitmapPixelFormat.Bgra8, render.Image.Width, render.Image.Height,BitmapAlphaMode.Premultiplied);
-            //MemoryBuffer sbuffer = new MemoryBuffer((uint)(render.Image.Width * render.Image.Height * 4));
-            bitmap.CopyFromBuffer(swapBuffer.AsBuffer());
+        //    SoftwareBitmap bitmap = new SoftwareBitmap(BitmapPixelFormat.Bgra8, render.Image.Width, render.Image.Height,BitmapAlphaMode.Premultiplied);
+        //    //MemoryBuffer sbuffer = new MemoryBuffer((uint)(render.Image.Width * render.Image.Height * 4));
+        //    bitmap.CopyFromBuffer(swapBuffer.AsBuffer());
+        //    VMMainWindow dataContext = MainContainer.DataContext as VMMainWindow;
+        //    await dataContext.ResultImage.SetBitmapAsync(bitmap);
+        //    dataContext.RaisePropertyChanged(nameof(VMMainWindow.ResultImage));
+        //    //render.Image.SaveAsJpeg("result.jpg");
+        //    //ProcessStartInfo startInfo = new ProcessStartInfo()
+        //    //{
+        //    //    UseShellExecute = true,
+        //    //    FileName = "result.jpg"
+        //    //};
 
-            await VMLocator.VMMainWindow.ResultImage.SetBitmapAsync(bitmap);
-            VMLocator.VMMainWindow.RaisePropertyChanged(nameof(VMMainWindow.ResultImage));
-            //render.Image.SaveAsJpeg("result.jpg");
-            //ProcessStartInfo startInfo = new ProcessStartInfo()
-            //{
-            //    UseShellExecute = true,
-            //    FileName = "result.jpg"
-            //};
+        //    //Process.Start(startInfo);
+        //    //Console.WriteLine("done");
+        //}
 
-            //Process.Start(startInfo);
-            //Console.WriteLine("done");
-        }
-
-        private  ZipArchive createZipPackage(string path)
-        {
-            MemoryStream ms = new MemoryStream();
-            ZipArchive result = new ZipArchive(ms, ZipArchiveMode.Update);
-            foreach (var f in Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,path)))
-            {
-                result.CreateEntryFromFile(f, Path.GetFileName(f));
-            }
-            //tmp.Dispose();
-            Console.WriteLine(ms.Length);
-            return result;
-        }
+        //private  ZipArchive createZipPackage(string path)
+        //{
+        //    MemoryStream ms = new MemoryStream();
+        //    ZipArchive result = new ZipArchive(ms, ZipArchiveMode.Update);
+        //    foreach (var f in Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,path)))
+        //    {
+        //        result.CreateEntryFromFile(f, Path.GetFileName(f));
+        //    }
+        //    //tmp.Dispose();
+        //    Console.WriteLine(ms.Length);
+        //    return result;
+        //}
     }
 }

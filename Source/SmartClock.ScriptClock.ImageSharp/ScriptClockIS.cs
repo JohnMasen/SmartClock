@@ -1,7 +1,9 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using SmartClock.Core;
 using System;
 using System.IO;
@@ -34,6 +36,11 @@ namespace SmartClock.ScriptClock.ImageSharp
 
         protected override async Task<Image<Rgba32>> drawClockAsync(CancellationToken token)
         {
+            global.Image.Mutate(opt =>
+            {
+                opt.Clear(Color.White);
+            });
+
             global.ClockTime = DateTime.Now;
             await mainCode.RunAsync(global);
             return global.Image as Image<Rgba32>;

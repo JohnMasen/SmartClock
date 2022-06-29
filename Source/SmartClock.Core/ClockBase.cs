@@ -67,9 +67,8 @@ namespace SmartClock.Core
                             await Task.Delay(nextRefresh, token);
                             await DrawAsync(token);
                         }
-                        System.Diagnostics.Debug.WriteLine("mainloop stopped");
                     }
-                    
+                    System.Diagnostics.Debug.WriteLine("mainloop stopped");
                 }
                 catch (OperationCanceledException)
                 {
