@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SmartClock.Core;
@@ -16,6 +17,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Pickers;
 
 namespace SmartClock.Studio.ViewModel
 {
@@ -29,14 +31,22 @@ namespace SmartClock.Studio.ViewModel
             manager = clockManager;
             imgRender = render;
             ResultImage = imgRender.Image;
-            loadClockPack("Scripts\\Test1");
+            string rootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts\\Test1");
+            loadClockPack(rootPath);
         }
         private string scriptCode;
         public string ScriptCode 
         {
             get => scriptCode;
             set=>SetProperty(ref scriptCode, value);
-        } 
+        }
+
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get=> isBusy;
+            set=>SetProperty(ref isBusy, value);
+        }
 
         public ImageSource ResultImage { get; }
 
@@ -80,9 +90,10 @@ namespace SmartClock.Studio.ViewModel
 
         public RelayCommand RunOnce => new RelayCommand(()=>
         {
-            
+            IsBusy = true;
             var clock = buildClock(ClockRefreshIntervalEnum.OneTime);
             clock.Start();
+            IsBusy = false;
         });
         
         
@@ -103,6 +114,25 @@ namespace SmartClock.Studio.ViewModel
             currentClock?.Stop();
             currentClock = buildClock(ClockRefreshIntervalEnum.PerMinute);
             currentClock.Start();
+        });
+
+        public AsyncRelayCommand<Window> SaveClock => new AsyncRelayCommand<Window>(async window =>
+        {
+            var hwnd=WinRT.Interop.WindowNative.GetWindowHandle(window);
+            FileSavePicker fsp = new FileSavePicker();
+            fsp.DefaultFileExtension = ".zip";
+            fsp.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            fsp.FileTypeChoices.Add("Clock File", new List<string>() { ".zip" });
+            WinRT.Interop.InitializeWithWindow.Initialize(fsp, hwnd);
+            var file=await fsp.PickSaveFileAsync();
+            if (file == null)
+            {
+                return;
+            }
+            using var fileStream = await file.OpenStreamForWriteAsync();
+            IsBusy = true;
+            manager.SaveClock(CurrentClockPack, fileStream);
+            IsBusy = false;
         });
     }
 }

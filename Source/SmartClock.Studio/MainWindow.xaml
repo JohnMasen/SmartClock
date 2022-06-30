@@ -6,7 +6,8 @@
     xmlns:vm="using:SmartClock.Studio.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="MainWindowControl">
     <Grid x:Name="MainContainer"  Background="Gray" DataContext="{x:Bind vm:VMLocator.VMMainWindow}" >
         <Grid.Resources>
             <Style TargetType="Rectangle">
@@ -45,16 +46,25 @@
                 <Button Content="Remove"/>
             </StackPanel>
         </Grid>
-
-        <StackPanel Grid.Column="0" Grid.Row="1">
-            <Button x:Name="btnRunOnce" Content="RunOnce" Command="{Binding Path=RunOnce}"/>
-            <Button x:Name="btnRun" Content="Run" Command="{Binding Path=Run}"/>
-            <Button x:Name="btnRunPerMinute" Content="Run(PerMinute)" Command="{Binding Path=RunPerMinute}"/>
-            <Button x:Name="btnStop" Content="Stop" Command="{Binding Path=Stop}"/>
-            <TextBox Text="{Binding Path=ScriptCode, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="False" />
-        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" >
+                <Button x:Name="btnRunOnce" Content="RunOnce" Command="{Binding Path=RunOnce}"/>
+                <Button x:Name="btnRun" Content="Run" Command="{Binding Path=Run}"/>
+                <Button x:Name="btnRunPerMinute" Content="Run(PerMinute)" Command="{Binding Path=RunPerMinute}"/>
+                <Button x:Name="btnStop" Content="Stop" Command="{Binding Path=Stop}"/>
+                <Button x:Name="btnSave" Content="Save" Command="{Binding Path=SaveClock}" CommandParameter="{Binding ElementName=MainWindowControl}"/>
+                
+            </StackPanel>
+            <TextBox Grid.Row="1" Height="auto" Text="{Binding Path=ScriptCode, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="False" />
+        </Grid>
+        
         <Border BorderThickness="2" Grid.Row="1" Grid.Column="1" BorderBrush="Black">
             <Image Source="{Binding Path=ResultImage}"    />
         </Border>
+        <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" IsIndeterminate="True" ShowPaused="False" ShowError="False" Visibility="{Binding Path=IsBusy}" />
     </Grid>
 </Window>
