@@ -97,5 +97,12 @@ namespace SmartClock.Studio.ViewModel
         {
             currentClock?.Stop();
         });
+
+        public RelayCommand RunPerMinute => new RelayCommand(() =>
+        {
+            currentClock?.Stop();
+            currentClock = buildClock(ClockRefreshIntervalEnum.PerMinute);
+            currentClock.Start();
+        });
     }
 }

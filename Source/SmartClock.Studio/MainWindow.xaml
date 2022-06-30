@@ -49,6 +49,7 @@
         <StackPanel Grid.Column="0" Grid.Row="1">
             <Button x:Name="btnRunOnce" Content="RunOnce" Command="{Binding Path=RunOnce}"/>
             <Button x:Name="btnRun" Content="Run" Command="{Binding Path=Run}"/>
+            <Button x:Name="btnRunPerMinute" Content="Run(PerMinute)" Command="{Binding Path=RunPerMinute}"/>
             <Button x:Name="btnStop" Content="Stop" Command="{Binding Path=Stop}"/>
             <TextBox Text="{Binding Path=ScriptCode, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="False" />
         </StackPanel>

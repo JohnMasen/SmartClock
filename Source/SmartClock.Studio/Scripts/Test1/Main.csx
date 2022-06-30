@@ -3,11 +3,24 @@
 if (IsFirstRun)
 {
     LoadFont("Arvo-Regular.ttf");
+    LoadFont("TYPEWR.TTF");
 }
 
-var img = Loader.LoadImage("pic1.jpg");
+var img = Loader.LoadImage("Pic1.jpg");
 
 //Rotate(img, System.Random.Shared.Next(0, 180));
-DrawImage(img,0,0,400,400);
-DrawText(ClockTime.ToString(), "Arvo", 16, 0, 0, "#FCF6FA");
+DrawImage(img,0,0,800,600);
+DrawText(ClockTime.ToString("yyyy/MM/dd"), "Arvo", 16, 0, 0, "#FCF6FA");
+DrawText(ClockTime.ToString("HH:mm:ss"), "Typewriter", 16, 0, 50, "#FCF6FA");
 DrawText(IsFirstRun.ToString(), "Arvo", 16, 0, 150, "#FCF6FA");
+bool isAM;
+switch(ClockTime.Hour)
+{
+    case <= 12:
+        isAM = true;
+        break;
+    default:
+        isAM = false;
+        break;
+}
+DrawText($"isAM {isAM.ToString()}", "Arvo", 16, 0, 200, "#FCF6FA");
