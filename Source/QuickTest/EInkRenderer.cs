@@ -28,5 +28,10 @@ namespace QuickTest
             device.DrawImage(tmp);
             return Task.CompletedTask;
         }
+
+        public void Clear()
+        {
+            device.ClearScreen();
+        }
     }
 }

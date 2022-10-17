@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Iot.Device.OneWire;
 using QuickTest;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -26,3 +27,5 @@ clock.Start();
 
 Console.WriteLine("Press ENTER to exit");
 Console.ReadLine();
+clock.Stop();
+render.Clear();
