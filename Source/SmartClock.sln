@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.ScriptClock.Imag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartClock.Studio", "SmartClock.Studio\SmartClock.Studio.csproj", "{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickTest", "QuickTest\QuickTest.csproj", "{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,26 @@ Global
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.ActiveCfg = Release|x86
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.Build.0 = Release|x86
 		{86E16EA0-7AB0-4EA3-A5CE-2DD925BD3C5A}.Release|x86.Deploy.0 = Release|x86
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|arm64.Build.0 = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Debug|x86.Build.0 = Debug|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|ARM.Build.0 = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|arm64.ActiveCfg = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|arm64.Build.0 = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|x64.Build.0 = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7FB65BD-DC83-4C18-8F69-921D1CB3711B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
