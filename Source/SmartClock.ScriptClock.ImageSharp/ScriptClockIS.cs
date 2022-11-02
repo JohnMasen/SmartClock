@@ -17,13 +17,9 @@ namespace SmartClock.ScriptClock.ImageSharp
     {
         Script mainCode;
         ScriptGlobal global;
-        public ScriptClockIS(PackageLoader loader, IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnum refreshInterval = ClockRefreshIntervalEnum.PerSecond) : base(render, infoManager, refreshInterval)
+        public ScriptClockIS(IPackageLoader loader, IClockRenderer render, InfoManager infoManager, ClockRefreshIntervalEnum refreshInterval = ClockRefreshIntervalEnum.PerSecond) : base(render, infoManager, refreshInterval)
         {
-            global = new ScriptGlobal();
-            global.Image = new Image<Rgba32>(800, 600);
-            global.InfoManager = infoManager;
-            global.Loader = loader;
-            global.IsFirstRun = true;
+            global = new ScriptGlobal(loader, infoManager, new Image<Rgba32>(800, 600));
             mainCode = CSharpScript.Create(loader.LoadText("Main.csx"), null, typeof(ScriptGlobal));
         }
 

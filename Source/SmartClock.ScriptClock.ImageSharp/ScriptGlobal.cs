@@ -11,17 +11,25 @@ using System.Net.Http.Headers;
 using SixLabors.ImageSharp.Memory;
 using SixLabors.Fonts;
 using System.IO;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace SmartClock.ScriptClock.ImageSharp
 {
     public class ScriptGlobal
     {
-        public PackageLoader Loader { get; set; }
-        public InfoManager InfoManager { get; set; }
+        public IPackageLoader Loader { get; private set; }
+        public InfoManager InfoManager { get; private set; }
         public DateTime ClockTime { get; set; }
-        public Image Image { get; set; }
+        public Image<Rgba32> Image { get; private set; }
+        public ScriptGlobal(IPackageLoader loader, InfoManager infoManager,  Image<Rgba32> image)
+        {
+            Loader = loader;
+            InfoManager = infoManager;
+            Image = image;
+            IsFirstRun = true;
+        }
 
-        public bool IsFirstRun { get; set; } 
+        public bool IsFirstRun { get; internal set; } 
         private FontCollection fontCollection = new FontCollection();
         
         public void DrawImage(string path)

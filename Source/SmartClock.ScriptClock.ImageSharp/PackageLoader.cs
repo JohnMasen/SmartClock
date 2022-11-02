@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SmartClock.ScriptClock.ImageSharp
 {
-    public class PackageLoader
+    public class PackageLoader : IPackageLoader
     {
         ZipArchive package;
         public PackageLoader(ZipArchive content)
@@ -18,7 +18,7 @@ namespace SmartClock.ScriptClock.ImageSharp
         }
         public Image<Rgba32> LoadImage(string path)
         {
-            using var f= FindEntry(path).Open();
+            using var f = FindEntry(path).Open();
             return Image.Load<Rgba32>(f);
         }
 
@@ -36,7 +36,7 @@ namespace SmartClock.ScriptClock.ImageSharp
 
         private ZipArchiveEntry FindEntry(string name)
         {
-            return package.Entries.FirstOrDefault(x => string.Compare(name, x.Name, true)==0);
+            return package.Entries.FirstOrDefault(x => string.Compare(name, x.Name, true) == 0);
         }
     }
 }
